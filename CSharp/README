@@ -1,0 +1,4 @@
+dotnet new console -o . -n tmp
+dotnet restore
+
+make compile

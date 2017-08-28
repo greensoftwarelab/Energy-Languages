@@ -1,0 +1,4 @@
+dotnet new console -o . -n tmp -lang F#
+dotnet restore
+
+make compile
