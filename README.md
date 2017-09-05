@@ -3,7 +3,8 @@
 
 ### What is this?
 
-... 4 operations: *(1)* **compilation**, *(2)* **execution**, *(3)* **energy measuring** and *(4)* **memory peak detection**.
+This repo contains the ...
+It supports, for each benchmark of each language, 4 operations: *(1)* **compilation**, *(2)* **execution**, *(3)* **energy measuring** and *(4)* **memory peak detection**.
 
 ### How is it structured and hows does it work?
 
@@ -61,7 +62,7 @@ Taking the `C` language as an example, this is how the folder for the `binary-tr
 #### The Operations
 
 Each benchmark sub-folder, included in a language folder, contains a `Makefile`.
-This is the file where is stated how to perform the 4 supported operations: *(1)***compilation**, *(2)***execution**, *(3)***energy measuring** and *(4)***memory peak detection**.
+This is the file where is stated how to perform the 4 supported operations: *(1)* **compilation**, *(2)* **execution**, *(3)* **energy measuring** and *(4)* **memory peak detection**.
 Basically, each `Makefile` **must** contains 4 rules, one for each operations:
 
 | Rule | Description |
@@ -90,6 +91,7 @@ mem:
 
 ### Running an example.
 
+We included a main Python script, `compile_all.py`, that you can either call from the main folder or from inside a language folder 
 
 ### Add your own example!
 #### Wanna know your own code's energy behavior? We help you!
@@ -100,3 +102,14 @@ mem:
 ##### 2. 
 
 ##### 3. 
+
+### Further Reading
+Wanna know more? Check [this website](https://sites.google.com/view/energy-efficiency-languages)!
+There you can find the results of a successful experimental setup using the contents of this repo, and the used machine and compilers specifications.
+You can also find there the paper which include such results and our discussion on them:
+***"Energy Efficiency across Programming Languages: How does Energy, Time and Memory Relate?"***, Rui Pereira, Marco Couto, Francisco Ribeiro, Rui Rua, Jácome Cunha, João Paulo Fernandes, and João Saraiva. In *Proceedings of the 10th International Conference on Software Language Engineering (SLE '17)*
+
+### Contacts
+
+[Green Software Lab](http://greenlab.di.uminho.pt)
+Main contributors: @MarcoCouto and @States
