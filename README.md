@@ -3,9 +3,9 @@
 
 ### What is this?
 
-This repo contains the ...
+This repo contains the source code of 10 distinct benchmarks, implemented in 29 different languages (exactly as taken from the [Computer Language Benchmark Game](http://benchmarksgame.alioth.debian.org)).
 
-It supports, for each benchmark of each language, 4 operations: *(1)* **compilation**, *(2)* **execution**, *(3)* **energy measuring** and *(4)* **memory peak detection**.
+It also contains tools which provide support, for each benchmark of each language, to 4 operations: *(1)* **compilation**, *(2)* **execution**, *(3)* **energy measuring** and *(4)* **memory peak detection**.
 
 ### How is it structured and hows does it work?
 
