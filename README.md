@@ -3,7 +3,7 @@
 
 ### What is this?
 
-... 4 operations: *(1)***compilation**, *(2)***execution**, *(3)***energy measuring** and *(4)***memory peak detection**.
+... 4 operations: *(1)* **compilation**, *(2)* **execution**, *(3)* **energy measuring** and *(4)* **memory peak detection**.
 
 ### How is it structured and hows does it work?
 
@@ -65,7 +65,7 @@ This is the file where is stated how to perform the 4 supported operations: *(1)
 Basically, each `Makefile` **must** contains 4 rules, one for each operations:
 
 | Rule | Description |
-| ------------------ |
+| -------- | -------- |
 | `compile` | This rule specifies how the benchmark should be compiled in the considered language; Interpreted languages don't need it, so it can be left blank in such cases. |
 | `run` | This rule specifies how the benchmark should be executed; It is used to test whether the benchmark runs with no errors, and the output is the expected. |
 | `measure` | This rule shows how to use the framework included in the `RAPL` folder to measure the energy of executing the task specified in the `run` rule. |
