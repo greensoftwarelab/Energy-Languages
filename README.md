@@ -19,42 +19,42 @@ The main folder contains 31 elements:
 
 Basically, the directories tree will look something like this:
 
-```Markdown
-|- ...
-|- <Language-1>
-	|-- <benchmark-1>
-		|--- <source>
-		|--- Makefile
-		|--- [input]
-|-- ...
-|-- <benchmark-i>
-|--- <source>
-|--- Makefile
-|--- [input]
-|- ...
-|- <Language-i>
-|-- <benchmark-1>
-|-- ...
-|-- <benchmark-i>
-|- RAPL
-|- compile_all.py
+```Java
+| ...
+| <Language-1>
+	| <benchmark-1>
+		| <source>
+		| Makefile
+		| [input]
+	| ...
+	| <benchmark-i>
+		| <source>
+		| Makefile
+		| [input]
+| ...
+| <Language-i>
+	| <benchmark-1>
+	| ...
+	| <benchmark-i>
+| RAPL
+| compile_all.py
 
 ```
 
 Taking the `C` language as an example, this is how the folder for the `binary-trees` and `k-nucleotide` benchmarks would look like:
 
-```Markdown
-|- ...
-|- C
-|-- binary-trees
-|--- binarytrees.gcc-3.c
-|--- Makefile
-|-- k-nucleotide
-|--- knucleotide.c
-|--- knucleotide-input25000000.txt
-|--- Makefile
-|-- ...
-|- ...
+```C
+| ...
+| C
+	| binary-trees
+		| binarytrees.gcc-3.c
+		| Makefile
+	| k-nucleotide
+		| knucleotide.c
+		| knucleotide-input25000000.txt
+		| Makefile
+	| ...
+| ...
 
 ```
 
