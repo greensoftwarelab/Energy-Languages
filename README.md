@@ -22,10 +22,10 @@ Basically, the directories tree will look something like this:
 ```Markdown
 |- ...
 |- <Language-1>
-|-- <benchmark-1>
-|--- <source>
-|--- Makefile
-|--- [input]
+	|-- <benchmark-1>
+		|--- <source>
+		|--- Makefile
+		|--- [input]
 |-- ...
 |-- <benchmark-i>
 |--- <source>
