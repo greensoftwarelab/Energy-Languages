@@ -96,7 +96,7 @@ mem:
 
 We included a main Python script, `compile_all.py`, that you can either call from the main folder or from inside a language folder, and it can be executed as follows:
 
-```PowerShell
+```openrc
 python compile_all.py [rule]
 ```
 
