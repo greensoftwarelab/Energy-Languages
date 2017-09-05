@@ -94,17 +94,28 @@ mem:
 
 ### Running an example.
 
-We included a main Python script, `compile_all.py`, that you can either call from the main folder or from inside a language folder 
+We included a main Python script, `compile_all.py`, that you can either call from the main folder or from inside a language folder, and it can be executed as follows:
+
+```Bash
+python compile_all.py [rule]
+```
+
+You can provide a rule from the available 4 referenced before, and the script will perform it using **every** `Makefile` found in the same folder level and bellow.
+
+The default rule is `compile`, which means that if you run it with no arguments provided (`python compile_all.py`) the script will try to compile all benchmarks.
+
+The results of the energy measurements will be stored in files with the name `<language>.csv`, where `<language>` is the name of the running language. 
+You will find such file inside of corresponding language folder.
 
 ### Add your own example!
 #### Wanna know your own code's energy behavior? We help you!
 #### Follow this steps:
 
-##### 1. 
+##### 1. Create a folder with the name of you benchmark, such as `test-benchmark`, inside the language you implemented it.
 
-##### 2. 
+##### 2. Follow the instructions presented in the [Operations](#the-operations) section, and fill the `Makefile`.
 
-##### 3. 
+##### 3. Use the `compile_all.py` script to compile, run, and/or measure what you want! Or run it yourself using the [`make`](https://linux.die.net/man/1/make) command.
 
 ### Further Reading
 Wanna know more? Check [this website](https://sites.google.com/view/energy-efficiency-languages)!
@@ -120,4 +131,5 @@ You can also find there the paper which include such results and our discussion 
 ### Contacts
 
 [Green Software Lab](http://greenlab.di.uminho.pt)
+
 Main contributors: [@Marco Couto](http://github.com/MarcoCouto) and [@Rui Pereira](http://github.com/States)
