@@ -3,7 +3,7 @@
 
 ### What is this?
 
-This repo contains the source code of 10 distinct benchmarks, implemented in 29 different languages (exactly as taken from the [Computer Language Benchmark Game](http://benchmarksgame.alioth.debian.org)).
+This repo contains the source code of 10 distinct benchmarks, implemented in 28 different languages (exactly as taken from the [Computer Language Benchmark Game](http://benchmarksgame.alioth.debian.org)).
 
 It also contains tools which provide support, for each benchmark of each language, to 4 operations: *(1)* **compilation**, *(2)* **execution**, *(3)* **energy measuring** and *(4)* **memory peak detection**.
 
@@ -16,7 +16,7 @@ Next, we explain the folder structure and how to specify, for each language benc
 
 #### The Structure
 The main folder contains 31 elements: 
-1. 29 sub-folders (one for each of the considered languages); each folder contains a sub-folder for each considered benchmark.
+1. 28 sub-folders (one for each of the considered languages); each folder contains a sub-folder for each considered benchmark.
 2. A `Python` script `compile_all.py`, capable of building, running and measuring the energy and memory usage of every benchmark in all considered languages.
 2. A `RAPL` sub-folder, containing the code of the energy measurement framework.
 
