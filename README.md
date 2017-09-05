@@ -43,7 +43,7 @@ Basically, the directories tree will look something like this:
 
 Taking the `C` language as an example, this is how the folder for the `binary-trees` and `k-nucleotide` benchmarks would look like:
 
-```C
+```Java
 | ...
 | C
 	| binary-trees
