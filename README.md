@@ -128,8 +128,16 @@ You can also find there the paper which include such results and our discussion 
 >Rui Pereira, Marco Couto, Francisco Ribeiro, Rui Rua, Jácome Cunha, João Paulo Fernandes, and João Saraiva. 
 >In *Proceedings of the 10th International Conference on Software Language Engineering (SLE '17)*
 
-### Contacts
+#### IMPORTANT NOTE:
+The `Makefiles` have specified, for some cases, the path for the language's compiler/runner. 
+It is most likely that you will not have them in the same path of your machine.
+If you would like to properly test every benchmark of every language, please make sure you have all compilers/runners installed, and adapt the `Makefiles` accordingly.
+
+### Contacts and References
 
 [Green Software Lab](http://greenlab.di.uminho.pt)
 
 Main contributors: [@Marco Couto](http://github.com/MarcoCouto) and [@Rui Pereira](http://github.com/States)
+
+
+[The Computer Language Benchmark Game](http://benchmarksgame.alioth.debian.org)
