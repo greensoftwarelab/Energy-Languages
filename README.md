@@ -75,7 +75,7 @@ Basically, each `Makefile` **must** contains 4 rules, one for each operations:
 | `measure` | This rule shows how to use the framework included in the `RAPL` folder to measure the energy of executing the task specified in the `run` rule. |
 | `mem` | Similar to `measure`, this rule executes the task specified in the `run` rule but with support for memory peak detection. |
 
-To better understand it, here's the `Makefile` for the `binary-trees` benchmark:
+To better understand it, here's the `Makefile` for the `binary-trees` benchmark in the `C` language:
 
 ```Makefile
 compile:
