@@ -4,12 +4,14 @@
 ### What is this?
 
 This repo contains the ...
+
 It supports, for each benchmark of each language, 4 operations: *(1)* **compilation**, *(2)* **execution**, *(3)* **energy measuring** and *(4)* **memory peak detection**.
 
 ### How is it structured and hows does it work?
 
 This framework follows a specific folder structure, which guarantees the correct workflow when the goal is to perform and operation for all benchmarks at once.
 Moreover, it must be defined, for each benchmark, how to perform the 4 operations considered.
+
 Next, we explain the folder structure and how to specify, for each language benchmark, the execution of each operation.
 
 #### The Structure
@@ -63,6 +65,7 @@ Taking the `C` language as an example, this is how the folder for the `binary-tr
 
 Each benchmark sub-folder, included in a language folder, contains a `Makefile`.
 This is the file where is stated how to perform the 4 supported operations: *(1)* **compilation**, *(2)* **execution**, *(3)* **energy measuring** and *(4)* **memory peak detection**.
+
 Basically, each `Makefile` **must** contains 4 rules, one for each operations:
 
 | Rule | Description |
@@ -105,9 +108,14 @@ We included a main Python script, `compile_all.py`, that you can either call fro
 
 ### Further Reading
 Wanna know more? Check [this website](https://sites.google.com/view/energy-efficiency-languages)!
+
 There you can find the results of a successful experimental setup using the contents of this repo, and the used machine and compilers specifications.
+
 You can also find there the paper which include such results and our discussion on them:
-***"Energy Efficiency across Programming Languages: How does Energy, Time and Memory Relate?"***, Rui Pereira, Marco Couto, Francisco Ribeiro, Rui Rua, Jácome Cunha, João Paulo Fernandes, and João Saraiva. In *Proceedings of the 10th International Conference on Software Language Engineering (SLE '17)*
+
+>**"_Energy Efficiency across Programming Languages: How does Energy, Time and Memory Relate?_"**, 
+>Rui Pereira, Marco Couto, Francisco Ribeiro, Rui Rua, Jácome Cunha, João Paulo Fernandes, and João Saraiva. 
+>In *Proceedings of the 10th International Conference on Software Language Engineering (SLE '17)*
 
 ### Contacts
 
