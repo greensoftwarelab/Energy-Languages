@@ -120,4 +120,4 @@ You can also find there the paper which include such results and our discussion 
 ### Contacts
 
 [Green Software Lab](http://greenlab.di.uminho.pt)
-Main contributors: @github/MarcoCouto and @States
+Main contributors: [@Marco Couto](http://github/MarcoCouto) and [@Rui Pereira](http://github/States)
