@@ -4,13 +4,13 @@ compile:
 	exit 1
 
 xmeasure:
-	#sudo ../../RAPL/main "sbcl --noinform --core regexredux.core < 0 < regexredux-input5000000.txt" Lisp regex-redux
+	#sudo ../../RAPL/main "sbcl --noinform --core regexredux.core < 0 < ../../regexredux-input5000000.txt" Lisp regex-redux
 
 clean:
 	rm -rf *core	
 
 mem:
-	/usr/bin/time -v regexredux.core < 0 < regexredux-input5000000.txt Lisp regex-redux
+	/usr/bin/time -v regexredux.core < 0 < ../../regexredux-input5000000.txt Lisp regex-redux
 
 valgrind:
-	valgrind --tool=massif --stacks=yes sbcl --noinform --core regexredux.core < 0 < regexredux-input5000000.txt Lisp regex-redux
+	valgrind --tool=massif --stacks=yes sbcl --noinform --core regexredux.core < 0 < ../../regexredux-input5000000.txt Lisp regex-redux
