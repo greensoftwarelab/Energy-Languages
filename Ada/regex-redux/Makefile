@@ -11,13 +11,13 @@ compile:
 	gnatbind-6 -x regexredux.ali
 	gnatlink-6 regexredux.ali -O3 -fomit-frame-pointer -march=native -msse3 -mfpmath=sse -o regexredux.gnat-5.gnat_run
 measure:
-	sudo ../../RAPL/main "./regexredux.gnat-5.gnat_run 0 < regexredux-input5000000.txt" Ada regex-redux
+	sudo ../../RAPL/main "./regexredux.gnat-5.gnat_run 0 < ../../regexredux-input5000000.txt" Ada regex-redux
 
 run:
-	./regexredux.gnat-5.gnat_run 0 < regexredux-input5000000.txt
+	./regexredux.gnat-5.gnat_run 0 < ../../regexredux-input5000000.txt
 	
 mem:
-	/usr/bin/time -v ./regexredux.gnat-5.gnat_run 0 < regexredux-input5000000.txt
+	/usr/bin/time -v ./regexredux.gnat-5.gnat_run 0 < ../../regexredux-input5000000.txt
 
 valgrind:
-	valgrind --tool=massif --stacks=yes ./regexredux.gnat-5.gnat_run 0 < regexredux-input5000000.txt
+	valgrind --tool=massif --stacks=yes ./regexredux.gnat-5.gnat_run 0 < ../../regexredux-input5000000.txt
