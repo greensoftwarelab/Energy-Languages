@@ -1,5 +1,4 @@
 compile:
-	cp binarytrees.chapel binarytrees.chpl
 	/usr/local/src/chapel-1.15.0/bin/linux64/chpl --fast binarytrees.chpl -o binarytrees.chapel_run
 measure:
 	sudo ../../RAPL/main "./binarytrees.chapel_run --n=21" Chapel binary-trees

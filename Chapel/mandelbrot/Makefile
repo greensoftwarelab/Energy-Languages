@@ -1,5 +1,4 @@
 compile:
-	cp mandelbrot.chapel-2.chapel mandelbrot.chapel-2.chpl
 	/usr/local/src/chapel-1.15.0/bin/linux64/chpl --fast mandelbrot.chapel-2.chpl -o mandelbrot.chapel-2.chapel_run
 measure:
 	sudo ../../RAPL/main "./mandelbrot.chapel-2.chapel_run --n=16000" Chapel mandelbrot
