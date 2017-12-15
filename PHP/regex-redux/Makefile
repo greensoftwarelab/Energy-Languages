@@ -1,6 +1,7 @@
 compile:
 
 measure:
+	sudo modprobe msr
 	sudo ../../RAPL/main "php -d memory_limit=512M regexredux.php 0 < ../../regexredux-input5000000.txt" PHP regex-redux
 
 run:

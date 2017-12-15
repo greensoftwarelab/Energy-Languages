@@ -9,6 +9,7 @@ compile:
 	gnatlink-6 knucleotide.ali -O3 -fomit-frame-pointer -march=native -msse3 -mfpmath=sse -o knucleotide.gnat-2.gnat_run
 
 measure:
+	sudo modprobe msr
 	sudo ../../RAPL/main "./knucleotide.gnat-2.gnat_run 0 < knucleotide-input25000000.txt" Ada k-nucleotide
 
 run:

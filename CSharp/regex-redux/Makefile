@@ -3,6 +3,7 @@ compile:
 	/usr/bin/dotnet build -c Release
 
 measure:
+	sudo modprobe msr
 	sudo ../../RAPL/main "/usr/bin/dotnet ./bin/Release/netcoreapp1.1/tmp.dll 0 < ../../regexredux-input5000000.txt" CSharp regex-redux
 
 run:

@@ -1,6 +1,7 @@
 compile:
 
 measure:
+	sudo modprobe msr
 	sudo ../../RAPL/main "/usr/local/src/lua-5.3.3/bin/lua  knucleotide.lua-2.lua 0 < knucleotide-input25000000.txt" Lua k-nucleotide
 
 run:

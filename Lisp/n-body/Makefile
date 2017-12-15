@@ -2,6 +2,7 @@ compile:
 	sbcl --load nbody.lisp --eval "(save-lisp-and-die \"nbody.core\" :purify t :toplevel (lambda () (main) (quit)))"
 
 measure:
+	sudo modprobe msr
 	sudo ../../RAPL/main "sbcl --noinform --core nbody.core 50000000" Lisp n-body
 
 run:

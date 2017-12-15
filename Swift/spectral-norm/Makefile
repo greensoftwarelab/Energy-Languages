@@ -2,6 +2,7 @@ compile:
 	/usr/local/src/swift-2017-04-13-a-ubuntu16.10/usr/bin/swiftc spectralnorm.swift-3.swift -Ounchecked -whole-module-optimization  -o spectralnorm.swift-3.swift_run
 
 measure:
+	sudo modprobe msr
 	sudo ../../RAPL/main "./spectralnorm.swift-3.swift_run 5500" Swift spectral-norm
 
 run:

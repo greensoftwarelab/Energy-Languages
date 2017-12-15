@@ -1,6 +1,7 @@
 compile:
 
 measure:
+	sudo modprobe msr
 	sudo ../../RAPL/main "/usr/local/src/lua-5.3.3/bin/lua  fannkuchredux.lua 12" Lua fannkuch-redux
 
 run:

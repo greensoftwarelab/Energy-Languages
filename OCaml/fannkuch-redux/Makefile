@@ -4,6 +4,7 @@ compile:
 	rm fannkuchredux.ocaml-4.ml
 
 measure:
+	sudo modprobe msr
 	sudo ../../RAPL/main "./fannkuchredux.ocaml-4.ocaml_run 12" OCaml fannkuch-redux
 
 run:

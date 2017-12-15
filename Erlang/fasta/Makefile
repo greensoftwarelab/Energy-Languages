@@ -2,6 +2,7 @@ compile:
 	cp fasta.hipe-2.hipe fasta.erl
 	erlc +native +"{hipe, [o3]}" fasta.erl
 measure:
+	sudo modprobe msr
 	sudo ../../RAPL/main "erl -smp enable -noshell -run  fasta main 25000000" Erlang fasta
 
 run:

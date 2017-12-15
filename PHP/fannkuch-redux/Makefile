@@ -1,6 +1,7 @@
 compile:
 
 measure:
+	sudo modprobe msr
 	sudo ../../RAPL/main "php  fannkuchredux.php-3.php 12" PHP fannkuch-redux
 
 run:

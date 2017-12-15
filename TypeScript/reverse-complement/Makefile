@@ -3,6 +3,7 @@ compile:
 	/usr/local/src/node-v7.9.0-linux-x64/bin/tsc --alwaysStrict -t ESNEXT  revcomp.ts
 	
 xmeasure:
+	sudo modprobe msr
 	sudo ../../RAPL/main "/usr/local/src/node-v7.9.0-linux-x64/bin/node --use_strict revcomp.js 0 < ../../revcomp-input25000000.txt" TypeScript reverse-complement
 
 run:

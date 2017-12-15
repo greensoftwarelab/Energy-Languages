@@ -2,6 +2,7 @@ compile:
 	/usr/bin/go build -o pidigits.go-3.go_run
 
 measure:
+	sudo modprobe msr
 	sudo ../../RAPL/main "./pidigits.go-3.go_run 10000" Go pidigits
 
 run:

@@ -5,6 +5,7 @@ compile:
 	gnatbind-6 -x mandelbrot.ali
 	gnatlink-6 mandelbrot.ali -O3 -fomit-frame-pointer -march=native -msse3 -mfpmath=sse -o mandelbrot.gnat-3.gnat_run
 measure:
+	sudo modprobe msr
 	sudo ../../RAPL/main "./mandelbrot.gnat-3.gnat_run 16000" Ada mandelbrot
 
 run:

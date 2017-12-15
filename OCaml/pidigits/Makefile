@@ -4,6 +4,7 @@ compile:
 	rm pidigits.ocaml-3.ml
 	
 xmeasure:
+	sudo modprobe msr
 	sudo ../../RAPL/main "./pidigits.ocaml-3.ocaml_run 2000" OCaml pidigits
 
 run:

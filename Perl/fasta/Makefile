@@ -1,6 +1,7 @@
 compile:
 
 measure:
+	sudo modprobe msr
 	sudo ../../RAPL/main "/usr/local/src/perl-5.24.0/bin/perl fasta.perl 25000000" Perl fasta
 
 run:

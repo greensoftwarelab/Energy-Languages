@@ -1,6 +1,7 @@
 compile:
 
 measure:
+	sudo modprobe msr
 	sudo ../../RAPL/main "/usr/local/src/perl-5.24.0/bin/perl mandelbrot.perl 16000" Perl mandelbrot
 
 run:

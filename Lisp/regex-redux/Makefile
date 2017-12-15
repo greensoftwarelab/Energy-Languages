@@ -4,6 +4,7 @@ compile:
 	exit 1
 
 xmeasure:
+	sudo modprobe msr
 	#sudo ../../RAPL/main "sbcl --noinform --core regexredux.core < 0 < ../../regexredux-input5000000.txt" Lisp regex-redux
 
 clean:

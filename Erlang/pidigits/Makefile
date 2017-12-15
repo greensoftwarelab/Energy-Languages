@@ -2,6 +2,7 @@ compile:
 	cp pidigits.hipe pidigits.erl
 	erlc +native +"{hipe, [o3]}" pidigits.erl
 measure:
+	sudo modprobe msr
 	sudo ../../RAPL/main "erl -smp enable -noshell -run  pidigits main 10000" Erlang pidigits
 
 run:

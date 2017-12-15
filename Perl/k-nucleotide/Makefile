@@ -1,6 +1,7 @@
 compile:
 
 measure:
+	sudo modprobe msr
 	sudo ../../RAPL/main "/usr/local/src/perl-5.24.0/bin/perl knucleotide.perl 0 < knucleotide-input25000000.txt" Perl k-nucleotide
 
 run:

@@ -6,6 +6,7 @@ compile:
 	gnatbind-6 -x pidigits.ali
 	gnatlink-6 pidigits.ali -O3 -fomit-frame-pointer -march=native -msse3 -mfpmath=sse -o pidigits.gnat-2.gnat_run
 measure:
+	sudo modprobe msr
 	sudo ../../RAPL/main "./pidigits.gnat-2.gnat_run 10000" Ada pidigits
 
 run:

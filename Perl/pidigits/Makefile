@@ -1,6 +1,7 @@
 compile:
 
 measure:
+	sudo modprobe msr
 	sudo ../../RAPL/main "perl pidigits.perl-4.perl 10000" Perl pidigits
 
 run:

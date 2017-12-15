@@ -5,6 +5,7 @@ compile:
 	rm nbody.pas
 
 measure:
+	sudo modprobe msr
 	sudo ../../RAPL/main "./nbody.fpascal_run 50000000" Pascal n-body
 
 run:

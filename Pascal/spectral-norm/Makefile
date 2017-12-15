@@ -4,6 +4,7 @@ compile:
 	mv FPASCAL_RUN spectralnorm.fpascal-2.fpascal_run
 	rm spectralnorm.fpascal-2.pas
 measure:
+	sudo modprobe msr
 	sudo ../../RAPL/main "./spectralnorm.fpascal-2.fpascal_run 5500" Pascal spectral-norm
 
 run:

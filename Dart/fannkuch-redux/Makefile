@@ -1,6 +1,7 @@
 compile:
 
 measure:
+	sudo modprobe msr
 	sudo ../../RAPL/main "/usr/bin/dart  fannkuchredux.dart-2.dart 12" Dart fannkuch-redux
 
 run:

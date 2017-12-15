@@ -2,6 +2,7 @@ compile:
 
 
 measure:
+	sudo modprobe msr
 	sudo ../../RAPL/main "/usr/local/src/ruby/bin/ruby -W0 fasta.yarv-3.yarv 25000000" Ruby fasta
 
 run:

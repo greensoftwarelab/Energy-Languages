@@ -13,6 +13,7 @@ compile:
 	gnatlink-6 spectralnorm.ali -O3 -fomit-frame-pointer -march=native -msse3 -mfpmath=sse -o spectralnorm.gnat-4.gnat_run
 
 measure:
+	sudo modprobe msr
 	sudo ../../RAPL/main "./spectralnorm.gnat-4.gnat_run 5500" Ada spectral-norm
 
 run:

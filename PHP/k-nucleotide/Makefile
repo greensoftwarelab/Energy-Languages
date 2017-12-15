@@ -1,6 +1,7 @@
 compile:
 
 measure:
+	sudo modprobe msr
 	sudo ../../RAPL/main "php -d memory_limit=1024M knucleotide.php-4.php 0 < knucleotide-input25000000.txt" PHP k-nucleotide
 
 run:

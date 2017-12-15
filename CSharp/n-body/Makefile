@@ -3,6 +3,7 @@ compile:
 	/usr/bin/dotnet build -c Release
 
 measure:
+	sudo modprobe msr
 	sudo ../../RAPL/main "/usr/bin/dotnet ./bin/Release/netcoreapp1.1/tmp.dll 50000000" CSharp n-body
 
 run:

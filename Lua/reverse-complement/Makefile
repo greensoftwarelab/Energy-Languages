@@ -1,6 +1,7 @@
 compile:
 
 measure:
+	sudo modprobe msr
 	sudo ../../RAPL/main "/usr/local/src/lua-5.3.3/bin/lua  revcomp.lua-2.lua 0 < ../../revcomp-input25000000.txt" Lua reverse-complement
 
 run:

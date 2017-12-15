@@ -1,6 +1,7 @@
 compile:
 
 measure:
+	sudo modprobe msr
 	sudo ../../RAPL/main "/usr/bin/dart  spectralnorm.dart 5500" Dart spectral-norm
 
 run:

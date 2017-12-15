@@ -2,6 +2,7 @@ compile:
 	/usr/bin/go build -o fasta.go-3.go_run
 
 measure:
+	sudo modprobe msr
 	sudo ../../RAPL/main "./fasta.go-3.go_run 25000000" Go fasta
 
 run:

@@ -2,6 +2,7 @@ compile:
 	sbcl --load fasta.lisp --eval "(save-lisp-and-die \"fasta.core\" :purify t :toplevel (lambda () (main) (quit)))"
 
 measure:
+	sudo modprobe msr
 	sudo ../../RAPL/main "sbcl --noinform --core fasta.core 25000000" Lisp fasta
 
 run:

@@ -8,6 +8,7 @@ compile:
 	gnatlink-6 revcomp.ali -O3 -fomit-frame-pointer -march=native -msse3 -mfpmath=sse -o revcomp.gnat-2.gnat_run
 
 measure:
+	sudo modprobe msr
 	sudo ../../RAPL/main "./revcomp.gnat-2.gnat_run 0 < ../../revcomp-input25000000.txt" Ada reverse-complement
 
 run:

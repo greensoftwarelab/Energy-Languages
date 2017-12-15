@@ -1,6 +1,7 @@
 compile:
 
 measure:
+	sudo modprobe msr
 	sudo ../../RAPL/main "/usr/local/src/lua-5.3.3/bin/lua  mandelbrot.lua-6.lua 16000" Lua mandelbrot
 
 run:

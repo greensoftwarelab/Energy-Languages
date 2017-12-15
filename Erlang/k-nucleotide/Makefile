@@ -2,6 +2,7 @@ compile:
 	cp knucleotide.hipe-3.hipe knucleotide.erl
 	erlc +native +"{hipe, [o3]}" knucleotide.erl
 measure:
+	sudo modprobe msr
 	sudo ../../RAPL/main "erl -smp enable -noshell -run  knucleotide main 0 < knucleotide-input25000000.txt" Erlang k-nucleotide
 
 run:

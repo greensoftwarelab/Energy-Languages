@@ -4,6 +4,7 @@ compile:
 	rm spectralnorm.ocaml-3.ml
 
 measure:
+	sudo modprobe msr
 	sudo ../../RAPL/main "./spectralnorm.ocaml-3.ocaml_run 5500" OCaml spectral-norm
 
 run:

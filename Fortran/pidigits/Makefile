@@ -1,6 +1,7 @@
 compile:
 	ifort -O3 -xHost -ipo -lgmp pidigits.ifc-3.f90 -o pidigits.ifc-3.ifc_run
 xmeasure:
+	sudo modprobe msr
 	sudo ../../RAPL/main "./pidigits.ifc-3.ifc_run 10000" Fortran pidigits
 
 run:

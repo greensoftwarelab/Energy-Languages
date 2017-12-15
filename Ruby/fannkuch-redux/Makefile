@@ -2,6 +2,7 @@ compile:
 
 
 measure:
+	sudo modprobe msr
 	sudo ../../RAPL/main "/usr/local/src/ruby/bin/ruby -W0 fannkuchredux.yarv-2.yarv 12" Ruby fannkuch-redux
 
 run:

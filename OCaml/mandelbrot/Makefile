@@ -4,6 +4,7 @@ compile:
 	rm mandelbrot.ml
 
 measure:
+	sudo modprobe msr
 	sudo ../../RAPL/main "./mandelbrot.ocaml_run 16000" OCaml mandelbrot
 
 run:
