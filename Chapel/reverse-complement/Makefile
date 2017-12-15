@@ -1,5 +1,4 @@
 compile:
-	cp revcomp.chapel revcomp.chpl
 	/usr/local/src/chapel-1.15.0/bin/linux64/chpl --fast revcomp.chpl -o revcomp.chapel_run
 measure:
 	sudo modprobe msr

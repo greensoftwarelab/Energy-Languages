@@ -1,5 +1,4 @@
 compile:
-	cp regexredux.chapel regexredux.chpl
 	/usr/local/src/chapel-1.15.0/bin/linux64/chpl --fast regexredux.chpl -o regexredux.chapel_run
 measure:
 	sudo modprobe msr

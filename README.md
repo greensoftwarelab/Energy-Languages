@@ -137,7 +137,7 @@ If you would like to properly test every benchmark of every language, please mak
 
 [Green Software Lab](http://greenlab.di.uminho.pt)
 
-Main contributors: [@Marco Couto](http://github.com/MarcoCouto) and [@Rui Pereira](http://github.com/States)
+Main contributors: [@Marco Couto](http://github.com/MarcoCouto) and [@Rui Pereira](http://haslab.uminho.pt/ruipereira)
 
 
 [The Computer Language Benchmark Game](http://benchmarksgame.alioth.debian.org)

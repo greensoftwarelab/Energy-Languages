@@ -1,5 +1,4 @@
 compile:
-	cp spectralnorm.chapel spectralnorm.chpl
 	/usr/local/src/chapel-1.15.0/bin/linux64/chpl --fast spectralnorm.chpl -o spectralnorm.chapel_run
 measure:
 	sudo modprobe msr
