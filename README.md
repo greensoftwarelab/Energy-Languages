@@ -15,10 +15,11 @@ Moreover, it must be defined, for each benchmark, how to perform the 4 operation
 Next, we explain the folder structure and how to specify, for each language benchmark, the execution of each operation.
 
 #### The Structure
-The main folder contains 31 elements: 
+The main folder contains 32 elements: 
 1. 28 sub-folders (one for each of the considered languages); each folder contains a sub-folder for each considered benchmark.
 2. A `Python` script `compile_all.py`, capable of building, running and measuring the energy and memory usage of every benchmark in all considered languages.
-2. A `RAPL` sub-folder, containing the code of the energy measurement framework.
+3. A `RAPL` sub-folder, containing the code of the energy measurement framework.
+4. A `Bash` script `gen-input.sh`, used to generate the input files for 3 benchmarks: `k-nucleotide`, `reverse-complement`, and `regex-redux`.
 
 Basically, the directories tree will look something like this:
 
@@ -41,6 +42,7 @@ Basically, the directories tree will look something like this:
 	| <benchmark-i>
 | RAPL
 | compile_all.py
+| gen-input.sh
 
 ```
 
@@ -93,6 +95,12 @@ mem:
 ```
 
 ### Running an example.
+
+*First things first:* generate the input files, like this
+```Makefile
+./gen-input.sh
+```
+This will generate the necessary input files, and are valid for every language.
 
 We included a main Python script, `compile_all.py`, that you can either call from the main folder or from inside a language folder, and it can be executed as follows:
 
