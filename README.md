@@ -115,6 +115,12 @@ The default rule is `compile`, which means that if you run it with no arguments 
 The results of the energy measurements will be stored in files with the name `<language>.csv`, where `<language>` is the name of the running language. 
 You will find such file inside of corresponding language folder.
 
+Each <language>.csv will contain a line with the following: 
+
+```benchmark-name ; PKG (Joules) ; CPU (J) ; GPU (J) ; DRAM (J) ; Time (ms)```
+
+Do note that the availability of GPU/DRAM measurements depend on your machine's architecture. These are requirements from RAPL itself.
+
 ### Add your own example!
 #### Wanna know your own code's energy behavior? We help you!
 #### Follow this steps:
