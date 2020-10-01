@@ -154,5 +154,5 @@ If you would like to properly test every benchmark of every language, please mak
 Main contributors: [@Marco Couto](http://github.com/MarcoCouto) and [@Rui Pereira](http://haslab.uminho.pt/ruipereira)
 
 
-[The Computer Language Benchmark Game](http://benchmarksgame.alioth.debian.org)
+[The Computer Language Benchmark Game](https://benchmarksgame-team.pages.debian.net/benchmarksgame/)
 
