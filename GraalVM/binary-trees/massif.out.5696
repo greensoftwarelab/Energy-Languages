@@ -1,0 +1,1242 @@
+desc: --stacks=yes
+cmd: /usr/lib/graal/graalvm-ce-java8-20.0.0/bin/java binarytrees 21
+time_unit: i
+#-----------
+snapshot=0
+#-----------
+time=0
+mem_heap_B=0
+mem_heap_extra_B=0
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=1
+#-----------
+time=357231464
+mem_heap_B=32146405
+mem_heap_extra_B=36059
+mem_stacks_B=45120
+heap_tree=empty
+#-----------
+snapshot=2
+#-----------
+time=588976095
+mem_heap_B=32146405
+mem_heap_extra_B=36059
+mem_stacks_B=44640
+heap_tree=empty
+#-----------
+snapshot=3
+#-----------
+time=941882605
+mem_heap_B=32146405
+mem_heap_extra_B=36059
+mem_stacks_B=45112
+heap_tree=detailed
+n2: 32146405 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n8: 31626432 0x59F53E4: os::malloc(unsigned long, MemoryType, NativeCallStack const&) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+  n2: 9437184 0x5A6046D: ParCompactionManager::ParCompactionManager() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 8388608 0x5A625A6: ParCompactionManager::initialize(ParMarkBitMap*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 8388608 0x5A70C62: PSParallelCompact::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 8388608 0x5A24B84: ParallelScavengeHeap::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 8388608 0x5B812E5: universe_post_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 8388608 0x56C3AD5: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 8388608 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+         n1: 8388608 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+          n1: 8388608 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+           n1: 8388608 0x4864668: start_thread (pthread_create.c:479)
+            n0: 8388608 0x4BBD2B2: clone (clone.S:95)
+   n1: 1048576 0x5A626B9: ParCompactionManager::initialize(ParMarkBitMap*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 1048576 0x5A70C62: PSParallelCompact::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 1048576 0x5A24B84: ParallelScavengeHeap::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 1048576 0x5B812E5: universe_post_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 1048576 0x56C3AD5: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 1048576 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+         n1: 1048576 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+          n1: 1048576 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+           n1: 1048576 0x4864668: start_thread (pthread_create.c:479)
+            n0: 1048576 0x4BBD2B2: clone (clone.S:95)
+  n1: 9437184 0x5A6215E: ParCompactionManager::initialize(ParMarkBitMap*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 9437184 0x5A70C62: PSParallelCompact::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 9437184 0x5A24B84: ParallelScavengeHeap::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 9437184 0x5B812E5: universe_post_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 9437184 0x56C3AD5: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 9437184 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 9437184 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+         n1: 9437184 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+          n1: 9437184 0x4864668: start_thread (pthread_create.c:479)
+           n0: 9437184 0x4BBD2B2: clone (clone.S:95)
+  n1: 9437184 0x5A71D7F: PSPromotionManager::PSPromotionManager() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 9437184 0x5A73FC4: PaddedArray<PSPromotionManager, (MemoryType)5, 64ul>::create_unfreeable(unsigned int) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 9437184 0x5A73197: PSPromotionManager::initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 9437184 0x5B812E5: universe_post_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 9437184 0x56C3AD5: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 9437184 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 9437184 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+         n1: 9437184 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+          n1: 9437184 0x4864668: start_thread (pthread_create.c:479)
+           n0: 9437184 0x4BBD2B2: clone (clone.S:95)
+  n2: 1179648 0x5A604F9: ParCompactionManager::ParCompactionManager() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 1048576 0x5A625A6: ParCompactionManager::initialize(ParMarkBitMap*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 1048576 0x5A70C62: PSParallelCompact::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 1048576 0x5A24B84: ParallelScavengeHeap::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 1048576 0x5B812E5: universe_post_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 1048576 0x56C3AD5: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 1048576 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+         n1: 1048576 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+          n1: 1048576 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+           n1: 1048576 0x4864668: start_thread (pthread_create.c:479)
+            n0: 1048576 0x4BBD2B2: clone (clone.S:95)
+   n0: 131072 in 1 place, below massif's threshold (1.00%)
+  n0: 932624 in 106 places, all below massif's threshold (1.00%)
+  n1: 480104 0x5B82E7E: universe_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 480104 0x56C3A4F: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 480104 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 480104 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 480104 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+       n1: 480104 0x4864668: start_thread (pthread_create.c:479)
+        n0: 480104 0x4BBD2B2: clone (clone.S:95)
+  n1: 368656 0x535CC38: Arena::Arena(MemoryType, unsigned long) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 368656 0x5B21518: SymbolTable::initialize_symbols(int) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 368656 0x5B82DDB: universe_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 368656 0x56C3A4F: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 368656 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 368656 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 368656 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+         n1: 368656 0x4864668: start_thread (pthread_create.c:479)
+          n0: 368656 0x4BBD2B2: clone (clone.S:95)
+  n2: 353848 0x535E222: ChunkPool::allocate(unsigned long, AllocFailStrategy::AllocFailEnum) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 327440 0x535DA41: Arena::grow(unsigned long, AllocFailStrategy::AllocFailEnum) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n0: 327440 in 10 places, all below massif's threshold (1.00%)
+   n0: 26408 in 2 places, all below massif's threshold (1.00%)
+ n0: 519973 in 61 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=4
+#-----------
+time=1452082093
+mem_heap_B=32343946
+mem_heap_extra_B=36350
+mem_stacks_B=61008
+heap_tree=detailed
+n2: 32343946 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n8: 31759360 0x59F53E4: os::malloc(unsigned long, MemoryType, NativeCallStack const&) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+  n2: 9437184 0x5A6046D: ParCompactionManager::ParCompactionManager() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 8388608 0x5A625A6: ParCompactionManager::initialize(ParMarkBitMap*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 8388608 0x5A70C62: PSParallelCompact::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 8388608 0x5A24B84: ParallelScavengeHeap::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 8388608 0x5B812E5: universe_post_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 8388608 0x56C3AD5: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 8388608 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+         n1: 8388608 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+          n1: 8388608 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+           n1: 8388608 0x4864668: start_thread (pthread_create.c:479)
+            n0: 8388608 0x4BBD2B2: clone (clone.S:95)
+   n1: 1048576 0x5A626B9: ParCompactionManager::initialize(ParMarkBitMap*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 1048576 0x5A70C62: PSParallelCompact::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 1048576 0x5A24B84: ParallelScavengeHeap::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 1048576 0x5B812E5: universe_post_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 1048576 0x56C3AD5: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 1048576 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+         n1: 1048576 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+          n1: 1048576 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+           n1: 1048576 0x4864668: start_thread (pthread_create.c:479)
+            n0: 1048576 0x4BBD2B2: clone (clone.S:95)
+  n1: 9437184 0x5A6215E: ParCompactionManager::initialize(ParMarkBitMap*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 9437184 0x5A70C62: PSParallelCompact::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 9437184 0x5A24B84: ParallelScavengeHeap::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 9437184 0x5B812E5: universe_post_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 9437184 0x56C3AD5: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 9437184 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 9437184 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+         n1: 9437184 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+          n1: 9437184 0x4864668: start_thread (pthread_create.c:479)
+           n0: 9437184 0x4BBD2B2: clone (clone.S:95)
+  n1: 9437184 0x5A71D7F: PSPromotionManager::PSPromotionManager() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 9437184 0x5A73FC4: PaddedArray<PSPromotionManager, (MemoryType)5, 64ul>::create_unfreeable(unsigned int) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 9437184 0x5A73197: PSPromotionManager::initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 9437184 0x5B812E5: universe_post_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 9437184 0x56C3AD5: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 9437184 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 9437184 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+         n1: 9437184 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+          n1: 9437184 0x4864668: start_thread (pthread_create.c:479)
+           n0: 9437184 0x4BBD2B2: clone (clone.S:95)
+  n2: 1179648 0x5A604F9: ParCompactionManager::ParCompactionManager() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 1048576 0x5A625A6: ParCompactionManager::initialize(ParMarkBitMap*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 1048576 0x5A70C62: PSParallelCompact::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 1048576 0x5A24B84: ParallelScavengeHeap::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 1048576 0x5B812E5: universe_post_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 1048576 0x56C3AD5: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 1048576 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+         n1: 1048576 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+          n1: 1048576 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+           n1: 1048576 0x4864668: start_thread (pthread_create.c:479)
+            n0: 1048576 0x4BBD2B2: clone (clone.S:95)
+   n0: 131072 in 1 place, below massif's threshold (1.00%)
+  n0: 934576 in 106 places, all below massif's threshold (1.00%)
+  n2: 484824 0x535E222: ChunkPool::allocate(unsigned long, AllocFailStrategy::AllocFailEnum) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 458416 0x535DA41: Arena::grow(unsigned long, AllocFailStrategy::AllocFailEnum) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n0: 458416 in 14 places, all below massif's threshold (1.00%)
+   n0: 26408 in 2 places, all below massif's threshold (1.00%)
+  n1: 480104 0x5B82E7E: universe_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 480104 0x56C3A4F: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 480104 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 480104 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 480104 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+       n1: 480104 0x4864668: start_thread (pthread_create.c:479)
+        n0: 480104 0x4BBD2B2: clone (clone.S:95)
+  n1: 368656 0x535CC38: Arena::Arena(MemoryType, unsigned long) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 368656 0x5B21518: SymbolTable::initialize_symbols(int) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 368656 0x5B82DDB: universe_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 368656 0x56C3A4F: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 368656 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 368656 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 368656 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+         n1: 368656 0x4864668: start_thread (pthread_create.c:479)
+          n0: 368656 0x4BBD2B2: clone (clone.S:95)
+ n0: 584586 in 61 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=5
+#-----------
+time=1887956620
+mem_heap_B=32344187
+mem_heap_extra_B=36581
+mem_stacks_B=56384
+heap_tree=empty
+#-----------
+snapshot=6
+#-----------
+time=2251370583
+mem_heap_B=32344187
+mem_heap_extra_B=36581
+mem_stacks_B=55904
+heap_tree=empty
+#-----------
+snapshot=7
+#-----------
+time=2757939016
+mem_heap_B=32349860
+mem_heap_extra_B=36980
+mem_stacks_B=60696
+heap_tree=empty
+#-----------
+snapshot=8
+#-----------
+time=3112509143
+mem_heap_B=32349860
+mem_heap_extra_B=36980
+mem_stacks_B=61160
+heap_tree=empty
+#-----------
+snapshot=9
+#-----------
+time=3348889382
+mem_heap_B=32349860
+mem_heap_extra_B=36980
+mem_stacks_B=61952
+heap_tree=empty
+#-----------
+snapshot=10
+#-----------
+time=3703459329
+mem_heap_B=32349860
+mem_heap_extra_B=36980
+mem_stacks_B=61880
+heap_tree=empty
+#-----------
+snapshot=11
+#-----------
+time=3998934163
+mem_heap_B=32349860
+mem_heap_extra_B=36980
+mem_stacks_B=61944
+heap_tree=empty
+#-----------
+snapshot=12
+#-----------
+time=4245155558
+mem_heap_B=32349860
+mem_heap_extra_B=36980
+mem_stacks_B=61952
+heap_tree=empty
+#-----------
+snapshot=13
+#-----------
+time=4688333196
+mem_heap_B=32349860
+mem_heap_extra_B=36980
+mem_stacks_B=61880
+heap_tree=empty
+#-----------
+snapshot=14
+#-----------
+time=4934543092
+mem_heap_B=32349860
+mem_heap_extra_B=36980
+mem_stacks_B=61640
+heap_tree=empty
+#-----------
+snapshot=15
+#-----------
+time=5328483533
+mem_heap_B=32349956
+mem_heap_extra_B=36868
+mem_stacks_B=61784
+heap_tree=empty
+#-----------
+snapshot=16
+#-----------
+time=5722422560
+mem_heap_B=32349956
+mem_heap_extra_B=36868
+mem_stacks_B=61880
+heap_tree=empty
+#-----------
+snapshot=17
+#-----------
+time=6214846094
+mem_heap_B=32349956
+mem_heap_extra_B=36868
+mem_stacks_B=61696
+heap_tree=empty
+#-----------
+snapshot=18
+#-----------
+time=6609113777
+mem_heap_B=32349956
+mem_heap_extra_B=36868
+mem_stacks_B=62136
+heap_tree=empty
+#-----------
+snapshot=19
+#-----------
+time=6960218361
+mem_heap_B=32349956
+mem_heap_extra_B=36868
+mem_stacks_B=61128
+heap_tree=empty
+#-----------
+snapshot=20
+#-----------
+time=7381148223
+mem_heap_B=32349956
+mem_heap_extra_B=36868
+mem_stacks_B=60288
+heap_tree=empty
+#-----------
+snapshot=21
+#-----------
+time=7661766929
+mem_heap_B=32349956
+mem_heap_extra_B=36868
+mem_stacks_B=60288
+heap_tree=empty
+#-----------
+snapshot=22
+#-----------
+time=8012543013
+mem_heap_B=32349956
+mem_heap_extra_B=36868
+mem_stacks_B=60288
+heap_tree=empty
+#-----------
+snapshot=23
+#-----------
+time=8363317997
+mem_heap_B=32349956
+mem_heap_extra_B=36868
+mem_stacks_B=60288
+heap_tree=empty
+#-----------
+snapshot=24
+#-----------
+time=8643936628
+mem_heap_B=32349956
+mem_heap_extra_B=36868
+mem_stacks_B=60288
+heap_tree=empty
+#-----------
+snapshot=25
+#-----------
+time=8994711919
+mem_heap_B=32349956
+mem_heap_extra_B=36868
+mem_stacks_B=60288
+heap_tree=empty
+#-----------
+snapshot=26
+#-----------
+time=9486706458
+mem_heap_B=32349956
+mem_heap_extra_B=36868
+mem_stacks_B=60288
+heap_tree=empty
+#-----------
+snapshot=27
+#-----------
+time=9767325202
+mem_heap_B=32349956
+mem_heap_extra_B=36868
+mem_stacks_B=60288
+heap_tree=empty
+#-----------
+snapshot=28
+#-----------
+time=10118099366
+mem_heap_B=32349956
+mem_heap_extra_B=36868
+mem_stacks_B=60096
+heap_tree=empty
+#-----------
+snapshot=29
+#-----------
+time=10387505464
+mem_heap_B=32349956
+mem_heap_extra_B=36868
+mem_stacks_B=59968
+heap_tree=empty
+#-----------
+snapshot=30
+#-----------
+time=10656797438
+mem_heap_B=32349956
+mem_heap_extra_B=36868
+mem_stacks_B=60288
+heap_tree=empty
+#-----------
+snapshot=31
+#-----------
+time=10926091410
+mem_heap_B=32349956
+mem_heap_extra_B=36868
+mem_stacks_B=60288
+heap_tree=empty
+#-----------
+snapshot=32
+#-----------
+time=11195384726
+mem_heap_B=32349956
+mem_heap_extra_B=36868
+mem_stacks_B=60288
+heap_tree=detailed
+n2: 32349956 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n8: 31776172 0x59F53E4: os::malloc(unsigned long, MemoryType, NativeCallStack const&) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+  n2: 9437184 0x5A6046D: ParCompactionManager::ParCompactionManager() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 8388608 0x5A625A6: ParCompactionManager::initialize(ParMarkBitMap*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 8388608 0x5A70C62: PSParallelCompact::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 8388608 0x5A24B84: ParallelScavengeHeap::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 8388608 0x5B812E5: universe_post_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 8388608 0x56C3AD5: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 8388608 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+         n1: 8388608 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+          n1: 8388608 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+           n1: 8388608 0x4864668: start_thread (pthread_create.c:479)
+            n0: 8388608 0x4BBD2B2: clone (clone.S:95)
+   n1: 1048576 0x5A626B9: ParCompactionManager::initialize(ParMarkBitMap*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 1048576 0x5A70C62: PSParallelCompact::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 1048576 0x5A24B84: ParallelScavengeHeap::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 1048576 0x5B812E5: universe_post_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 1048576 0x56C3AD5: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 1048576 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+         n1: 1048576 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+          n1: 1048576 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+           n1: 1048576 0x4864668: start_thread (pthread_create.c:479)
+            n0: 1048576 0x4BBD2B2: clone (clone.S:95)
+  n1: 9437184 0x5A6215E: ParCompactionManager::initialize(ParMarkBitMap*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 9437184 0x5A70C62: PSParallelCompact::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 9437184 0x5A24B84: ParallelScavengeHeap::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 9437184 0x5B812E5: universe_post_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 9437184 0x56C3AD5: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 9437184 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 9437184 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+         n1: 9437184 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+          n1: 9437184 0x4864668: start_thread (pthread_create.c:479)
+           n0: 9437184 0x4BBD2B2: clone (clone.S:95)
+  n1: 9437184 0x5A71D7F: PSPromotionManager::PSPromotionManager() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 9437184 0x5A73FC4: PaddedArray<PSPromotionManager, (MemoryType)5, 64ul>::create_unfreeable(unsigned int) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 9437184 0x5A73197: PSPromotionManager::initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 9437184 0x5B812E5: universe_post_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 9437184 0x56C3AD5: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 9437184 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 9437184 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+         n1: 9437184 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+          n1: 9437184 0x4864668: start_thread (pthread_create.c:479)
+           n0: 9437184 0x4BBD2B2: clone (clone.S:95)
+  n2: 1179648 0x5A604F9: ParCompactionManager::ParCompactionManager() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 1048576 0x5A625A6: ParCompactionManager::initialize(ParMarkBitMap*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 1048576 0x5A70C62: PSParallelCompact::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 1048576 0x5A24B84: ParallelScavengeHeap::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 1048576 0x5B812E5: universe_post_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 1048576 0x56C3AD5: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 1048576 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+         n1: 1048576 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+          n1: 1048576 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+           n1: 1048576 0x4864668: start_thread (pthread_create.c:479)
+            n0: 1048576 0x4BBD2B2: clone (clone.S:95)
+   n0: 131072 in 1 place, below massif's threshold (1.00%)
+  n0: 951388 in 108 places, all below massif's threshold (1.00%)
+  n2: 484824 0x535E222: ChunkPool::allocate(unsigned long, AllocFailStrategy::AllocFailEnum) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 458416 0x535DA41: Arena::grow(unsigned long, AllocFailStrategy::AllocFailEnum) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n0: 458416 in 14 places, all below massif's threshold (1.00%)
+   n0: 26408 in 2 places, all below massif's threshold (1.00%)
+  n1: 480104 0x5B82E7E: universe_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 480104 0x56C3A4F: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 480104 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 480104 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 480104 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+       n1: 480104 0x4864668: start_thread (pthread_create.c:479)
+        n0: 480104 0x4BBD2B2: clone (clone.S:95)
+  n1: 368656 0x535CC38: Arena::Arena(MemoryType, unsigned long) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 368656 0x5B21518: SymbolTable::initialize_symbols(int) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 368656 0x5B82DDB: universe_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 368656 0x56C3A4F: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 368656 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 368656 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 368656 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+         n1: 368656 0x4864668: start_thread (pthread_create.c:479)
+          n0: 368656 0x4BBD2B2: clone (clone.S:95)
+ n0: 573784 in 66 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=33
+#-----------
+time=11464675954
+mem_heap_B=32349956
+mem_heap_extra_B=36868
+mem_stacks_B=60144
+heap_tree=empty
+#-----------
+snapshot=34
+#-----------
+time=11733968416
+mem_heap_B=32349956
+mem_heap_extra_B=36868
+mem_stacks_B=60072
+heap_tree=empty
+#-----------
+snapshot=35
+#-----------
+time=12003259913
+mem_heap_B=32349956
+mem_heap_extra_B=36868
+mem_stacks_B=60208
+heap_tree=empty
+#-----------
+snapshot=36
+#-----------
+time=12272551347
+mem_heap_B=32349956
+mem_heap_extra_B=36868
+mem_stacks_B=60096
+heap_tree=empty
+#-----------
+snapshot=37
+#-----------
+time=12676488888
+mem_heap_B=32349956
+mem_heap_extra_B=36868
+mem_stacks_B=57760
+heap_tree=empty
+#-----------
+snapshot=38
+#-----------
+time=12945780171
+mem_heap_B=32364832
+mem_heap_extra_B=37408
+mem_stacks_B=55848
+heap_tree=empty
+#-----------
+snapshot=39
+#-----------
+time=13215071549
+mem_heap_B=32398968
+mem_heap_extra_B=38104
+mem_stacks_B=63784
+heap_tree=empty
+#-----------
+snapshot=40
+#-----------
+time=13619008477
+mem_heap_B=32398968
+mem_heap_extra_B=38104
+mem_stacks_B=63584
+heap_tree=empty
+#-----------
+snapshot=41
+#-----------
+time=14157590998
+mem_heap_B=32398968
+mem_heap_extra_B=38104
+mem_stacks_B=63440
+heap_tree=empty
+#-----------
+snapshot=42
+#-----------
+time=14426882347
+mem_heap_B=32398968
+mem_heap_extra_B=38104
+mem_stacks_B=63600
+heap_tree=empty
+#-----------
+snapshot=43
+#-----------
+time=14696173577
+mem_heap_B=32398968
+mem_heap_extra_B=38104
+mem_stacks_B=64040
+heap_tree=empty
+#-----------
+snapshot=44
+#-----------
+time=15100110411
+mem_heap_B=32398968
+mem_heap_extra_B=38104
+mem_stacks_B=63920
+heap_tree=empty
+#-----------
+snapshot=45
+#-----------
+time=15369402872
+mem_heap_B=32398848
+mem_heap_extra_B=38088
+mem_stacks_B=63944
+heap_tree=empty
+#-----------
+snapshot=46
+#-----------
+time=15773340453
+mem_heap_B=32398848
+mem_heap_extra_B=38088
+mem_stacks_B=64784
+heap_tree=empty
+#-----------
+snapshot=47
+#-----------
+time=16042632874
+mem_heap_B=32398848
+mem_heap_extra_B=38088
+mem_stacks_B=65000
+heap_tree=empty
+#-----------
+snapshot=48
+#-----------
+time=16446569829
+mem_heap_B=32398848
+mem_heap_extra_B=38088
+mem_stacks_B=65568
+heap_tree=empty
+#-----------
+snapshot=49
+#-----------
+time=16850508854
+mem_heap_B=32398848
+mem_heap_extra_B=38088
+mem_stacks_B=65520
+heap_tree=empty
+#-----------
+snapshot=50
+#-----------
+time=17082253615
+mem_heap_B=32398848
+mem_heap_extra_B=38088
+mem_stacks_B=65848
+heap_tree=empty
+#-----------
+snapshot=51
+#-----------
+time=17313999044
+mem_heap_B=32398848
+mem_heap_extra_B=38088
+mem_stacks_B=66048
+heap_tree=empty
+#-----------
+snapshot=52
+#-----------
+time=17545745637
+mem_heap_B=32398848
+mem_heap_extra_B=38088
+mem_stacks_B=66072
+heap_tree=empty
+#-----------
+snapshot=53
+#-----------
+time=17777490269
+mem_heap_B=32398848
+mem_heap_extra_B=38088
+mem_stacks_B=65200
+heap_tree=empty
+#-----------
+snapshot=54
+#-----------
+time=18009235470
+mem_heap_B=32398848
+mem_heap_extra_B=38088
+mem_stacks_B=65712
+heap_tree=empty
+#-----------
+snapshot=55
+#-----------
+time=18240980118
+mem_heap_B=32398848
+mem_heap_extra_B=38088
+mem_stacks_B=65680
+heap_tree=empty
+#-----------
+snapshot=56
+#-----------
+time=18472725748
+mem_heap_B=32398848
+mem_heap_extra_B=38088
+mem_stacks_B=65696
+heap_tree=empty
+#-----------
+snapshot=57
+#-----------
+time=18704470395
+mem_heap_B=32439401
+mem_heap_extra_B=39359
+mem_stacks_B=73352
+heap_tree=detailed
+n2: 32439401 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n9: 31862311 0x59F53E4: os::malloc(unsigned long, MemoryType, NativeCallStack const&) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+  n2: 9437184 0x5A6046D: ParCompactionManager::ParCompactionManager() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 8388608 0x5A625A6: ParCompactionManager::initialize(ParMarkBitMap*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 8388608 0x5A70C62: PSParallelCompact::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 8388608 0x5A24B84: ParallelScavengeHeap::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 8388608 0x5B812E5: universe_post_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 8388608 0x56C3AD5: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 8388608 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+         n1: 8388608 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+          n1: 8388608 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+           n1: 8388608 0x4864668: start_thread (pthread_create.c:479)
+            n0: 8388608 0x4BBD2B2: clone (clone.S:95)
+   n1: 1048576 0x5A626B9: ParCompactionManager::initialize(ParMarkBitMap*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 1048576 0x5A70C62: PSParallelCompact::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 1048576 0x5A24B84: ParallelScavengeHeap::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 1048576 0x5B812E5: universe_post_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 1048576 0x56C3AD5: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 1048576 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+         n1: 1048576 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+          n1: 1048576 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+           n1: 1048576 0x4864668: start_thread (pthread_create.c:479)
+            n0: 1048576 0x4BBD2B2: clone (clone.S:95)
+  n1: 9437184 0x5A6215E: ParCompactionManager::initialize(ParMarkBitMap*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 9437184 0x5A70C62: PSParallelCompact::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 9437184 0x5A24B84: ParallelScavengeHeap::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 9437184 0x5B812E5: universe_post_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 9437184 0x56C3AD5: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 9437184 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 9437184 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+         n1: 9437184 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+          n1: 9437184 0x4864668: start_thread (pthread_create.c:479)
+           n0: 9437184 0x4BBD2B2: clone (clone.S:95)
+  n1: 9437184 0x5A71D7F: PSPromotionManager::PSPromotionManager() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 9437184 0x5A73FC4: PaddedArray<PSPromotionManager, (MemoryType)5, 64ul>::create_unfreeable(unsigned int) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 9437184 0x5A73197: PSPromotionManager::initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 9437184 0x5B812E5: universe_post_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 9437184 0x56C3AD5: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 9437184 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 9437184 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+         n1: 9437184 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+          n1: 9437184 0x4864668: start_thread (pthread_create.c:479)
+           n0: 9437184 0x4BBD2B2: clone (clone.S:95)
+  n2: 1179648 0x5A604F9: ParCompactionManager::ParCompactionManager() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 1048576 0x5A625A6: ParCompactionManager::initialize(ParMarkBitMap*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 1048576 0x5A70C62: PSParallelCompact::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 1048576 0x5A24B84: ParallelScavengeHeap::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 1048576 0x5B812E5: universe_post_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 1048576 0x56C3AD5: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 1048576 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+         n1: 1048576 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+          n1: 1048576 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+           n1: 1048576 0x4864668: start_thread (pthread_create.c:479)
+            n0: 1048576 0x4BBD2B2: clone (clone.S:95)
+   n0: 131072 in 1 place, below massif's threshold (1.00%)
+  n0: 682223 in 107 places, all below massif's threshold (1.00%)
+  n2: 485824 0x535E222: ChunkPool::allocate(unsigned long, AllocFailStrategy::AllocFailEnum) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 458416 0x535DA41: Arena::grow(unsigned long, AllocFailStrategy::AllocFailEnum) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n0: 458416 in 14 places, all below massif's threshold (1.00%)
+   n0: 27408 in 2 places, all below massif's threshold (1.00%)
+  n1: 480104 0x5B82E7E: universe_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 480104 0x56C3A4F: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 480104 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 480104 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 480104 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+       n1: 480104 0x4864668: start_thread (pthread_create.c:479)
+        n0: 480104 0x4BBD2B2: clone (clone.S:95)
+  n1: 368656 0x535CC38: Arena::Arena(MemoryType, unsigned long) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 368656 0x5B21518: SymbolTable::initialize_symbols(int) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 368656 0x5B82DDB: universe_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 368656 0x56C3A4F: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 368656 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 368656 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 368656 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+         n1: 368656 0x4864668: start_thread (pthread_create.c:479)
+          n0: 368656 0x4BBD2B2: clone (clone.S:95)
+  n2: 354304 0x569B345: BasicHashtable<(MemoryType)10>::new_entry(unsigned int) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 329728 0x569B410: Hashtable<Symbol*, (MemoryType)10>::new_entry(unsigned int, Symbol*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n0: 329728 in 3 places, all below massif's threshold (1.00%)
+   n0: 24576 in 1 place, below massif's threshold (1.00%)
+ n0: 577090 in 69 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=58
+#-----------
+time=18832890786
+mem_heap_B=32668705
+mem_heap_extra_B=52503
+mem_stacks_B=64888
+heap_tree=detailed
+n2: 32668705 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n9: 32091297 0x59F53E4: os::malloc(unsigned long, MemoryType, NativeCallStack const&) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+  n2: 9437184 0x5A6046D: ParCompactionManager::ParCompactionManager() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 8388608 0x5A625A6: ParCompactionManager::initialize(ParMarkBitMap*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 8388608 0x5A70C62: PSParallelCompact::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 8388608 0x5A24B84: ParallelScavengeHeap::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 8388608 0x5B812E5: universe_post_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 8388608 0x56C3AD5: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 8388608 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+         n1: 8388608 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+          n1: 8388608 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+           n1: 8388608 0x4864668: start_thread (pthread_create.c:479)
+            n0: 8388608 0x4BBD2B2: clone (clone.S:95)
+   n1: 1048576 0x5A626B9: ParCompactionManager::initialize(ParMarkBitMap*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 1048576 0x5A70C62: PSParallelCompact::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 1048576 0x5A24B84: ParallelScavengeHeap::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 1048576 0x5B812E5: universe_post_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 1048576 0x56C3AD5: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 1048576 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+         n1: 1048576 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+          n1: 1048576 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+           n1: 1048576 0x4864668: start_thread (pthread_create.c:479)
+            n0: 1048576 0x4BBD2B2: clone (clone.S:95)
+  n1: 9437184 0x5A6215E: ParCompactionManager::initialize(ParMarkBitMap*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 9437184 0x5A70C62: PSParallelCompact::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 9437184 0x5A24B84: ParallelScavengeHeap::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 9437184 0x5B812E5: universe_post_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 9437184 0x56C3AD5: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 9437184 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 9437184 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+         n1: 9437184 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+          n1: 9437184 0x4864668: start_thread (pthread_create.c:479)
+           n0: 9437184 0x4BBD2B2: clone (clone.S:95)
+  n1: 9437184 0x5A71D7F: PSPromotionManager::PSPromotionManager() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 9437184 0x5A73FC4: PaddedArray<PSPromotionManager, (MemoryType)5, 64ul>::create_unfreeable(unsigned int) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 9437184 0x5A73197: PSPromotionManager::initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 9437184 0x5B812E5: universe_post_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 9437184 0x56C3AD5: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 9437184 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 9437184 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+         n1: 9437184 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+          n1: 9437184 0x4864668: start_thread (pthread_create.c:479)
+           n0: 9437184 0x4BBD2B2: clone (clone.S:95)
+  n2: 1179648 0x5A604F9: ParCompactionManager::ParCompactionManager() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 1048576 0x5A625A6: ParCompactionManager::initialize(ParMarkBitMap*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 1048576 0x5A70C62: PSParallelCompact::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 1048576 0x5A24B84: ParallelScavengeHeap::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 1048576 0x5B812E5: universe_post_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 1048576 0x56C3AD5: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 1048576 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+         n1: 1048576 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+          n1: 1048576 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+           n1: 1048576 0x4864668: start_thread (pthread_create.c:479)
+            n0: 1048576 0x4BBD2B2: clone (clone.S:95)
+   n0: 131072 in 1 place, below massif's threshold (1.00%)
+  n0: 777929 in 109 places, all below massif's threshold (1.00%)
+  n2: 584288 0x535E222: ChunkPool::allocate(unsigned long, AllocFailStrategy::AllocFailEnum) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 556648 0x535DA41: Arena::grow(unsigned long, AllocFailStrategy::AllocFailEnum) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n0: 556648 in 17 places, all below massif's threshold (1.00%)
+   n0: 27640 in 2 places, all below massif's threshold (1.00%)
+  n1: 480104 0x5B82E7E: universe_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 480104 0x56C3A4F: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 480104 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 480104 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 480104 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+       n1: 480104 0x4864668: start_thread (pthread_create.c:479)
+        n0: 480104 0x4BBD2B2: clone (clone.S:95)
+  n2: 389120 0x569B345: BasicHashtable<(MemoryType)10>::new_entry(unsigned int) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 356352 0x569B410: Hashtable<Symbol*, (MemoryType)10>::new_entry(unsigned int, Symbol*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n0: 356352 in 3 places, all below massif's threshold (1.00%)
+   n0: 32768 in 1 place, below massif's threshold (1.00%)
+  n1: 368656 0x535CC38: Arena::Arena(MemoryType, unsigned long) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 368656 0x5B21518: SymbolTable::initialize_symbols(int) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 368656 0x5B82DDB: universe_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 368656 0x56C3A4F: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 368656 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 368656 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 368656 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+         n1: 368656 0x4864668: start_thread (pthread_create.c:479)
+          n0: 368656 0x4BBD2B2: clone (clone.S:95)
+ n0: 577408 in 69 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=59
+#-----------
+time=19064635422
+mem_heap_B=32716777
+mem_heap_extra_B=53551
+mem_stacks_B=59960
+heap_tree=empty
+#-----------
+snapshot=60
+#-----------
+time=19091696164
+mem_heap_B=33012140
+mem_heap_extra_B=53748
+mem_stacks_B=63312
+heap_tree=detailed
+n2: 33012140 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n9: 32434506 0x59F53E4: os::malloc(unsigned long, MemoryType, NativeCallStack const&) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+  n2: 9437184 0x5A6046D: ParCompactionManager::ParCompactionManager() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 8388608 0x5A625A6: ParCompactionManager::initialize(ParMarkBitMap*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 8388608 0x5A70C62: PSParallelCompact::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 8388608 0x5A24B84: ParallelScavengeHeap::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 8388608 0x5B812E5: universe_post_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 8388608 0x56C3AD5: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 8388608 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+         n1: 8388608 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+          n1: 8388608 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+           n1: 8388608 0x4864668: start_thread (pthread_create.c:479)
+            n0: 8388608 0x4BBD2B2: clone (clone.S:95)
+   n1: 1048576 0x5A626B9: ParCompactionManager::initialize(ParMarkBitMap*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 1048576 0x5A70C62: PSParallelCompact::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 1048576 0x5A24B84: ParallelScavengeHeap::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 1048576 0x5B812E5: universe_post_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 1048576 0x56C3AD5: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 1048576 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+         n1: 1048576 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+          n1: 1048576 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+           n1: 1048576 0x4864668: start_thread (pthread_create.c:479)
+            n0: 1048576 0x4BBD2B2: clone (clone.S:95)
+  n1: 9437184 0x5A6215E: ParCompactionManager::initialize(ParMarkBitMap*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 9437184 0x5A70C62: PSParallelCompact::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 9437184 0x5A24B84: ParallelScavengeHeap::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 9437184 0x5B812E5: universe_post_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 9437184 0x56C3AD5: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 9437184 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 9437184 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+         n1: 9437184 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+          n1: 9437184 0x4864668: start_thread (pthread_create.c:479)
+           n0: 9437184 0x4BBD2B2: clone (clone.S:95)
+  n1: 9437184 0x5A71D7F: PSPromotionManager::PSPromotionManager() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 9437184 0x5A73FC4: PaddedArray<PSPromotionManager, (MemoryType)5, 64ul>::create_unfreeable(unsigned int) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 9437184 0x5A73197: PSPromotionManager::initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 9437184 0x5B812E5: universe_post_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 9437184 0x56C3AD5: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 9437184 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 9437184 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+         n1: 9437184 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+          n1: 9437184 0x4864668: start_thread (pthread_create.c:479)
+           n0: 9437184 0x4BBD2B2: clone (clone.S:95)
+  n2: 1179648 0x5A604F9: ParCompactionManager::ParCompactionManager() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 1048576 0x5A625A6: ParCompactionManager::initialize(ParMarkBitMap*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 1048576 0x5A70C62: PSParallelCompact::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 1048576 0x5A24B84: ParallelScavengeHeap::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 1048576 0x5B812E5: universe_post_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 1048576 0x56C3AD5: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 1048576 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+         n1: 1048576 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+          n1: 1048576 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+           n1: 1048576 0x4864668: start_thread (pthread_create.c:479)
+            n0: 1048576 0x4BBD2B2: clone (clone.S:95)
+   n0: 131072 in 1 place, below massif's threshold (1.00%)
+  n2: 912960 0x535E222: ChunkPool::allocate(unsigned long, AllocFailStrategy::AllocFailEnum) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 884088 0x535DA41: Arena::grow(unsigned long, AllocFailStrategy::AllocFailEnum) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n0: 884088 in 26 places, all below massif's threshold (1.00%)
+   n0: 28872 in 2 places, all below massif's threshold (1.00%)
+  n0: 792466 in 110 places, all below massif's threshold (1.00%)
+  n1: 480104 0x5B82E7E: universe_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 480104 0x56C3A4F: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 480104 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 480104 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 480104 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+       n1: 480104 0x4864668: start_thread (pthread_create.c:479)
+        n0: 480104 0x4BBD2B2: clone (clone.S:95)
+  n2: 389120 0x569B345: BasicHashtable<(MemoryType)10>::new_entry(unsigned int) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 356352 0x569B410: Hashtable<Symbol*, (MemoryType)10>::new_entry(unsigned int, Symbol*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n0: 356352 in 3 places, all below massif's threshold (1.00%)
+   n0: 32768 in 1 place, below massif's threshold (1.00%)
+  n1: 368656 0x535CC38: Arena::Arena(MemoryType, unsigned long) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 368656 0x5B21518: SymbolTable::initialize_symbols(int) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 368656 0x5B82DDB: universe_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 368656 0x56C3A4F: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 368656 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 368656 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 368656 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+         n1: 368656 0x4864668: start_thread (pthread_create.c:479)
+          n0: 368656 0x4BBD2B2: clone (clone.S:95)
+ n0: 577634 in 69 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=61
+#-----------
+time=19323440865
+mem_heap_B=32681084
+mem_heap_extra_B=54372
+mem_stacks_B=68736
+heap_tree=empty
+#-----------
+snapshot=62
+#-----------
+time=19555185546
+mem_heap_B=32681084
+mem_heap_extra_B=54372
+mem_stacks_B=68528
+heap_tree=empty
+#-----------
+snapshot=63
+#-----------
+time=19682899579
+mem_heap_B=33822541
+mem_heap_extra_B=55491
+mem_stacks_B=82240
+heap_tree=detailed
+n3: 33822541 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n9: 32122042 0x59F53E4: os::malloc(unsigned long, MemoryType, NativeCallStack const&) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+  n2: 9437184 0x5A6046D: ParCompactionManager::ParCompactionManager() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 8388608 0x5A625A6: ParCompactionManager::initialize(ParMarkBitMap*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 8388608 0x5A70C62: PSParallelCompact::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 8388608 0x5A24B84: ParallelScavengeHeap::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 8388608 0x5B812E5: universe_post_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 8388608 0x56C3AD5: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 8388608 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+         n1: 8388608 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+          n1: 8388608 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+           n1: 8388608 0x4864668: start_thread (pthread_create.c:479)
+            n0: 8388608 0x4BBD2B2: clone (clone.S:95)
+   n1: 1048576 0x5A626B9: ParCompactionManager::initialize(ParMarkBitMap*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 1048576 0x5A70C62: PSParallelCompact::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 1048576 0x5A24B84: ParallelScavengeHeap::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 1048576 0x5B812E5: universe_post_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 1048576 0x56C3AD5: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 1048576 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+         n1: 1048576 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+          n1: 1048576 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+           n1: 1048576 0x4864668: start_thread (pthread_create.c:479)
+            n0: 1048576 0x4BBD2B2: clone (clone.S:95)
+  n1: 9437184 0x5A6215E: ParCompactionManager::initialize(ParMarkBitMap*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 9437184 0x5A70C62: PSParallelCompact::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 9437184 0x5A24B84: ParallelScavengeHeap::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 9437184 0x5B812E5: universe_post_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 9437184 0x56C3AD5: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 9437184 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 9437184 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+         n1: 9437184 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+          n1: 9437184 0x4864668: start_thread (pthread_create.c:479)
+           n0: 9437184 0x4BBD2B2: clone (clone.S:95)
+  n1: 9437184 0x5A71D7F: PSPromotionManager::PSPromotionManager() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 9437184 0x5A73FC4: PaddedArray<PSPromotionManager, (MemoryType)5, 64ul>::create_unfreeable(unsigned int) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 9437184 0x5A73197: PSPromotionManager::initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 9437184 0x5B812E5: universe_post_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 9437184 0x56C3AD5: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 9437184 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 9437184 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+         n1: 9437184 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+          n1: 9437184 0x4864668: start_thread (pthread_create.c:479)
+           n0: 9437184 0x4BBD2B2: clone (clone.S:95)
+  n2: 1179648 0x5A604F9: ParCompactionManager::ParCompactionManager() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 1048576 0x5A625A6: ParCompactionManager::initialize(ParMarkBitMap*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 1048576 0x5A70C62: PSParallelCompact::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 1048576 0x5A24B84: ParallelScavengeHeap::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 1048576 0x5B812E5: universe_post_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 1048576 0x56C3AD5: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 1048576 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+         n1: 1048576 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+          n1: 1048576 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+           n1: 1048576 0x4864668: start_thread (pthread_create.c:479)
+            n0: 1048576 0x4BBD2B2: clone (clone.S:95)
+   n0: 131072 in 1 place, below massif's threshold (1.00%)
+  n0: 836490 in 117 places, all below massif's threshold (1.00%)
+  n2: 556472 0x535E222: ChunkPool::allocate(unsigned long, AllocFailStrategy::AllocFailEnum) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 523904 0x535DA41: Arena::grow(unsigned long, AllocFailStrategy::AllocFailEnum) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n0: 523904 in 26 places, all below massif's threshold (1.00%)
+   n0: 32568 in 2 places, all below massif's threshold (1.00%)
+  n1: 480104 0x5B82E7E: universe_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 480104 0x56C3A4F: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 480104 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 480104 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 480104 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+       n1: 480104 0x4864668: start_thread (pthread_create.c:479)
+        n0: 480104 0x4BBD2B2: clone (clone.S:95)
+  n2: 389120 0x569B345: BasicHashtable<(MemoryType)10>::new_entry(unsigned int) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 356352 0x569B410: Hashtable<Symbol*, (MemoryType)10>::new_entry(unsigned int, Symbol*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n0: 356352 in 3 places, all below massif's threshold (1.00%)
+   n0: 32768 in 1 place, below massif's threshold (1.00%)
+  n1: 368656 0x535CC38: Arena::Arena(MemoryType, unsigned long) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 368656 0x5B21518: SymbolTable::initialize_symbols(int) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 368656 0x5B82DDB: universe_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 368656 0x56C3A4F: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 368656 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 368656 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 368656 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+         n1: 368656 0x4864668: start_thread (pthread_create.c:479)
+          n0: 368656 0x4BBD2B2: clone (clone.S:95)
+ n2: 1113234 0x59F5284: os::malloc(unsigned long, MemoryType) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+  n1: 1103592 0x55F9593: ElfSymbolTable::ElfSymbolTable(_IO_FILE*, Elf64_Shdr) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n2: 1103592 0x55F8D9F: ElfFile::load_tables() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 1103592 0x557BED4: ElfDecoder::decode(unsigned char*, char*, int, int*, char const*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 1103592 0x59FE47D: os::dll_address_to_function_name(unsigned char*, char*, int, int*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 1103592 0x5617CDC: frame::print_C_frame(outputStream*, char*, int, unsigned char*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 1103592 0x55784C7: print_native_stack(outputStream*, frame, Thread*, char*, int) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 1103592 0x5BBF581: VMError::report(outputStream*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+         n1: 1103592 0x5BC004E: VMError::report_and_die() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+          n1: 1103592 0x5A082D4: JVM_handle_linux_signal (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+           n1: 1103592 0x59FB537: signalHandler(int, siginfo*, void*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+            n1: 1103592 0x487053F: ??? (in /usr/lib/x86_64-linux-gnu/libpthread-2.30.so)
+             n1: 1103592 0x69EEE86: ???
+              n1: 1103592 0x76D7FCF3F: ???
+               n1: 1103592 0x69AE041: ???
+                n1: 1103592 0x69ADFFC: ???
+                 n1: 1103592 0x69AE041: ???
+                  n1: 1103592 0x69A64E6: ???
+                   n1: 1103592 0x571D280: JavaCalls::call_helper(JavaValue*, methodHandle*, JavaCallArguments*, Thread*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+                    n1: 1103592 0x571AD22: JavaCalls::call_virtual(JavaValue*, KlassHandle, Symbol*, Symbol*, JavaCallArguments*, Thread*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+                     n1: 1103592 0x571B2EE: JavaCalls::call_virtual(JavaValue*, Handle, KlassHandle, Symbol*, Symbol*, Thread*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+                      n1: 1103592 0x575D00B: thread_entry(JavaThread*, Thread*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+                       n1: 1103592 0x5B5D5CA: JavaThread::thread_main_inner() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+                        n1: 1103592 0x5B5D915: JavaThread::run() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+                         n1: 1103592 0x59FD4F1: java_start(Thread*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+                          n1: 1103592 0x4864668: start_thread (pthread_create.c:479)
+                           n0: 1103592 0x4BBD2B2: clone (clone.S:95)
+    n0: 0 in 1 place, below massif's threshold (1.00%)
+  n0: 9642 in 5 places, all below massif's threshold (1.00%)
+ n0: 587265 in 80 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=64
+#-----------
+time=19682919660
+mem_heap_B=35655052
+mem_heap_extra_B=55524
+mem_stacks_B=82240
+heap_tree=peak
+n3: 35655052 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n9: 32122146 0x59F53E4: os::malloc(unsigned long, MemoryType, NativeCallStack const&) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+  n2: 9437184 0x5A6046D: ParCompactionManager::ParCompactionManager() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 8388608 0x5A625A6: ParCompactionManager::initialize(ParMarkBitMap*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 8388608 0x5A70C62: PSParallelCompact::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 8388608 0x5A24B84: ParallelScavengeHeap::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 8388608 0x5B812E5: universe_post_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 8388608 0x56C3AD5: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 8388608 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+         n1: 8388608 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+          n1: 8388608 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+           n1: 8388608 0x4864668: start_thread (pthread_create.c:479)
+            n0: 8388608 0x4BBD2B2: clone (clone.S:95)
+   n1: 1048576 0x5A626B9: ParCompactionManager::initialize(ParMarkBitMap*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 1048576 0x5A70C62: PSParallelCompact::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 1048576 0x5A24B84: ParallelScavengeHeap::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 1048576 0x5B812E5: universe_post_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 1048576 0x56C3AD5: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 1048576 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+         n1: 1048576 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+          n1: 1048576 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+           n1: 1048576 0x4864668: start_thread (pthread_create.c:479)
+            n0: 1048576 0x4BBD2B2: clone (clone.S:95)
+  n1: 9437184 0x5A6215E: ParCompactionManager::initialize(ParMarkBitMap*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 9437184 0x5A70C62: PSParallelCompact::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 9437184 0x5A24B84: ParallelScavengeHeap::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 9437184 0x5B812E5: universe_post_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 9437184 0x56C3AD5: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 9437184 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 9437184 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+         n1: 9437184 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+          n1: 9437184 0x4864668: start_thread (pthread_create.c:479)
+           n0: 9437184 0x4BBD2B2: clone (clone.S:95)
+  n1: 9437184 0x5A71D7F: PSPromotionManager::PSPromotionManager() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 9437184 0x5A73FC4: PaddedArray<PSPromotionManager, (MemoryType)5, 64ul>::create_unfreeable(unsigned int) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 9437184 0x5A73197: PSPromotionManager::initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 9437184 0x5B812E5: universe_post_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 9437184 0x56C3AD5: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 9437184 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 9437184 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+         n1: 9437184 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+          n1: 9437184 0x4864668: start_thread (pthread_create.c:479)
+           n0: 9437184 0x4BBD2B2: clone (clone.S:95)
+  n2: 1179648 0x5A604F9: ParCompactionManager::ParCompactionManager() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 1048576 0x5A625A6: ParCompactionManager::initialize(ParMarkBitMap*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 1048576 0x5A70C62: PSParallelCompact::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 1048576 0x5A24B84: ParallelScavengeHeap::post_initialize() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 1048576 0x5B812E5: universe_post_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 1048576 0x56C3AD5: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 1048576 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+         n1: 1048576 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+          n1: 1048576 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+           n1: 1048576 0x4864668: start_thread (pthread_create.c:479)
+            n0: 1048576 0x4BBD2B2: clone (clone.S:95)
+   n0: 131072 in 1 place, below massif's threshold (1.00%)
+  n0: 836594 in 117 places, all below massif's threshold (1.00%)
+  n2: 556472 0x535E222: ChunkPool::allocate(unsigned long, AllocFailStrategy::AllocFailEnum) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 523904 0x535DA41: Arena::grow(unsigned long, AllocFailStrategy::AllocFailEnum) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n0: 523904 in 26 places, all below massif's threshold (1.00%)
+   n0: 32568 in 2 places, all below massif's threshold (1.00%)
+  n1: 480104 0x5B82E7E: universe_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 480104 0x56C3A4F: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 480104 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 480104 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 480104 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+       n1: 480104 0x4864668: start_thread (pthread_create.c:479)
+        n0: 480104 0x4BBD2B2: clone (clone.S:95)
+  n1: 389120 0x569B345: BasicHashtable<(MemoryType)10>::new_entry(unsigned int) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n0: 389120 in 2 places, all below massif's threshold (1.00%)
+  n1: 368656 0x535CC38: Arena::Arena(MemoryType, unsigned long) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n1: 368656 0x5B21518: SymbolTable::initialize_symbols(int) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 368656 0x5B82DDB: universe_init() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 368656 0x56C3A4F: init_globals() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 368656 0x5B6664C: Threads::create_vm(JavaVMInitArgs*, bool*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 368656 0x5741990: JNI_CreateJavaVM (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 368656 0x4885A5D: JavaMain (in /usr/lib/graal/graalvm-ce-java8-20.0.0/lib/amd64/jli/libjli.so)
+         n1: 368656 0x4864668: start_thread (pthread_create.c:479)
+          n0: 368656 0x4BBD2B2: clone (clone.S:95)
+ n3: 2945641 0x59F5284: os::malloc(unsigned long, MemoryType) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+  n1: 1839854 0x55F9319: ElfStringTable::ElfStringTable(_IO_FILE*, Elf64_Shdr, int) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n2: 1839854 0x55F8D24: ElfFile::load_tables() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 1839854 0x557BED4: ElfDecoder::decode(unsigned char*, char*, int, int*, char const*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 1839854 0x59FE47D: os::dll_address_to_function_name(unsigned char*, char*, int, int*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 1839854 0x5617CDC: frame::print_C_frame(outputStream*, char*, int, unsigned char*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 1839854 0x55784C7: print_native_stack(outputStream*, frame, Thread*, char*, int) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 1839854 0x5BBF581: VMError::report(outputStream*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+         n1: 1839854 0x5BC004E: VMError::report_and_die() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+          n1: 1839854 0x5A082D4: JVM_handle_linux_signal (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+           n1: 1839854 0x59FB537: signalHandler(int, siginfo*, void*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+            n1: 1839854 0x487053F: ??? (in /usr/lib/x86_64-linux-gnu/libpthread-2.30.so)
+             n1: 1839854 0x69EEE86: ???
+              n1: 1839854 0x76D7FCF3F: ???
+               n1: 1839854 0x69AE041: ???
+                n1: 1839854 0x69ADFFC: ???
+                 n1: 1839854 0x69AE041: ???
+                  n1: 1839854 0x69A64E6: ???
+                   n1: 1839854 0x571D280: JavaCalls::call_helper(JavaValue*, methodHandle*, JavaCallArguments*, Thread*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+                    n1: 1839854 0x571AD22: JavaCalls::call_virtual(JavaValue*, KlassHandle, Symbol*, Symbol*, JavaCallArguments*, Thread*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+                     n1: 1839854 0x571B2EE: JavaCalls::call_virtual(JavaValue*, Handle, KlassHandle, Symbol*, Symbol*, Thread*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+                      n1: 1839854 0x575D00B: thread_entry(JavaThread*, Thread*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+                       n1: 1839854 0x5B5D5CA: JavaThread::thread_main_inner() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+                        n1: 1839854 0x5B5D915: JavaThread::run() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+                         n1: 1839854 0x59FD4F1: java_start(Thread*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+                          n1: 1839854 0x4864668: start_thread (pthread_create.c:479)
+                           n0: 1839854 0x4BBD2B2: clone (clone.S:95)
+    n0: 0 in 1 place, below massif's threshold (1.00%)
+  n1: 1103592 0x55F9593: ElfSymbolTable::ElfSymbolTable(_IO_FILE*, Elf64_Shdr) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+   n2: 1103592 0x55F8D9F: ElfFile::load_tables() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+    n1: 1103592 0x557BED4: ElfDecoder::decode(unsigned char*, char*, int, int*, char const*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+     n1: 1103592 0x59FE47D: os::dll_address_to_function_name(unsigned char*, char*, int, int*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+      n1: 1103592 0x5617CDC: frame::print_C_frame(outputStream*, char*, int, unsigned char*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+       n1: 1103592 0x55784C7: print_native_stack(outputStream*, frame, Thread*, char*, int) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+        n1: 1103592 0x5BBF581: VMError::report(outputStream*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+         n1: 1103592 0x5BC004E: VMError::report_and_die() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+          n1: 1103592 0x5A082D4: JVM_handle_linux_signal (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+           n1: 1103592 0x59FB537: signalHandler(int, siginfo*, void*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+            n1: 1103592 0x487053F: ??? (in /usr/lib/x86_64-linux-gnu/libpthread-2.30.so)
+             n1: 1103592 0x69EEE86: ???
+              n1: 1103592 0x76D7FCF3F: ???
+               n1: 1103592 0x69AE041: ???
+                n1: 1103592 0x69ADFFC: ???
+                 n1: 1103592 0x69AE041: ???
+                  n1: 1103592 0x69A64E6: ???
+                   n1: 1103592 0x571D280: JavaCalls::call_helper(JavaValue*, methodHandle*, JavaCallArguments*, Thread*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+                    n1: 1103592 0x571AD22: JavaCalls::call_virtual(JavaValue*, KlassHandle, Symbol*, Symbol*, JavaCallArguments*, Thread*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+                     n1: 1103592 0x571B2EE: JavaCalls::call_virtual(JavaValue*, Handle, KlassHandle, Symbol*, Symbol*, Thread*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+                      n1: 1103592 0x575D00B: thread_entry(JavaThread*, Thread*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+                       n1: 1103592 0x5B5D5CA: JavaThread::thread_main_inner() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+                        n1: 1103592 0x5B5D915: JavaThread::run() (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+                         n1: 1103592 0x59FD4F1: java_start(Thread*) (in /usr/lib/graal/graalvm-ce-java8-20.0.0/jre/lib/amd64/server/libjvm.so)
+                          n1: 1103592 0x4864668: start_thread (pthread_create.c:479)
+                           n0: 1103592 0x4BBD2B2: clone (clone.S:95)
+    n0: 0 in 1 place, below massif's threshold (1.00%)
+  n0: 2195 in 4 places, all below massif's threshold (1.00%)
+ n0: 587265 in 80 places, all below massif's threshold (1.00%)
