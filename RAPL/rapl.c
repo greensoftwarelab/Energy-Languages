@@ -52,69 +52,101 @@ long long read_msr(int fd, int which) {
 #define CPU_IVYBRIDGE   58
 #define CPU_IVYBRIDGE_EP  62
 #define CPU_HASWELL   60
+#define CPU_HASWELL2   69
+#define CPU_HASWELL3   70
+#define CPU_HASWELL_EP   63
+#define CPU_SKYLAKE1   78
+#define CPU_SKYLAKE2   94
+#define CPU_BROADWELL  77
+#define CPU_BROADWELL2  79
+#define CPU_KABYLAKE 158
 
 int detect_cpu(void) {
 
-  FILE *fff;
+	FILE *fff;
 
-  int family,model=-1;
-  char buffer[BUFSIZ],*result;
-  char vendor[BUFSIZ];
+	int family,model=-1;
+	char buffer[BUFSIZ],*result;
+	char vendor[BUFSIZ];
 
-  fff=fopen("/proc/cpuinfo","r");
-  if (fff==NULL) return -1;
+	fff=fopen("/proc/cpuinfo","r");
+	if (fff==NULL) return -1;
 
-  while(1) {
-    result=fgets(buffer,BUFSIZ,fff);
-    if (result==NULL) break;
+	while(1) {
+		result=fgets(buffer,BUFSIZ,fff);
+		if (result==NULL) break;
 
-    if (!strncmp(result,"vendor_id",8)) {
-      sscanf(result,"%*s%*s%s",vendor);
+		if (!strncmp(result,"vendor_id",8)) {
+			sscanf(result,"%*s%*s%s",vendor);
 
-      if (strncmp(vendor,"GenuineIntel",12)) {
-        printf("%s not an Intel chip\n",vendor);
-        return -1;
-      }
-    }
+			if (strncmp(vendor,"GenuineIntel",12)) {
+				printf("%s not an Intel chip\n",vendor);
+				return -1;
+			}
+		}
 
-    if (!strncmp(result,"cpu family",10)) {
-      sscanf(result,"%*s%*s%*s%d",&family);
-      if (family!=6) {
-        printf("Wrong CPU family %d\n",family);
-        return -1;
-      }
-    }
+		if (!strncmp(result,"cpu family",10)) {
+			sscanf(result,"%*s%*s%*s%d",&family);
+			if (family!=6) {
+				printf("Wrong CPU family %d\n",family);
+				return -1;
+			}
+		}
 
-    if (!strncmp(result,"model",5)) {
-      sscanf(result,"%*s%*s%d",&model);
-    }
+		if (!strncmp(result,"model",5)) {
+			sscanf(result,"%*s%*s%d",&model);
+		}
 
-  }
+	}
 
-  fclose(fff);
-/*
-  switch(model) {
-    case CPU_SANDYBRIDGE:
-      printf("Found Sandybridge CPU\n");
-      break;
-    case CPU_SANDYBRIDGE_EP:
-      printf("Found Sandybridge-EP CPU\n");
-      break;
-    case CPU_IVYBRIDGE:
-      printf("Found Ivybridge CPU\n");
-      break;
-    case CPU_IVYBRIDGE_EP:
-      printf("Found Ivybridge-EP CPU\n");
-      break;
+	fclose(fff);
+/**
+	switch(model) {
+		case CPU_SANDYBRIDGE:
+			printf("Found Sandybridge CPU\n");
+			break;
+		case CPU_SANDYBRIDGE_EP:
+			printf("Found Sandybridge-EP CPU\n");
+			break;
+		case CPU_IVYBRIDGE:
+			printf("Found Ivybridge CPU\n");
+			break;
+		case CPU_IVYBRIDGE_EP:
+			printf("Found Ivybridge-EP CPU\n");
+			break;
     case CPU_HASWELL:
       printf("Found Haswell CPU\n");
       break;
-    default:  printf("Unsupported model %d\n",model);
-        model=-1;
-        break;
-  }
-*/
-  return model;
+    case CPU_HASWELL2:
+      printf("Found Haswell2 CPU\n");
+      break;
+    case CPU_HASWELL3:
+      printf("Found Haswell3 CPU\n");
+      break;
+    case CPU_HASWELL_EP:
+      printf("Found Haswell_EP CPU\n");
+      break;
+    case CPU_SKYLAKE1:
+      printf("Found SKYLAKE1 CPU\n");
+      break;
+    case CPU_SKYLAKE2:
+      printf("Found SKYLAKE2 CPU\n");
+      break;
+    case CPU_BROADWELL:
+      printf("Found BROADWELL CPU\n");
+      break;
+    case CPU_BROADWELL2:
+      printf("Found BROADWELL2 CPU\n");
+      break;
+    case CPU_KABYLAKE:
+      printf("Found KABYLAKE CPU\n");
+      break;
+		default:	printf("Unsupported model %d\n",model);
+				//model=-1;
+				break;
+	}
+**/
+	return model;
 }
 
 
