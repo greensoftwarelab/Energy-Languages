@@ -96,7 +96,11 @@ mem:
 
 ### Running an example.
 
-*First things first:* generate the input files, like this
+*First things first:* We must give sudo access to the energy registers for RAPL to access
+```
+sudo modprobe msr
+```
+and then generate the input files, like this
 ```Makefile
 ./gen-input.sh
 ```
