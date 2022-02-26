@@ -126,7 +126,7 @@ Each <language>.csv will contain a line with the following:
 Do note that the availability of GPU/DRAM measurements depend on your machine's architecture. These are requirements from RAPL itself.
 
 ### Add your own example!
-#### Wanna know your own code's energy behavior? We help you!
+#### Wanna know your own code's energy behavior? We can help you!
 #### Follow this steps:
 
 ##### 1. Create a folder with the name of you benchmark, such as `test-benchmark`, inside the language you implemented it.
