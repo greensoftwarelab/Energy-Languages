@@ -1,5 +1,5 @@
 compile:
-	/usr/bin/gcc -pipe -Wall -O3 -fomit-frame-pointer -march=native -pthread chameneosredux.gcc-5.c -o chameneosredux.gcc-5.gcc_run
+	$(CC) -pipe -Wall -O3 -fomit-frame-pointer -march=native -pthread chameneosredux.gcc-5.c -o chameneosredux.gcc-5.gcc_run
 	
 measure:
 	sudo modprobe msr
