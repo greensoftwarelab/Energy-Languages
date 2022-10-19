@@ -19,6 +19,7 @@
 #include <mutex>
 #include <iostream>
 #include <numeric>
+#include <functional>
 
 struct IUB
 {

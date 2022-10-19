@@ -1,5 +1,5 @@
 compile:
-	/usr/bin/g++ -c -pipe -O3 -fomit-frame-pointer -march=native  -std=c++14 -fopenmp binarytrees.gpp-9.c++ -o binarytrees.gpp-9.c++.o &&  /usr/bin/g++ binarytrees.gpp-9.c++.o -o binarytrees.gpp-9.gpp_run -fopenmp
+	$(CXX) -O3 -DNDEBUG binarytrees.gpp-9.c++ -o binarytrees.gpp-9.gpp_run
 
 measure:
 	sudo modprobe msr
