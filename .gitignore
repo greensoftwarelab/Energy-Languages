@@ -5,4 +5,5 @@ tmp.*
 *.class
 lshw
 sysinfo.*
-
+*.o
+*_run
