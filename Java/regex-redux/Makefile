@@ -1,15 +1,23 @@
+ifndef JAVAC
+JAVAC := javac
+endif
+
+ifndef JAVA
+JAVA := java
+endif
+
 compile:
-	cp regexredux.java-3.java regexredux.java
-	/usr/local/src/jdk1.8.0_121/bin/javac -d .  regexredux.java
+	$(JAVAC) -d . regexredux.java
+
 measure:
 	sudo modprobe msr
-	sudo ../../RAPL/main "/usr/local/src/jdk1.8.0_121/bin/java   regexredux 0 < ../../regexredux-input5000000.txt" Java regex-redux
+	sudo ../../RAPL/main "$(JAVA) regexredux 0 < ../../regexredux-input5000000.txt" Java regex-redux
 
 run:
-	/usr/local/src/jdk1.8.0_121/bin/java   regexredux 0 < ../../regexredux-input5000000.txt
+	$(JAVA) regexredux 0 < ../../regexredux-input5000000.txt
 
 mem:
-	/usr/bin/time -v /usr/local/src/jdk1.8.0_121/bin/java   regexredux 0 < ../../regexredux-input5000000.txt
+	/usr/bin/time -v $(JAVA) regexredux 0 < ../../regexredux-input5000000.txt
 
 valgrind:
-	valgrind --tool=massif --stacks=yes /usr/local/src/jdk1.8.0_121/bin/java   regexredux 0 < ../../regexredux-input5000000.txt
+	valgrind --tool=massif --stacks=yes $(JAVA) regexredux 0 < ../../regexredux-input5000000.txt
