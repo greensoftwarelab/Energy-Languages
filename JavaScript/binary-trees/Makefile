@@ -1,14 +1,18 @@
+ifndef NODE
+NODE := node
+endif
+
 compile:
-	cp -L binarytrees.node binarytrees.js
+
 measure:
 	sudo modprobe msr
-	sudo ../../RAPL/main "/usr/local/src/node-v7.9.0-linux-x64/bin/node binarytrees.js 21" JavaScript binary-trees
+	sudo ../../RAPL/main "$(NODE) binarytrees.js 21" JavaScript binary-trees
 
 run:
-	/usr/local/src/node-v7.9.0-linux-x64/bin/node binarytrees.js 21
+	$(NODE) binarytrees.js 21
 
 mem:
-	/usr/bin/time -v /usr/local/src/node-v7.9.0-linux-x64/bin/node binarytrees.js 21
+	/usr/bin/time -v $(NODE) binarytrees.js 21
 
 valgrind:
-	valgrind --tool=massif --stacks=yes /usr/local/src/node-v7.9.0-linux-x64/bin/node binarytrees.js 21
+	valgrind --tool=massif --stacks=yes $(NODE) binarytrees.js 21
