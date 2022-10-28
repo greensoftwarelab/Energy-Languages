@@ -1,11 +1,14 @@
+-include ../Makefile.defaults
+
 compile:
-	$(CC) -pipe -Wall -O3 -fomit-frame-pointer -march=native -pthread chameneosredux.gcc-5.c -o chameneosredux.gcc-5.gcc_run
-	
+	$(CC) $(CFLAGS) -pthread chameneosredux.c -o chameneosredux_run
+
 measure:
 	sudo modprobe msr
-	sudo ../../RAPL/main "./chameneosredux.gcc-5.gcc_run 6000000"
+	sudo ../../RAPL/main "./chameneosredux_run 6000000"
 
 run:
-	./chameneosredux.gcc-5.gcc_run 6000000
+	./chameneosredux_run 6000000
+
 mem:
-	/usr/bin/time -v ./chameneosredux.gcc-5.gcc_run 6000000
+	/usr/bin/time -v ./chameneosredux_run 6000000

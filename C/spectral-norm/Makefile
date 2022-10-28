@@ -1,13 +1,14 @@
+-include ../Makefile.defaults
+
 compile:
-	$(CC) -pipe -Wall -O3 -fomit-frame-pointer -march=native -fopenmp -mfpmath=sse -msse2 spectralnorm.gcc-4.c -o spectralnorm.gcc-4.gcc_run -lm
-	
+	$(CC) $(CFLAGS) -fopenmp -mfpmath=sse -msse2 spectralnorm.c -o spectralnorm_run -lm
+
 measure:
 	sudo modprobe msr
-	sudo ../../RAPL/main "./spectralnorm.gcc-4.gcc_run 5500" C spectral-norm
+	sudo ../../RAPL/main "./spectralnorm_run 5500" C spectral-norm
 
 run:
-	./spectralnorm.gcc-4.gcc_run 5500
+	./spectralnorm_run 5500
 
 mem:
-	/usr/bin/time -v ./spectralnorm.gcc-4.gcc_run 5500
-
+	/usr/bin/time -v ./spectralnorm_run 5500
