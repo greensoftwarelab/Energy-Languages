@@ -1,15 +1,15 @@
 compile:
-	/usr/local/src/racket-6.8/bin/raco make fasta.racket-3.racket
+	$(RACO) make fasta.racket-3.racket
 
 measure:
 	sudo modprobe msr
-	sudo ../../RAPL/main "/usr/local/src/racket-6.8/bin/racket ./compiled/fasta.racket-3_racket.zo 25000000" Racket fasta
+	sudo ../../RAPL/main "$(RACKET) ./compiled/fasta.racket-3_racket.zo 25000000" Racket fasta
 
 run:
-	/usr/local/src/racket-6.8/bin/racket ./compiled/fasta.racket-3_racket.zo 25000000
+	$(RACKET) ./compiled/fasta.racket-3_racket.zo 25000000
 
 mem:
-	/usr/bin/time -v /usr/local/src/racket-6.8/bin/racket ./compiled/fasta.racket-3_racket.zo 25000000
+	/usr/bin/time -v $(RACKET) ./compiled/fasta.racket-3_racket.zo 25000000
 
 valgrind:
-	valgrind --tool=massif --stacks=yes /usr/local/src/racket-6.8/bin/racket ./compiled/fasta.racket-3_racket.zo 25000000
+	valgrind --tool=massif --stacks=yes $(RACKET) ./compiled/fasta.racket-3_racket.zo 25000000

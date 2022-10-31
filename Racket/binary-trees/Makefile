@@ -1,15 +1,15 @@
 compile:
-	/usr/local/src/racket-6.8/bin/raco make binarytrees.racket-3.racket
+	$(RACO) make binarytrees.racket-3.racket
 	
 measure:
 	sudo modprobe msr
-	sudo ../../RAPL/main "/usr/local/src/racket-6.8/bin/racket ./compiled/binarytrees.racket-3_racket.zo 21" Racket binary-trees
+	sudo ../../RAPL/main "$(RACKET) ./compiled/binarytrees.racket-3_racket.zo 21" Racket binary-trees
 
 run:
-	/usr/local/src/racket-6.8/bin/racket ./compiled/binarytrees.racket-3_racket.zo 21
+	$(RACKET) ./compiled/binarytrees.racket-3_racket.zo 21
 
 mem:
-	/usr/bin/time -v  /usr/local/src/racket-6.8/bin/racket ./compiled/binarytrees.racket-3_racket.zo 21
+	/usr/bin/time -v  $(RACKET) ./compiled/binarytrees.racket-3_racket.zo 21
 
 valgrind:
-	valgrind --tool=massif --stacks=yes  /usr/local/src/racket-6.8/bin/racket ./compiled/binarytrees.racket-3_racket.zo 21
+	valgrind --tool=massif --stacks=yes  $(RACKET) ./compiled/binarytrees.racket-3_racket.zo 21
