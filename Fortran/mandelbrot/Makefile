@@ -1,5 +1,5 @@
 compile:
-	ifort -O3 -fast -qopenmp mandelbrot.ifc-4.f90 -o mandelbrot.ifc-4.ifc_run
+	$(FC) -O3 -fast -qopenmp mandelbrot.ifc-4.f90 -o mandelbrot.ifc-4.ifc_run
 measure:
 	sudo modprobe msr
 	sudo ../../RAPL/main "./mandelbrot.ifc-4.ifc_run 16000" Fortran mandelbrot
