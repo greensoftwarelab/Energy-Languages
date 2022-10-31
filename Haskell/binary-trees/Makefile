@@ -1,6 +1,6 @@
 compile:
 	cp binarytrees.ghc binarytrees.hs
-	/usr/local/src/ghc-8.0.2/bin/ghc --make -fllvm -O2 -XBangPatterns -threaded -rtsopts -funbox-strict-fields binarytrees.hs -o binarytrees.ghc_run
+	$(HC) --make -fllvm -O2 -XBangPatterns -threaded -rtsopts -funbox-strict-fields binarytrees.hs -o binarytrees.ghc_run
 
 measure:
 	sudo modprobe msr
