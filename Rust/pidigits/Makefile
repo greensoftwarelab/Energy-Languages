@@ -1,5 +1,5 @@
 compile:
-	/usr/local/src/rust-1.16.0/bin/rustc -C opt-level=3 -C target-cpu=core2 -C lto  pidigits.rs -o pidigits.rust-2.rust_run
+	$(RUSTC) -C opt-level=3 -C target-cpu=core2 -C lto  pidigits.rs -o pidigits.rust-2.rust_run
 
 measure:
 	sudo modprobe msr
