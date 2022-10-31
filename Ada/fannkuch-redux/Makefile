@@ -1,9 +1,9 @@
 compile:
 	gnatchop -r -w fannkuchredux.gnat-3.gnat
 	gnatmake -O3 -fomit-frame-pointer -march=native -msse3 -mfpmath=sse -gnatNp -f fannkuchredux.adb -o fannkuchredux.gnat-3.gnat_run 
-	gcc-6 -c -O3 -fomit-frame-pointer -march=native -msse3 -mfpmath=sse -gnatNp fannkuchredux.adb
-	gnatbind-6 -x fannkuchredux.ali
-	gnatlink-6 fannkuchredux.ali -O3 -fomit-frame-pointer -march=native -msse3 -mfpmath=sse -o fannkuchredux.gnat-3.gnat_run
+	$(CC) -c -O3 -fomit-frame-pointer -march=native -msse3 -mfpmath=sse -gnatNp fannkuchredux.adb
+	gnatbind -x fannkuchredux.ali
+	gnatlink fannkuchredux.ali -O3 -fomit-frame-pointer -march=native -msse3 -mfpmath=sse -o fannkuchredux.gnat-3.gnat_run
 
 measure:
 	sudo modprobe msr
