@@ -2,13 +2,13 @@ compile:
 
 measure:
 	sudo modprobe msr
-	sudo ../../RAPL/main "/usr/local/src/lua-5.3.3/bin/lua  fannkuchredux.lua 12" Lua fannkuch-redux
+	sudo ../../RAPL/main "$(LUA) fannkuchredux.lua 12" Lua fannkuch-redux
 
 run:
-	/usr/local/src/lua-5.3.3/bin/lua  fannkuchredux.lua 12
+	$(LUA) fannkuchredux.lua 12
 
 mem:
-	/usr/bin/time -v /usr/local/src/lua-5.3.3/bin/lua  fannkuchredux.lua 12
+	/usr/bin/time -v $(LUA) fannkuchredux.lua 12
 
 valgrind:
-	valgrind --tool=massif --stacks=yes /usr/local/src/lua-5.3.3/bin/lua  fannkuchredux.lua 12
+	valgrind --tool=massif --stacks=yes $(LUA) fannkuchredux.lua 12
