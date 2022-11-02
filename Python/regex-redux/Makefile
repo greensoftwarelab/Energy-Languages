@@ -2,10 +2,10 @@ compile:
 	cp regexredux.python3 regexredux.py
 measure:
 	sudo modprobe msr
-	sudo ../../RAPL/main "/usr/local/src/Python-3.6.1/bin/python3.6 -OO regexredux.py 0 < ../../regexredux-input5000000.txt" Python regex-redux
+	sudo ../../RAPL/main "$(PY3) -OO regexredux.py 0 < ../../regexredux-input5000000.txt" Python regex-redux
 
 run:
-	/usr/local/src/Python-3.6.1/bin/python3.6 -OO regexredux.py 0 < ../../regexredux-input5000000.txt
+	$(PY3) -OO regexredux.py 0 < ../../regexredux-input5000000.txt
 
 mem:
-	/usr/bin/time -v /usr/local/src/Python-3.6.1/bin/python3.6 -OO regexredux.py 0 < ../../regexredux-input5000000.txt
+	/usr/bin/time -v $(PY3) -OO regexredux.py 0 < ../../regexredux-input5000000.txt
