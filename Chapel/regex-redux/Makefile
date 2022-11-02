@@ -1,5 +1,5 @@
 compile:
-	/usr/local/src/chapel-1.15.0/bin/linux64/chpl --fast regexredux.chpl -o regexredux.chapel_run
+	$(CHPL) --fast regexredux.chpl -o regexredux.chapel_run
 measure:
 	sudo modprobe msr
 	sudo ../../RAPL/main "./regexredux.chapel_run --n=0 < ../../regexredux-input5000000.txt" Chapel regex-redux
