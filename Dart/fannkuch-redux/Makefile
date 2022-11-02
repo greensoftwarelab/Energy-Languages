@@ -2,13 +2,13 @@ compile:
 
 measure:
 	sudo modprobe msr
-	sudo ../../RAPL/main "/usr/bin/dart  fannkuchredux.dart-2.dart 12" Dart fannkuch-redux
+	sudo ../../RAPL/main "$(DART)  fannkuchredux.dart-2.dart 12" Dart fannkuch-redux
 
 run:
-	/usr/bin/dart  fannkuchredux.dart-2.dart 12
+	$(DART)  fannkuchredux.dart-2.dart 12
 
 mem:
-	/usr/bin/time -v /usr/bin/dart  fannkuchredux.dart-2.dart 12
+	/usr/bin/time -v $(DART)  fannkuchredux.dart-2.dart 12
 
 valgrind:
-	valgrind --tool=massif --stacks=yes /usr/bin/dart  fannkuchredux.dart-2.dart 12
+	valgrind --tool=massif --stacks=yes $(DART)  fannkuchredux.dart-2.dart 12

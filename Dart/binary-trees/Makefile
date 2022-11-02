@@ -2,13 +2,13 @@ compile:
 
 measure:
 	sudo modprobe msr
-	sudo ../../RAPL/main "/usr/bin/dart  binarytrees.dart 21" Dart binary-trees
+	sudo ../../RAPL/main "$(DART)  binarytrees.dart 21" Dart binary-trees
 
 run:
-	/usr/bin/dart  binarytrees.dart 21
+	$(DART)  binarytrees.dart 21
 
 mem:
-	/usr/bin/time -v  /usr/bin/dart  binarytrees.dart 21
+	/usr/bin/time -v  $(DART)  binarytrees.dart 21
 
 valgrind:
-	valgrind --tool=massif --stacks=yes  /usr/bin/dart  binarytrees.dart 21
+	valgrind --tool=massif --stacks=yes  $(DART)  binarytrees.dart 21
