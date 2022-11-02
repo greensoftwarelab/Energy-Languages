@@ -1,5 +1,5 @@
 compile:
-	/usr/bin/go build -o fannkuchredux.go_run
+	$(GOC) build -o fannkuchredux.go_run
 
 measure:
 	sudo modprobe msr

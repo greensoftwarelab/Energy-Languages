@@ -1,5 +1,5 @@
 compile:
-	/usr/bin/go build -o revcomp.go-6.go_run
+	$(GOC) build -o revcomp.go-6.go_run
 
 measure:
 	sudo modprobe msr

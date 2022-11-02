@@ -1,5 +1,5 @@
 compile:
-	/usr/bin/go build -o knucleotide.go-6.go_run
+	$(GOC) build -o knucleotide.go-6.go_run
 
 measure:
 	sudo modprobe msr
