@@ -1,5 +1,5 @@
 compile:
-	/usr/local/src/swift-2017-04-13-a-ubuntu16.10/usr/bin/swiftc pidigits.swift-2.swift -Ounchecked -whole-module-optimization -I Include/swift/gmp -o pidigits.swift-2.swift_run
+	$(SWIFTC) pidigits.swift-2.swift -Ounchecked -whole-module-optimization -I Include/swift/gmp -o pidigits.swift-2.swift_run
 
 xmeasure:
 	sudo modprobe msr

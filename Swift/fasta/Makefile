@@ -1,5 +1,5 @@
 compile:
-	/usr/local/src/swift-2017-04-13-a-ubuntu16.10/usr/bin/swiftc fasta.swift-3.swift -Ounchecked -whole-module-optimization  -o fasta.swift-3.swift_run
+	$(SWIFTC) fasta.swift-3.swift -Ounchecked -whole-module-optimization  -o fasta.swift-3.swift_run
 
 measure:
 	sudo modprobe msr
