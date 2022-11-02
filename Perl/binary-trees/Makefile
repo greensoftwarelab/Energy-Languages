@@ -2,13 +2,13 @@ compile:
 
 measure:
 	sudo modprobe msr
-	sudo ../../RAPL/main "/usr/local/src/perl-5.24.0/bin/perl binarytrees.perl-3.perl 21" Perl binary-trees
+	sudo ../../RAPL/main "$(PERL) binarytrees.perl-3.perl 21" Perl binary-trees
 
 run:
-	/usr/local/src/perl-5.24.0/bin/perl binarytrees.perl-3.perl 21
+	$(PERL) binarytrees.perl-3.perl 21
 
 mem:
-	/usr/bin/time -v  /usr/local/src/perl-5.24.0/bin/perl binarytrees.perl-3.perl 21
+	/usr/bin/time -v  $(PERL) binarytrees.perl-3.perl 21
 
 valgrind:
-	valgrind --tool=massif --stacks=yes  /usr/local/src/perl-5.24.0/bin/perl binarytrees.perl-3.perl 21
+	valgrind --tool=massif --stacks=yes  $(PERL) binarytrees.perl-3.perl 21
