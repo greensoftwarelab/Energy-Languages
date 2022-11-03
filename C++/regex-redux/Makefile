@@ -1,15 +1,17 @@
+-include ../Makefile.defaults
+
 compile:
-	$(CXX) -pipe -O3 -fomit-frame-pointer -march=native -fopenmp regexredux.gpp-3.c++ -o regexredux.gpp-3.gpp_run -lboost_regex
+	$(CXX) $(CXXFLAGS) -fopenmp regexredux.cpp -o regexredux_run -lboost_regex
 
 measure:
 	sudo modprobe msr
-	sudo ../../RAPL/main "./regexredux.gpp-3.gpp_run 0 < ../../regexredux-input5000000.txt" C++ regex-redux
+	sudo ../../RAPL/main "./regexredux_run 0 < ../../regexredux-input5000000.txt" C++ regex-redux
 
 run:
-	./regexredux.gpp-3.gpp_run 0 < ../../regexredux-input5000000.txt
+	./regexredux_run 0 < ../../regexredux-input5000000.txt
 
 mem:
-	/usr/bin/time -v ./regexredux.gpp-3.gpp_run 0 < ../../regexredux-input5000000.txt
+	/usr/bin/time -v ./regexredux_run 0 < ../../regexredux-input5000000.txt
 
 valgrind:
-	valgrind --tool=massif --stacks=yes ./regexredux.gpp-3.gpp_run 0 < ../../regexredux-input5000000.txt
+	valgrind --tool=massif --stacks=yes ./regexredux_run 0 < ../../regexredux-input5000000.txt

@@ -1,15 +1,17 @@
+-include ../Makefile.defaults
+
 compile:
-	$(CXX) -pipe -O3 -fomit-frame-pointer -march=native -std=c++14 pidigits.gpp-4.c++ -o pidigits.gpp-4.gpp_run -lgmp -lgmpxx
+	$(CXX) $(CXXFLAGS) pidigits.cpp -o pidigits_run -lgmp -lgmpxx
 	
 measure:
 	sudo modprobe msr
-	sudo ../../RAPL/main "./pidigits.gpp-4.gpp_run 10000" C++ pidigits
+	sudo ../../RAPL/main "./pidigits_run 10000" C++ pidigits
 
 run:
-	./pidigits.gpp-4.gpp_run 10000
+	./pidigits_run 10000
 
 mem:
-	/usr/bin/time -v ./pidigits.gpp-4.gpp_run 10000
+	/usr/bin/time -v ./pidigits_run 10000
 
 valgrind:
-	valgrind --tool=massif --stacks=yes ./pidigits.gpp-4.gpp_run 10000
+	valgrind --tool=massif --stacks=yes ./pidigits_run 10000

@@ -1,15 +1,17 @@
+-include ../Makefile.defaults
+
 compile:
-	$(CXX) -pipe -O3 -fomit-frame-pointer -march=native -std=c++14 -fopenmp -I/usr/include/apr-1.0 binarytrees.gpp-9.c++ -o binarytrees.gpp-9.gpp_run -lapr-1
+	$(CXX) $(CXXFLAGS) $(shell pkg-config --cflags apr-1) -fopenmp binarytrees.cpp -o binarytrees_run $(shell pkg-config --libs apr-1)
 
 measure:
 	sudo modprobe msr
-	sudo ../../RAPL/main "./binarytrees.gpp-9.gpp_run 21" C++ binary-trees
+	sudo ../../RAPL/main "./binarytrees_run 21" C++ binary-trees
 
 run:
-	./binarytrees.gpp-9.gpp_run 21
+	./binarytrees_run 21
 
 mem:
-	/usr/bin/time -v ./binarytrees.gpp-9.gpp_run 21
+	/usr/bin/time -v ./binarytrees_run 21
 
 valgrind:
-	valgrind --tool=massif --stacks=yes ./binarytrees.gpp-9.gpp_run 21
+	valgrind --tool=massif --stacks=yes ./binarytrees_run 21

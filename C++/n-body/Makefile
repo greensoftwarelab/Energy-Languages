@@ -1,15 +1,17 @@
+-include ../Makefile.defaults
+
 compile:
-	$(CXX) -pipe -O3 -fomit-frame-pointer -march=native -mfpmath=sse -msse3 -std=c++11 nbody.gpp-8.c++ -o nbody.gpp-8.gpp_run -fopenmp
+	$(CXX) $(CXXFLAGS) -fopenmp -mfpmath=sse -msse3 nbody.cpp -o nbody_run
 	
 measure:
 	sudo modprobe msr
-	sudo ../../RAPL/main "./nbody.gpp-8.gpp_run 50000000" C++ n-body
+	sudo ../../RAPL/main "./nbody_run 50000000" C++ n-body
 
 run:
-	./nbody.gpp-8.gpp_run 50000000
+	./nbody_run 50000000
 
 mem:
-	/usr/bin/time -v ./nbody.gpp-8.gpp_run 50000000
+	/usr/bin/time -v ./nbody_run 50000000
 
 valgrind:
-	valgrind --tool=massif --stacks=yes ./nbody.gpp-8.gpp_run 50000000
+	valgrind --tool=massif --stacks=yes ./nbody_run 50000000

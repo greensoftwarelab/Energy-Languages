@@ -1,15 +1,17 @@
+-include ../Makefile.defaults
+
 compile:
-	$(CXX) -pipe -O3 -fomit-frame-pointer -march=native -mfpmath=sse -msse2 -fopenmp -mno-fma --std=c++14 mandelbrot.gpp-6.c++ -o mandelbrot.gpp-6.gpp_run
+	$(CXX) $(CXXFLAGS) -mfpmath=sse -msse2 -fopenmp -mno-fma mandelbrot.cpp -o mandelbrot_run
 	
 measure:
 	sudo modprobe msr
-	sudo ../../RAPL/main "./mandelbrot.gpp-6.gpp_run 16000" C++ mandelbrot
+	sudo ../../RAPL/main "./mandelbrot_run 16000" C++ mandelbrot
 
 run:
-	./mandelbrot.gpp-6.gpp_run 16000
+	./mandelbrot_run 16000
 
 mem:
-	/usr/bin/time -v ./mandelbrot.gpp-6.gpp_run 16000
+	/usr/bin/time -v ./mandelbrot_run 16000
 
 valgrind:
-	valgrind --tool=massif --stacks=yes ./mandelbrot.gpp-6.gpp_run 16000
+	valgrind --tool=massif --stacks=yes ./mandelbrot_run 16000
