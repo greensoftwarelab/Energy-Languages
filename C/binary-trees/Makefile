@@ -1,6 +1,6 @@
 -include ../Makefile.defaults
 
-compile: binarytrees.c
+compile:
 	$(CC) $(CFLAGS) $(shell pkg-config --cflags apr-1) -fopenmp binarytrees.c -o binarytrees_run $(shell pkg-config --libs apr-1)
 
 measure:
