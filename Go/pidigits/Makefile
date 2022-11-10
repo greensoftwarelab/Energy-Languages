@@ -1,15 +1,19 @@
+ifndef GO
+GO := go
+endif
+
 compile:
-	$(GOC) build -o pidigits.go-3.go_run
+	$(GO) build -o pidigits_run pidigits.go
 
 measure:
 	sudo modprobe msr
-	sudo ../../RAPL/main "./pidigits.go-3.go_run 10000" Go pidigits
+	sudo ../../RAPL/main "./pidigits_run 10000" Go pidigits
 
 run:
-	./pidigits.go-3.go_run 10000
+	./pidigits_run 10000
 
 mem:
-	/usr/bin/time -v ./pidigits.go-3.go_run 10000
+	/usr/bin/time -v ./pidigits_run 10000
 
 valgrind:
-	valgrind --tool=massif --stacks=yes ./pidigits.go-3.go_run 10000
+	valgrind --tool=massif --stacks=yes ./pidigits_run 10000

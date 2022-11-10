@@ -1,15 +1,19 @@
+ifndef GO
+GO := go
+endif
+
 compile:
-	$(GOC) build -o fasta.go-3.go_run
+	$(GO) build -o fasta_run fasta.go
 
 measure:
 	sudo modprobe msr
-	sudo ../../RAPL/main "./fasta.go-3.go_run 25000000" Go fasta
+	sudo ../../RAPL/main "./fasta_run 25000000" Go fasta
 
 run:
-	./fasta.go-3.go_run 25000000
+	./fasta_run 25000000
 
 mem:
-	/usr/bin/time -v ./fasta.go-3.go_run 25000000
+	/usr/bin/time -v ./fasta_run 25000000
 
 valgrind:
-	valgrind --tool=massif --stacks=yes ./fasta.go-3.go_run 25000000
+	valgrind --tool=massif --stacks=yes ./fasta_run 25000000

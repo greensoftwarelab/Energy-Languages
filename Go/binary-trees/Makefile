@@ -1,15 +1,19 @@
+ifndef GO
+GO := go
+endif
+
 compile:
-	$(GOC) build -o binarytrees.go-2.go_run
+	$(GO) build -o binarytrees_run binarytrees.go
 
 measure:
 	sudo modprobe msr
-	sudo ../../RAPL/main "./binarytrees.go-2.go_run 21" Go binary-trees
+	sudo ../../RAPL/main "./binarytrees_run 21" Go binary-trees
 
 run:
-	./binarytrees.go-2.go_run 21
+	./binarytrees_run 21
 
 mem:
-	/usr/bin/time -v ./binarytrees.go-2.go_run 21
+	/usr/bin/time -v ./binarytrees_run 21
 
 valgrind:
-	valgrind --tool=massif --stacks=yes ./binarytrees.go-2.go_run 21
+	valgrind --tool=massif --stacks=yes ./binarytrees_run 21

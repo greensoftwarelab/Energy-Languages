@@ -1,15 +1,19 @@
+ifndef GO
+GO := go
+endif
+
 compile:
-	$(GOC) build -o revcomp.go-6.go_run
+	$(GO) build -o revcomp_run revcomp.go
 
 measure:
 	sudo modprobe msr
-	sudo ../../RAPL/main "./revcomp.go-6.go_run 0 < ../../revcomp-input25000000.txt" Go reverse-complement
+	sudo ../../RAPL/main "./revcomp_run 0 < ../../revcomp-input25000000.txt" Go reverse-complement
 
 run:
-	./revcomp.go-6.go_run 0 < ../../revcomp-input25000000.txt
+	./revcomp_run 0 < ../../revcomp-input25000000.txt
 
 mem:
-	/usr/bin/time -v   ./revcomp.go-6.go_run 0 < ../../revcomp-input25000000.txt
+	/usr/bin/time -v ./revcomp_run 0 < ../../revcomp-input25000000.txt
 
 valgrind:
-	valgrind --tool=massif --stacks=yes   ./revcomp.go-6.go_run 0 < ../../revcomp-input25000000.txt
+	valgrind --tool=massif --stacks=yes ./revcomp_run 0 < ../../revcomp-input25000000.txt

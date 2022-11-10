@@ -1,15 +1,19 @@
-compile:
-	$(GOC) build -o regexredux.go-2.go_run
+ifndef GO
+GO := go
+endif
 
-xmeasure:
+compile:
+	$(GO) build -o regexredux_run regexredux.go
+
+measure:
 	sudo modprobe msr
-	sudo ../../RAPL/main "./regexredux.go-2.go_run 0 < ../../regexredux-input5000000.txt" Go regex-redux
+	sudo ../../RAPL/main "./regexredux_run 0 < ../../regexredux-input5000000.txt" Go regex-redux
 
 run:
-	./regexredux.go-2.go_run 0 < ../../regexredux-input5000000.txt
+	./regexredux_run 0 < ../../regexredux-input5000000.txt
 
 mem:
-	/usr/bin/time -v ./regexredux.go-2.go_run 0 < ../../regexredux-input5000000.txt
+	/usr/bin/time -v ./regexredux_run 0 < ../../regexredux-input5000000.txt
 
 valgrind:
-	valgrind --tool=massif --stacks=yes ./regexredux.go-2.go_run 0 < ../../regexredux-input5000000.txt
+	valgrind --tool=massif --stacks=yes ./regexredux_run 0 < ../../regexredux-input5000000.txt

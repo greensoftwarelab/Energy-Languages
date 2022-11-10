@@ -1,15 +1,19 @@
+ifndef GO
+GO := go
+endif
+
 compile:
-	$(GOC) build -o nbody.go_run
+	$(GO) build -o nbody_run nbody.go
 
 measure:
 	sudo modprobe msr
-	sudo ../../RAPL/main "./nbody.go_run 50000000" Go n-body
+	sudo ../../RAPL/main "./nbody_run 50000000" Go n-body
 
 run:
-	./nbody.go_run 50000000
+	./nbody_run 50000000
 
 mem:
-	/usr/bin/time -v ./nbody.go_run 50000000
+	/usr/bin/time -v ./nbody_run 50000000
 
 valgrind:
-	valgrind --tool=massif --stacks=yes ./nbody.go_run 50000000
+	valgrind --tool=massif --stacks=yes ./nbody_run 50000000

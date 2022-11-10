@@ -1,15 +1,19 @@
+ifndef GO
+GO := go
+endif
+
 compile:
-	$(GOC) build -o spectralnorm.go-4.go_run
+	$(GO) build -o spectralnorm_run spectralnorm.go
 
 measure:
 	sudo modprobe msr
-	sudo ../../RAPL/main "./spectralnorm.go-4.go_run 5500" Go spectral-norm
+	sudo ../../RAPL/main "./spectralnorm_run 5500" Go spectral-norm
 
 run:
-	./spectralnorm.go-4.go_run 5500
+	./spectralnorm_run 5500
 
 mem:
-	/usr/bin/time -v  ./spectralnorm.go-4.go_run 5500
+	/usr/bin/time -v ./spectralnorm_run 5500
 
 valgrind:
-	valgrind --tool=massif --stacks=yes  ./spectralnorm.go-4.go_run 5500
+	valgrind --tool=massif --stacks=yes ./spectralnorm_run 5500

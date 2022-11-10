@@ -1,15 +1,19 @@
+ifndef GO
+GO := go
+endif
+
 compile:
-	$(GOC) build -o knucleotide.go-6.go_run
+	$(GO) build -o knucleotide_run knucleotide.go
 
 measure:
 	sudo modprobe msr
-	sudo ../../RAPL/main "./knucleotide.go-6.go_run 0 < knucleotide-input25000000.txt" Go k-nucleotide
+	sudo ../../RAPL/main "./knucleotide_run 0 < ../../knucleotide-input25000000.txt" Go k-nucleotide
 
 run:
-	./knucleotide.go-6.go_run 0 < knucleotide-input25000000.txt
+	./knucleotide_run 0 < ../../knucleotide-input25000000.txt
 
 mem:
-	/usr/bin/time -v  ./knucleotide.go-6.go_run 0 < knucleotide-input25000000.txt
+	/usr/bin/time -v  ./knucleotide_run 0 < ../../knucleotide-input25000000.txt
 
 valgrind:
-	valgrind --tool=massif --stacks=yes  ./knucleotide.go-6.go_run 0 < knucleotide-input25000000.txt
+	valgrind --tool=massif --stacks=yes  ./knucleotide_run 0 < ../../knucleotide-input25000000.txt
