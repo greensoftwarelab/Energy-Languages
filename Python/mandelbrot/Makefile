@@ -1,11 +1,15 @@
+ifndef PYTHON
+PYTHON := python3
+endif
+
 compile:
-	cp mandelbrot.python3-7.python3 mandelbrot.python3-7.py
+
 measure:
 	sudo modprobe msr
-	sudo ../../RAPL/main "$(PY3) -OO mandelbrot.python3-7.py 16000" Python mandelbrot
+	sudo ../../RAPL/main "$(PYTHON) -OO mandelbrot.py 16000" Python mandelbrot
 
 run:
-	$(PY3) -OO mandelbrot.python3-7.py 16000
+	$(PYTHON) -OO mandelbrot.py 16000
 
 mem:
-	/usr/bin/time -v $(PY3) -OO mandelbrot.python3-7.py 16000
+	/usr/bin/time -v $(PYTHON) -OO mandelbrot.py 16000
