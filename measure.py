@@ -10,7 +10,7 @@ from rich.progress import Progress
 
 # Default values
 LANGUAGES = ["C", "C++", "Go", "Java", "JavaScript", "Python"]
-N = 100
+N = 101
 
 ROOT = os.path.dirname(__file__)
 CSV_SEPARATOR = ","
