@@ -64,7 +64,9 @@ def main(args):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Runs the measurements.")
+    parser = argparse.ArgumentParser(
+        description="Generates a normalized runtime table."
+    )
 
     parser.add_argument(
         "--data",
