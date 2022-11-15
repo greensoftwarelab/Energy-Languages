@@ -51,10 +51,12 @@ def main(args):
 
         entries = []
         for language in languages:
+            baseline = averages[args.baseline][benchmark]
             if benchmark not in data[language]:
                 entries.append("")
             else:
-                text = Text(f"{averages[language][benchmark]:.2f}")
+                normalized = averages[language][benchmark] / baseline
+                text = Text(f"{normalized:.2f}")
                 if len(data[language][benchmark]) < median_n:
                     text.stylize("red")
                 entries.append(text)
