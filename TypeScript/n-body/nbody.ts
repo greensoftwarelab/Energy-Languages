@@ -5,9 +5,6 @@
    TypeScript install check, transliterated from C#
 */
 
-
-/// <reference path="../node_modules/@types/node/index.d.ts" />
-
 class NBodySystem {
    private bodies: Body[];
 

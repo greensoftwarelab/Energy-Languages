@@ -3,9 +3,6 @@
    contributed by Isaac Gouy 
 */
 
-
-/// <reference path="../node_modules/@types/node/index.d.ts" />
-
 function approximate(n: number): number {
    let u = Array(n), v = Array(n)
    for (let i=0; i<n; ++i) {

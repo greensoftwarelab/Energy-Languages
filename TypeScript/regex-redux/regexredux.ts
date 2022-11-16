@@ -5,8 +5,6 @@
    compile with tsc --lib es7 regexredux.ts
 */
 
-/// <reference path="../node_modules/@types/node/index.d.ts" />
-
 var fs = require("fs");
 
 var i = fs.readFileSync("/dev/stdin", "ascii");

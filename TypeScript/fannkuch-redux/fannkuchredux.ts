@@ -3,9 +3,6 @@
    contributed by Isaac Gouy 
 */
 
-
-/// <reference path="../node_modules/@types/node/index.d.ts" />
-
 function fannkuch(n: number): number {
    const perm = new Array(n), count = new Array(n)
 

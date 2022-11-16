@@ -4,9 +4,6 @@
    *reset*
 */
 
-
-/// <reference path="../node_modules/@types/node/index.d.ts" />
-
 class TreeNode {
    constructor(
       private left: TreeNode, 

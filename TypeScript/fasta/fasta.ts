@@ -6,9 +6,6 @@
    which was in turn based on C/Dart programs by Petr Prokhorenkov/Jos Hirth et al.
  */
 
-
-/// <reference path="../node_modules/@types/node/index.d.ts" />
-
 type Freq = { s: string; p: number; c: number; sc: number };
 
 class Out {

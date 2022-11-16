@@ -4,9 +4,6 @@
    contributed by Josh Goldfoot
 */
 
-
-/// <reference path="../node_modules/@types/node/index.d.ts" />
-
 import { createInterface } from "readline";
 
 class RefNum {

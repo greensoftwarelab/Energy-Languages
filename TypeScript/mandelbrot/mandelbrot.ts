@@ -5,8 +5,6 @@
    contributed by Isaac Gouy
 */
 
-/// <reference path="../node_modules/@types/node/index.d.ts" />
-
 const w = +process.argv[2]
 const h = w
 

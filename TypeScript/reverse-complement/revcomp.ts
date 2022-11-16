@@ -5,9 +5,6 @@
    TypeScript adaptation by Josh Goldfoot
 */
 
-
-/// <reference path="../node_modules/@types/node/index.d.ts" />
-
 class LinkedArray {
     prev: LinkedArray;
     next: LinkedArray;

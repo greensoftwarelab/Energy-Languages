@@ -1,20 +1,26 @@
-compile:
-	cp knucleotide.typescript knucleotide.ts
-	/usr/local/src/node-v7.9.0-linux-x64/bin/tsc --alwaysStrict -t ESNEXT  knucleotide.ts
-	/usr/local/src/node-v7.9.0-linux-x64/lib/node_modules/babel-cli/bin/babel.js --plugins transform-es2015-modules-commonjs knucleotide.js -o knucleotide.js
+ifndef TSC
+TSC := tsc
+endif
 
-xmeasure:
+ifndef NODE
+NODE := node
+endif
+
+compile:
+	$(TSC) --alwaysStrict -t ESNEXT knucleotide.ts
+
+measure:
 	sudo modprobe msr
-	sudo ../../RAPL/main "/usr/local/src/node-v7.9.0-linux-x64/bin/node --use_strict knucleotide.js 0 < knucleotide-input25000000.txt" TypeScript k-nucleotide
+	sudo ../../RAPL/main "$(NODE) knucleotide.js 0 < ../../knucleotide-input25000000.txt" TypeScript k-nucleotide
 
 run:
-	/usr/local/src/node-v7.9.0-linux-x64/bin/node --use_strict knucleotide.js 0 < knucleotide-input25000000.txt
+	$(NODE) knucleotide.js 0 < ../../knucleotide-input25000000.txt
 
 clean:
 	rm -rf *.js *.ts
 
 mem:
-	/usr/bin/time -v /usr/local/src/node-v7.9.0-linux-x64/bin/node --use_strict knucleotide.js 0 < knucleotide-input25000000.txt
+	/usr/bin/time -v $(NODE) knucleotide.js 0 < ../../knucleotide-input25000000.txt
 
 valgrind:
-	valgrind --tool=massif --stacks=yes /usr/local/src/node-v7.9.0-linux-x64/bin/node --use_strict knucleotide.js 0 < knucleotide-input25000000.txt
+	valgrind --tool=massif --stacks=yes $(NODE) knucleotide.js 0 < ../../knucleotide-input25000000.txt
