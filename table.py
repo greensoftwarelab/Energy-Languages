@@ -33,10 +33,13 @@ def main(args):
                     if line[i] != "":
                         data[language][benchmarks[i]].append(float(line[i]))
 
+    all_benchmarks = sorted(list(all_benchmarks))
+
     averages = {
         l: {b: statistics.mean(data[l][b]) for b in all_benchmarks if b in data[l]}
         for l in languages
     }
+
     median_n = statistics.median(
         [len(r) for language in languages for r in data[language].values()]
     )
@@ -45,11 +48,11 @@ def main(args):
     table.add_column("Benchmark")
     for language in languages:
         table.add_column(f"{language} / {args.baseline}", justify="right")
+
+    missing_benchmarks = []
     for benchmark in all_benchmarks:
         if benchmark not in data[args.baseline]:
-            text = Text(benchmark)
-            text.stylize("strike")
-            table.add_row(text)
+            missing_benchmarks.append(benchmark)
             continue
 
         entries = []
@@ -64,6 +67,11 @@ def main(args):
                     text.stylize("red")
                 entries.append(text)
         table.add_row(*(benchmark, *entries))
+
+    for benchmark in missing_benchmarks:
+        text = Text(benchmark)
+        text.stylize("strike")
+        table.add_row(text)
 
     Console().print(table)
 
