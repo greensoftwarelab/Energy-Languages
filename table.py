@@ -18,11 +18,14 @@ def main(args):
     languages.sort()
     assert args.baseline in languages
 
+    all_benchmarks = set()
+
     data = defaultdict(lambda: defaultdict(lambda: []))
     for language in languages:
         with open(os.path.join(args.data, f"{language}.csv"), "r") as f:
             reader = csv.reader(f)
             benchmarks = next(reader)
+            all_benchmarks.update(benchmarks)
             for line in reader:
                 assert len(line) == len(benchmarks)
                 for i in range(len(benchmarks)):
@@ -31,7 +34,7 @@ def main(args):
                         data[language][benchmarks[i]].append(float(line[i]))
 
     averages = {
-        l: {b: statistics.mean(data[l][b]) for b in benchmarks if b in data[l]}
+        l: {b: statistics.mean(data[l][b]) for b in all_benchmarks if b in data[l]}
         for l in languages
     }
     median_n = statistics.median(
@@ -42,7 +45,7 @@ def main(args):
     table.add_column("Benchmark")
     for language in languages:
         table.add_column(f"{language} / {args.baseline}", justify="right")
-    for benchmark in benchmarks:
+    for benchmark in all_benchmarks:
         if benchmark not in data[args.baseline]:
             text = Text(benchmark)
             text.stylize("strike")
