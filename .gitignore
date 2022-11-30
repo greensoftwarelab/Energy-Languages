@@ -7,3 +7,5 @@ lshw
 sysinfo.*
 *.o
 *_run
+!*.csproj
+!*.fsproj
