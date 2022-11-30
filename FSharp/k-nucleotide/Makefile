@@ -4,13 +4,13 @@ compile:
 
 measure:
 	sudo modprobe msr
-	sudo ../../RAPL/main "$(DOTNET) ./bin/Release/netcoreapp1.1/tmp.dll 0 < knucleotide-input25000000.txt" FSharp k-nucleotide
+	sudo ../../RAPL/main "$(DOTNET) ./bin/Release/netcoreapp1.1/tmp.dll 0 < ../../knucleotide-input25000000.txt" FSharp k-nucleotide
 
 run:
-	$(DOTNET) ./bin/Release/netcoreapp1.1/tmp.dll 0 < knucleotide-input25000000.txt
+	$(DOTNET) ./bin/Release/netcoreapp1.1/tmp.dll 0 < ../../knucleotide-input25000000.txt
 
 mem:
-	/usr/bin/time -v  $(DOTNET) ./bin/Release/netcoreapp1.1/tmp.dll 0 < knucleotide-input25000000.txt
+	/usr/bin/time -v  $(DOTNET) ./bin/Release/netcoreapp1.1/tmp.dll 0 < ../../knucleotide-input25000000.txt
 
 valgrind:
-	valgrind --tool=massif --stacks=yes  $(DOTNET) ./bin/Release/netcoreapp1.1/tmp.dll 0 < knucleotide-input25000000.txt
+	valgrind --tool=massif --stacks=yes  $(DOTNET) ./bin/Release/netcoreapp1.1/tmp.dll 0 < ../../knucleotide-input25000000.txt
