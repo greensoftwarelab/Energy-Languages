@@ -1,15 +1,15 @@
 compile:
 	cp spectralnorm.hipe-2.hipe spectralnorm.erl
-	erlc +native +"{hipe, [o3]}" spectralnorm.erl
+	$(ERLC) +native +"{hipe, [o3]}" spectralnorm.erl
 measure:
 	sudo modprobe msr
-	sudo ../../RAPL/main "erl -smp enable -noshell -run  spectralnorm main 5500" Erlang spectral-norm
+	sudo ../../RAPL/main "$(ERL) -smp enable -noshell -run  spectralnorm main 5500" Erlang spectral-norm
 
 run:
-	erl -smp enable -noshell -run  spectralnorm main 5500
+	$(ERL) -smp enable -noshell -run  spectralnorm main 5500
 
 mem:
-	/usr/bin/time -v erl -smp enable -noshell -run  spectralnorm main 5500
+	/usr/bin/time -v $(ERL) -smp enable -noshell -run  spectralnorm main 5500
 
 valgrind:
-	valgrind --tool=massif --stacks=yes erl -smp enable -noshell -run  spectralnorm main 5500
+	valgrind --tool=massif --stacks=yes $(ERL) -smp enable -noshell -run  spectralnorm main 5500
