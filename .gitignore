@@ -9,3 +9,5 @@ sysinfo.*
 *_run
 !*.csproj
 !*.fsproj
+.cache
+.vscode
