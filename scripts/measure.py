@@ -11,7 +11,7 @@ import rapl
 
 
 # Default values
-LANGUAGES = ["C", "C++", "Go", "Java", "JavaScript", "Python"]
+LANGUAGES = ["C", "C++", "Go", "Java", "JavaScript", "Python", "Java_100"]
 N = 101
 
 ROOT = os.path.join(os.path.dirname(__file__), "..")
