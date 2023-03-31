@@ -11,3 +11,4 @@ sysinfo.*
 !*.fsproj
 .cache
 .vscode
+__pycache__
