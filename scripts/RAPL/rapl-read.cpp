@@ -1,38 +1,23 @@
-/* Read the RAPL registers on recent (>sandybridge) Intel processors	*/
-/*									*/
-/* There are currently three ways to do this:				*/
-/*	1. Read the MSRs directly with /dev/cpu/??/msr			*/
-/*	2. Use the perf_event_open() interface				*/
-/*	3. Read the values from the sysfs powercap interface		*/
-/*									*/
-/* MSR Code originally based on a (never made it upstream) linux-kernel	*/
-/*	RAPL driver by Zhang Rui <rui.zhang@intel.com>			*/
-/*	https://lkml.org/lkml/2011/5/26/93				*/
-/* Additional contributions by:						*/
-/*	Romain Dolbeau -- romain @ dolbeau.org				*/
-/*									*/
-/* For raw MSR access the /dev/cpu/??/msr driver must be enabled and	*/
-/*	permissions set to allow read access.				*/
-/*	You might need to "modprobe msr" before it will work.		*/
-/*									*/
-/* Compile with:   gcc -O2 -Wall -o rapl-read rapl-read.c -lm		*/
-/*									*/
-/* Vince Weaver -- vincent.weaver @ maine.edu -- 11 September 2015	*/
-/*									*/
+// Modernized from rapl-read.c originally grabbed from Vince Weaver's website.
 
 #include <fcntl.h>
 #include <inttypes.h>
 #include <sys/stat.h>
+#include <sys/syscall.h>
 #include <sys/types.h>
 #include <unistd.h>
 
+#include <cassert>
 #include <cerrno>
 #include <cmath>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
-
-#include <sys/syscall.h>
+#include <fstream>
+#include <iostream>
+#include <sstream>
+#include <string>
+#include <unordered_set>
 
 #define MSR_RAPL_POWER_UNIT 0x606
 
@@ -76,6 +61,15 @@
 
 #define TIME_UNIT_OFFSET 0x10
 #define TIME_UNIT_MASK 0xF000
+
+namespace {
+std::string trim(std::string s) {
+  static const auto isNotSpace = [](auto c) { return !std::isspace(c); };
+  s.erase(s.begin(), std::find_if(s.begin(), s.end(), isNotSpace));
+  s.erase(std::find_if(s.rbegin(), s.rend(), isNotSpace).base(), s.end());
+  return s;
+}
+} // namespace
 
 static int open_msr(int core) {
   char msr_filename[BUFSIZ];
@@ -139,83 +133,61 @@ static long long read_msr(int fd, int which) {
 #define CPU_ATOM_DENVERTON 95
 #define CPU_ROCKETLAKE 140
 
-/* TODO: on Skylake, also may support  PSys "platform" domain,	*/
-/* the whole SoC not just the package.				*/
-/* see dcee75b3b7f025cc6765e6c92ba0a4e59a4d25f4			*/
+static const auto SUPPORTED = std::unordered_set<uint8_t>(
+    {CPU_SANDYBRIDGE,      CPU_SANDYBRIDGE_EP,  CPU_IVYBRIDGE,
+     CPU_IVYBRIDGE_EP,     CPU_HASWELL,         CPU_HASWELL_ULT,
+     CPU_HASWELL_GT3E,     CPU_HASWELL_EP,      CPU_BROADWELL,
+     CPU_BROADWELL_GT3E,   CPU_BROADWELL_EP,    CPU_BROADWELL_DE,
+     CPU_SKYLAKE,          CPU_SKYLAKE_HS,      CPU_SKYLAKE_X,
+     CPU_KNIGHTS_LANDING,  CPU_KNIGHTS_MILL,    CPU_KABYLAKE_MOBILE,
+     CPU_KABYLAKE,         CPU_ATOM_SILVERMONT, CPU_ATOM_AIRMONT,
+     CPU_ATOM_MERRIFIELD,  CPU_ATOM_MOOREFIELD, CPU_ATOM_GOLDMONT,
+     CPU_ATOM_GEMINI_LAKE, CPU_ATOM_DENVERTON,  CPU_ROCKETLAKE});
 
-static int detect_cpu(void) {
-  FILE *fff;
+namespace cpu {
+uint8_t model() {
+  uint8_t model = -1;
+  std::ifstream file("/proc/cpuinfo");
+  std::string line;
 
-  int family, model = -1;
-  char buffer[BUFSIZ], *result;
-  char vendor[BUFSIZ];
+  while (std::getline(file, line)) {
+    if (line.empty()) {
+      continue;
+    }
 
-  fff = fopen("/proc/cpuinfo", "r");
-  if (fff == NULL)
-    return -1;
+    const auto index = line.find(':');
+    assert(index != std::string::npos);
+    const auto key = trim(line.substr(0, index));
+    const auto value = trim(line.substr(index + 1));
 
-  while (1) {
-    result = fgets(buffer, BUFSIZ, fff);
-    if (result == NULL)
-      break;
-
-    if (!strncmp(result, "vendor_id", 8)) {
-      sscanf(result, "%*s%*s%s", vendor);
-
-      if (strncmp(vendor, "GenuineIntel", 12)) {
-        printf("%s not an Intel chip\n", vendor);
+    if (key == "vendor_id") {
+      if (value != "GenuineIntel") {
+        std::cout << value << " not an Intel chip" << std::endl;
         return -1;
       }
     }
 
-    if (!strncmp(result, "cpu family", 10)) {
-      sscanf(result, "%*s%*s%*s%d", &family);
+    if (key == "cpu family") {
+      const auto family = std::stoi(value);
       if (family != 6) {
-        printf("Wrong CPU family %d\n", family);
+        std::cout << "Wrong CPU family " << family << std::endl;
         return -1;
       }
     }
 
-    if (!strncmp(result, "model", 5)) {
-      sscanf(result, "%*s%*s%d", &model);
+    if (key == "model") {
+      model = std::stoi(value);
+
+      if (!SUPPORTED.contains(model)) {
+        std::cout << "Unsupported CPU model " << model << std::endl;
+        return -1;
+      }
     }
-  }
-
-  fclose(fff);
-
-  printf("Model: %d\n", model);
-
-  switch (model) {
-  case CPU_SANDYBRIDGE:
-  case CPU_SANDYBRIDGE_EP:
-  case CPU_IVYBRIDGE:
-  case CPU_IVYBRIDGE_EP:
-  case CPU_HASWELL:
-  case CPU_HASWELL_ULT:
-  case CPU_HASWELL_GT3E:
-  case CPU_HASWELL_EP:
-  case CPU_BROADWELL:
-  case CPU_BROADWELL_GT3E:
-  case CPU_BROADWELL_EP:
-  case CPU_SKYLAKE:
-  case CPU_SKYLAKE_HS:
-  case CPU_SKYLAKE_X:
-  case CPU_KABYLAKE:
-  case CPU_KABYLAKE_MOBILE:
-  case CPU_KNIGHTS_LANDING:
-  case CPU_KNIGHTS_MILL:
-  case CPU_ATOM_GOLDMONT:
-  case CPU_ATOM_GEMINI_LAKE:
-  case CPU_ATOM_DENVERTON:
-  case CPU_ROCKETLAKE:
-    break;
-  default:
-    model = -1;
-    break;
   }
 
   return model;
 }
+} // namespace cpu
 
 #define MAX_CPUS 1024
 #define MAX_PACKAGES 16
@@ -522,7 +494,7 @@ int main() {
 
   opterr = 0;
 
-  cpu_model = detect_cpu();
+  cpu_model = cpu::model();
   if (cpu_model == -1) {
     printf("Unsupported CPU model.\n");
     return -1;
