@@ -8,7 +8,7 @@ all: $(BUILDDIR)/rapl
 
 $(BUILDDIR)/rapl: rapl-read.cpp
 	mkdir -p $(BUILDDIR)
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $< $(LDLIBS)
+	$(CXX) $(CXXFLAGS) -Iinclude $(LDFLAGS) -o $@ $< $(LDLIBS)
 
 .PHONY: clean
 clean:
