@@ -1,22 +1,11 @@
 // Modernized from rapl-read.c originally grabbed from Vince Weaver's website.
 
-#include <fcntl.h>
-#include <inttypes.h>
-#include <sys/stat.h>
-#include <sys/syscall.h>
-#include <sys/types.h>
-#include <unistd.h>
-
 #include <chrono>
-#include <cmath>
-#include <cstdio>
-#include <cstdlib>
-#include <cstring>
 #include <iostream>
-#include <sstream>
-#include <string>
 #include <thread>
 #include <vector>
+
+#include <unistd.h>
 
 #include <cpu.hpp>
 #include <msr.hpp>
@@ -25,7 +14,7 @@
 
 int main() {
   if (cpu::model() == -1) {
-    printf("Unsupported CPU model.\n");
+    std::cout << "Unsupported CPU model.\n" << std::endl;
     return -1;
   }
 
