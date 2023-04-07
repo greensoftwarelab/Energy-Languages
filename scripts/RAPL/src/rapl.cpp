@@ -13,7 +13,7 @@
 
 #define MAX_PACKAGES 16
 
-int main(int argc, char* argv, char** envp) {
+int main() {
     if (cpu::model() == -1) {
         std::cout << "Unsupported CPU model.\n" << std::endl;
         return -1;
