@@ -40,7 +40,7 @@
 #define MSR_PLATFORM_ENERGY_STATUS 0x64d
 
 namespace msr {
-// The returned file descriptor should be closed by the called.
+// The returned file descriptor should be closed by the caller.
 int open(int core) {
   const auto filename = "/dev/cpu/" + std::to_string(core) + "/msr";
   const auto fd = ::open(filename.c_str(), O_RDONLY);

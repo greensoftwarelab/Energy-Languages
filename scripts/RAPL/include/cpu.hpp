@@ -2,7 +2,6 @@
 
 #include <algorithm>
 #include <cassert>
-#include <cstdint>
 #include <fstream>
 #include <iostream>
 #include <unordered_map>
