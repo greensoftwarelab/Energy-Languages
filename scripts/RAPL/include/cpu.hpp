@@ -5,6 +5,7 @@
 #include <cstdint>
 #include <fstream>
 #include <iostream>
+#include <unordered_map>
 #include <unordered_set>
 
 #define CPU_SANDYBRIDGE 42
@@ -42,10 +43,37 @@ std::string trim(std::string s) {
   s.erase(std::find_if(s.rbegin(), s.rend(), isNotSpace).base(), s.end());
   return s;
 }
+
+// Maps package # to the lowest numbered core in that package
+std::unordered_map<int, int> packages;
+
+[[maybe_unused]] void detect() {
+  if (!packages.empty()) {
+    return;
+  }
+
+  for (int i = 0;; ++i) {
+    std::ifstream file("/sys/devices/system/cpu/cpu" + std::to_string(i) +
+                       "/topology/physical_package_id");
+    if (!file) {
+      break;
+    }
+
+    int package;
+    file >> package;
+    if (!file) {
+      std::cout << "Error finding out which package CPU " << i << " belongs to"
+                << std::endl;
+      exit(1);
+    }
+
+    packages.emplace(package, i);
+  }
+}
 } // namespace
 
 namespace cpu {
-static const auto SUPPORTED = std::unordered_set<uint8_t>(
+const auto SUPPORTED = std::unordered_set<int>(
     {CPU_SANDYBRIDGE,      CPU_SANDYBRIDGE_EP,  CPU_IVYBRIDGE,
      CPU_IVYBRIDGE_EP,     CPU_HASWELL,         CPU_HASWELL_ULT,
      CPU_HASWELL_GT3E,     CPU_HASWELL_EP,      CPU_BROADWELL,
@@ -56,8 +84,8 @@ static const auto SUPPORTED = std::unordered_set<uint8_t>(
      CPU_ATOM_MERRIFIELD,  CPU_ATOM_MOOREFIELD, CPU_ATOM_GOLDMONT,
      CPU_ATOM_GEMINI_LAKE, CPU_ATOM_DENVERTON,  CPU_ROCKETLAKE});
 
-uint8_t model() {
-  uint8_t model = -1;
+int model() {
+  int model = -1;
   std::ifstream file("/proc/cpuinfo");
   std::string line;
 
@@ -97,5 +125,15 @@ uint8_t model() {
   }
 
   return model;
+}
+
+int getNPackages() {
+  detect();
+  return packages.size();
+}
+
+int getCpuForPackage(int package) {
+  detect();
+  return packages.at(package);
 }
 } // namespace cpu

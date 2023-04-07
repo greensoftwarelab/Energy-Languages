@@ -1,5 +1,6 @@
 // Modernized from rapl-read.c originally grabbed from Vince Weaver's website.
 
+#include "include/cpu.hpp"
 #include <fcntl.h>
 #include <inttypes.h>
 #include <sys/stat.h>
@@ -7,7 +8,6 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-#include <cerrno>
 #include <cmath>
 #include <cstdio>
 #include <cstdlib>
@@ -19,43 +19,7 @@
 #include <cpu.hpp>
 #include <msr.hpp>
 
-#define MAX_CPUS 1024
 #define MAX_PACKAGES 16
-
-static int total_cores = 0, total_packages = 0;
-static int package_map[MAX_PACKAGES];
-
-static int detect_packages(void) {
-  char filename[BUFSIZ];
-  FILE *fff;
-  int package;
-  int i;
-
-  for (i = 0; i < MAX_PACKAGES; i++)
-    package_map[i] = -1;
-
-  for (i = 0; i < MAX_CPUS; i++) {
-    sprintf(filename,
-            "/sys/devices/system/cpu/cpu%d/topology/physical_package_id", i);
-    fff = fopen(filename, "r");
-    if (fff == NULL)
-      break;
-    if (fscanf(fff, "%d", &package) != 1) {
-      printf("Error reading %s\n", filename);
-      exit(1);
-    }
-    fclose(fff);
-
-    if (package_map[package] == -1) {
-      total_packages++;
-      package_map[package] = i;
-    }
-  }
-
-  total_cores = i;
-
-  return 0;
-}
 
 static int rapl_msr(int core, int cpu_model) {
   int fd;
@@ -72,11 +36,6 @@ static int rapl_msr(int core, int cpu_model) {
 
   int dram_avail = 0, pp0_avail = 0, pp1_avail = 0, psys_avail = 0;
   int different_units = 0;
-
-  if (cpu_model < 0) {
-    printf("\tUnsupported CPU model %d\n", cpu_model);
-    return -1;
-  }
 
   switch (cpu_model) {
 
@@ -145,10 +104,10 @@ static int rapl_msr(int core, int cpu_model) {
     break;
   }
 
-  for (j = 0; j < total_packages; j++) {
+  for (j = 0; j < cpu::getNPackages(); j++) {
     printf("\tListing paramaters for package #%d\n", j);
 
-    fd = msr::open(package_map[j]);
+    fd = msr::open(cpu::getCpuForPackage(j));
 
     /* Calculate the units used */
     result = msr::read(fd, MSR_RAPL_POWER_UNIT);
@@ -232,9 +191,9 @@ static int rapl_msr(int core, int cpu_model) {
   }
   printf("\n");
 
-  for (j = 0; j < total_packages; j++) {
+  for (j = 0; j < cpu::getNPackages(); j++) {
 
-    fd = msr::open(package_map[j]);
+    fd = msr::open(cpu::getCpuForPackage(j));
 
     /* Package Energy */
     result = msr::read(fd, MSR_PKG_ENERGY_STATUS);
@@ -274,9 +233,9 @@ static int rapl_msr(int core, int cpu_model) {
   printf("\n\tSleeping 1 second\n\n");
   sleep(1);
 
-  for (j = 0; j < total_packages; j++) {
+  for (j = 0; j < cpu::getNPackages(); j++) {
 
-    fd = msr::open(package_map[j]);
+    fd = msr::open(cpu::getCpuForPackage(j));
 
     printf("\tPackage %d:\n", j);
 
@@ -329,8 +288,6 @@ int main() {
     printf("Unsupported CPU model.\n");
     return -1;
   }
-
-  detect_packages();
 
   result = rapl_msr(core, cpu_model);
 
