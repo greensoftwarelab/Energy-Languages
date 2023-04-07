@@ -17,83 +17,7 @@
 #include <string>
 
 #include <cpu.hpp>
-
-#define MSR_RAPL_POWER_UNIT 0x606
-
-/*
- * Platform specific RAPL Domains.
- * Note that PP1 RAPL Domain is supported on 062A only
- * And DRAM RAPL Domain is supported on 062D only
- */
-/* Package RAPL Domain */
-#define MSR_PKG_RAPL_POWER_LIMIT 0x610
-#define MSR_PKG_ENERGY_STATUS 0x611
-#define MSR_PKG_PERF_STATUS 0x613
-#define MSR_PKG_POWER_INFO 0x614
-
-/* PP0 RAPL Domain */
-#define MSR_PP0_POWER_LIMIT 0x638
-#define MSR_PP0_ENERGY_STATUS 0x639
-#define MSR_PP0_POLICY 0x63A
-#define MSR_PP0_PERF_STATUS 0x63B
-
-/* PP1 RAPL Domain, may reflect to uncore devices */
-#define MSR_PP1_POWER_LIMIT 0x640
-#define MSR_PP1_ENERGY_STATUS 0x641
-#define MSR_PP1_POLICY 0x642
-
-/* DRAM RAPL Domain */
-#define MSR_DRAM_POWER_LIMIT 0x618
-#define MSR_DRAM_ENERGY_STATUS 0x619
-#define MSR_DRAM_PERF_STATUS 0x61B
-#define MSR_DRAM_POWER_INFO 0x61C
-
-/* PSYS RAPL Domain */
-#define MSR_PLATFORM_ENERGY_STATUS 0x64d
-
-/* RAPL UNIT BITMASK */
-#define POWER_UNIT_OFFSET 0
-#define POWER_UNIT_MASK 0x0F
-
-#define ENERGY_UNIT_OFFSET 0x08
-#define ENERGY_UNIT_MASK 0x1F00
-
-#define TIME_UNIT_OFFSET 0x10
-#define TIME_UNIT_MASK 0xF000
-
-static int open_msr(int core) {
-  char msr_filename[BUFSIZ];
-  int fd;
-
-  sprintf(msr_filename, "/dev/cpu/%d/msr", core);
-  fd = open(msr_filename, O_RDONLY);
-  if (fd < 0) {
-    if (errno == ENXIO) {
-      fprintf(stderr, "rdmsr: No CPU %d\n", core);
-      exit(1);
-    } else if (errno == EIO) {
-      fprintf(stderr, "rdmsr: CPU %d doesn't support MSRs\n", core);
-      exit(1);
-    } else {
-      perror("rdmsr:open");
-      fprintf(stderr, "Trying to open %s\n", msr_filename);
-      exit(1);
-    }
-  }
-
-  return fd;
-}
-
-static long long read_msr(int fd, int which) {
-  uint64_t data;
-
-  if (pread(fd, &data, sizeof data, which) != sizeof data) {
-    perror("rdmsr:pread");
-    exit(1);
-  }
-
-  return (long long)data;
-}
+#include <msr.hpp>
 
 #define MAX_CPUS 1024
 #define MAX_PACKAGES 16
@@ -224,10 +148,10 @@ static int rapl_msr(int core, int cpu_model) {
   for (j = 0; j < total_packages; j++) {
     printf("\tListing paramaters for package #%d\n", j);
 
-    fd = open_msr(package_map[j]);
+    fd = msr::open(package_map[j]);
 
     /* Calculate the units used */
-    result = read_msr(fd, MSR_RAPL_POWER_UNIT);
+    result = msr::read(fd, MSR_RAPL_POWER_UNIT);
 
     power_units = pow(0.5, (double)(result & 0xf));
     cpu_energy_units[j] = pow(0.5, (double)((result >> 8) & 0x1f));
@@ -250,7 +174,7 @@ static int rapl_msr(int core, int cpu_model) {
     printf("\n");
 
     /* Show package power info */
-    result = read_msr(fd, MSR_PKG_POWER_INFO);
+    result = msr::read(fd, MSR_PKG_POWER_INFO);
     thermal_spec_power = power_units * (double)(result & 0x7fff);
     printf("\t\tPackage thermal spec: %.3fW\n", thermal_spec_power);
     minimum_power = power_units * (double)((result >> 16) & 0x7fff);
@@ -261,7 +185,7 @@ static int rapl_msr(int core, int cpu_model) {
     printf("\t\tPackage maximum time window: %.6fs\n", time_window);
 
     /* Show package power limit */
-    result = read_msr(fd, MSR_PKG_RAPL_POWER_LIMIT);
+    result = msr::read(fd, MSR_PKG_RAPL_POWER_LIMIT);
     printf("\t\tPackage power limits are %s\n",
            (result >> 63) ? "locked" : "unlocked");
     double pkg_power_limit_1 = power_units * (double)((result >> 0) & 0x7FFF);
@@ -279,7 +203,7 @@ static int rapl_msr(int core, int cpu_model) {
 
     /* only available on *Bridge-EP */
     if ((cpu_model == CPU_SANDYBRIDGE_EP) || (cpu_model == CPU_IVYBRIDGE_EP)) {
-      result = read_msr(fd, MSR_PKG_PERF_STATUS);
+      result = msr::read(fd, MSR_PKG_PERF_STATUS);
       double acc_pkg_throttled_time = (double)result * time_units;
       printf("\tAccumulated Package Throttled Time : %.6fs\n",
              acc_pkg_throttled_time);
@@ -287,19 +211,19 @@ static int rapl_msr(int core, int cpu_model) {
 
     /* only available on *Bridge-EP */
     if ((cpu_model == CPU_SANDYBRIDGE_EP) || (cpu_model == CPU_IVYBRIDGE_EP)) {
-      result = read_msr(fd, MSR_PP0_PERF_STATUS);
+      result = msr::read(fd, MSR_PP0_PERF_STATUS);
       double acc_pp0_throttled_time = (double)result * time_units;
       printf("\tPowerPlane0 (core) Accumulated Throttled Time "
              ": %.6fs\n",
              acc_pp0_throttled_time);
 
-      result = read_msr(fd, MSR_PP0_POLICY);
+      result = msr::read(fd, MSR_PP0_POLICY);
       int pp0_policy = (int)result & 0x001f;
       printf("\tPowerPlane0 (core) for core %d policy: %d\n", core, pp0_policy);
     }
 
     if (pp1_avail) {
-      result = read_msr(fd, MSR_PP1_POLICY);
+      result = msr::read(fd, MSR_PP1_POLICY);
       int pp1_policy = (int)result & 0x001f;
       printf("\tPowerPlane1 (on-core GPU if avail) %d policy: %d\n", core,
              pp1_policy);
@@ -310,37 +234,37 @@ static int rapl_msr(int core, int cpu_model) {
 
   for (j = 0; j < total_packages; j++) {
 
-    fd = open_msr(package_map[j]);
+    fd = msr::open(package_map[j]);
 
     /* Package Energy */
-    result = read_msr(fd, MSR_PKG_ENERGY_STATUS);
+    result = msr::read(fd, MSR_PKG_ENERGY_STATUS);
     package_before[j] = (double)result * cpu_energy_units[j];
 
     /* PP0 energy */
     /* Not available on Knights* */
     /* Always returns zero on Haswell-EP? */
     if (pp0_avail) {
-      result = read_msr(fd, MSR_PP0_ENERGY_STATUS);
+      result = msr::read(fd, MSR_PP0_ENERGY_STATUS);
       pp0_before[j] = (double)result * cpu_energy_units[j];
     }
 
     /* PP1 energy */
     /* not available on *Bridge-EP */
     if (pp1_avail) {
-      result = read_msr(fd, MSR_PP1_ENERGY_STATUS);
+      result = msr::read(fd, MSR_PP1_ENERGY_STATUS);
       pp1_before[j] = (double)result * cpu_energy_units[j];
     }
 
     /* Updated documentation (but not the Vol3B) says Haswell and	*/
     /* Broadwell have DRAM support too				*/
     if (dram_avail) {
-      result = read_msr(fd, MSR_DRAM_ENERGY_STATUS);
+      result = msr::read(fd, MSR_DRAM_ENERGY_STATUS);
       dram_before[j] = (double)result * dram_energy_units[j];
     }
 
     /* Skylake and newer for Psys				*/
     if (psys_avail) {
-      result = read_msr(fd, MSR_PLATFORM_ENERGY_STATUS);
+      result = msr::read(fd, MSR_PLATFORM_ENERGY_STATUS);
       psys_before[j] = (double)result * cpu_energy_units[j];
     }
 
@@ -352,34 +276,34 @@ static int rapl_msr(int core, int cpu_model) {
 
   for (j = 0; j < total_packages; j++) {
 
-    fd = open_msr(package_map[j]);
+    fd = msr::open(package_map[j]);
 
     printf("\tPackage %d:\n", j);
 
-    result = read_msr(fd, MSR_PKG_ENERGY_STATUS);
+    result = msr::read(fd, MSR_PKG_ENERGY_STATUS);
     package_after[j] = (double)result * cpu_energy_units[j];
     printf("\t\tPackage energy: %.6fJ\n", package_after[j] - package_before[j]);
 
-    result = read_msr(fd, MSR_PP0_ENERGY_STATUS);
+    result = msr::read(fd, MSR_PP0_ENERGY_STATUS);
     pp0_after[j] = (double)result * cpu_energy_units[j];
     printf("\t\tPowerPlane0 (cores): %.6fJ\n", pp0_after[j] - pp0_before[j]);
 
     /* not available on SandyBridge-EP */
     if (pp1_avail) {
-      result = read_msr(fd, MSR_PP1_ENERGY_STATUS);
+      result = msr::read(fd, MSR_PP1_ENERGY_STATUS);
       pp1_after[j] = (double)result * cpu_energy_units[j];
       printf("\t\tPowerPlane1 (on-core GPU if avail): %.6f J\n",
              pp1_after[j] - pp1_before[j]);
     }
 
     if (dram_avail) {
-      result = read_msr(fd, MSR_DRAM_ENERGY_STATUS);
+      result = msr::read(fd, MSR_DRAM_ENERGY_STATUS);
       dram_after[j] = (double)result * dram_energy_units[j];
       printf("\t\tDRAM: %.6fJ\n", dram_after[j] - dram_before[j]);
     }
 
     if (psys_avail) {
-      result = read_msr(fd, MSR_PLATFORM_ENERGY_STATUS);
+      result = msr::read(fd, MSR_PLATFORM_ENERGY_STATUS);
       psys_after[j] = (double)result * cpu_energy_units[j];
       printf("\t\tPSYS: %.6fJ\n", psys_after[j] - psys_before[j]);
     }
