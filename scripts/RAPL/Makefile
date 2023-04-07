@@ -6,7 +6,7 @@ BUILDDIR := build
 .PHONY: all
 all: $(BUILDDIR)/rapl
 
-$(BUILDDIR)/rapl: rapl-read.cpp
+$(BUILDDIR)/rapl: rapl.cpp
 	mkdir -p $(BUILDDIR)
 	$(CXX) $(CXXFLAGS) -Iinclude $(LDFLAGS) -o $@ $< $(LDLIBS)
 
