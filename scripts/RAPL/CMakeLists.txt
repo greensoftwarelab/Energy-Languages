@@ -8,6 +8,7 @@ set(CMAKE_CXX_STANDARD 20)
 
 add_executable(rapl src/rapl.cpp)
 target_include_directories(rapl PRIVATE include)
+target_link_libraries(rapl PRIVATE m)
 
 target_compile_options(rapl PRIVATE -Wall -Wextra -Wpedantic -Werror)
 

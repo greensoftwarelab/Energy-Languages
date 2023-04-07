@@ -1,6 +1,7 @@
 // Modernized from rapl-read.c originally grabbed from Vince Weaver's website.
 
 #include <chrono>
+#include <cmath>
 #include <iostream>
 #include <thread>
 #include <vector>
