@@ -44,29 +44,33 @@ std::string trim(std::string s) {
 }
 
 // Maps package # to the lowest numbered core in that package
-std::unordered_map<int, int> packages;
+static std::unordered_map<int, int> packages;
 
-void detect() {
-    if (!packages.empty()) {
-        return;
-    }
-
-    for (int i = 0;; ++i) {
-        std::ifstream file("/sys/devices/system/cpu/cpu" + std::to_string(i) + "/topology/physical_package_id");
-        if (!file) {
-            break;
+struct Initialization {
+    Initialization() {
+        if (!packages.empty()) {
+            return;
         }
 
-        int package;
-        file >> package;
-        if (!file) {
-            std::cerr << "Error finding out which package CPU " << i << " belongs to" << std::endl;
-            exit(1);
-        }
+        for (int i = 0;; ++i) {
+            std::ifstream file("/sys/devices/system/cpu/cpu" + std::to_string(i) + "/topology/physical_package_id");
+            if (!file) {
+                break;
+            }
 
-        packages.emplace(package, i);
+            int package;
+            file >> package;
+            if (!file) {
+                std::cerr << "Error finding out which package CPU " << i << " belongs to" << std::endl;
+                exit(1);
+            }
+
+            packages.emplace(package, i);
+        }
     }
-}
+};
+
+static const Initialization _;
 } // namespace
 
 namespace cpu {
@@ -121,13 +125,7 @@ int model() {
     return model;
 }
 
-int getNPackages() {
-    detect();
-    return packages.size();
-}
+int getNPackages() { return packages.size(); }
 
-int getCpuForPackage(int package) {
-    detect();
-    return packages.at(package);
-}
+int getCpuForPackage(int package) { return packages.at(package); }
 } // namespace cpu
