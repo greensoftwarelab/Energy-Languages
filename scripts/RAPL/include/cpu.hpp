@@ -46,7 +46,7 @@ std::string trim(std::string s) {
 // Maps package # to the lowest numbered core in that package
 std::unordered_map<int, int> packages;
 
-[[maybe_unused]] void detect() {
+void detect() {
     if (!packages.empty()) {
         return;
     }
