@@ -1,8 +1,14 @@
 // Modernized from rapl-read.c originally grabbed from Vince Weaver's website.
 
+#include <cassert>
+#include <cerrno>
 #include <chrono>
 #include <cmath>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 #include <iostream>
+#include <mutex>
 #include <thread>
 #include <vector>
 
@@ -11,11 +17,21 @@
 #include <cpu.hpp>
 #include <msr.hpp>
 
-#define MAX_PACKAGES 16
+void aggregate(msr::Sample& total, const msr::Sample& sample) {
+    assert(total.size() == sample.size());
+    for (size_t i = 0; i < sample.size(); ++i) {
+        total[i] += sample[i];
+    }
+}
 
-int main() {
+int main(int argc, char* argv[]) {
+    if (argc < 2) {
+        std::cerr << "Usage: ./rapl <command> [args...]" << std::endl;
+        exit(1);
+    }
+
     if (cpu::model() == -1) {
-        std::cout << "Unsupported CPU model.\n" << std::endl;
+        std::cerr << "Unsupported CPU model.\n" << std::endl;
         return -1;
     }
 
@@ -27,22 +43,44 @@ int main() {
         close(fd);
     }
 
+    msr::Sample total = {0, 0, 0, 0, 0};
     std::vector<msr::Sample> previous;
+    std::mutex previous_lock;
 
     for (int package = 0; package < cpu::getNPackages(); ++package) {
         previous.emplace_back(msr::sample(package));
     }
 
-    for (;;) {
-        using namespace std::chrono_literals;
-        std::this_thread::sleep_for(1s);
-
+    std::thread subprocess = std::thread([&argv]() {
+        if (system(argv[1]) == -1) {
+            std::cerr << "Failed to execute command: " << strerror(errno) << std::endl;
+            exit(1);
+        }
+    });
+    std::thread joiner = std::thread([&]() {
+        subprocess.join();
+        std::lock_guard<std::mutex> guard(previous_lock);
         for (int package = 0; package < cpu::getNPackages(); ++package) {
             const auto sample = msr::sample(package);
-            for (int i = 0; i < 5; i++) {
-                std::cout << (sample[i] - previous[package][i]) * energy_units[package] << " ";
-            }
-            std::cout << std::endl;
+            aggregate(total, msr::delta(previous[package], sample));
+            previous[package] = sample;
+        }
+
+        std::cerr << "Subprocess exited." << std::endl;
+        for (size_t i = 0; i < total.size(); ++i) {
+            std::cerr << "Energy consumed: " << energy_units[0] * total[i] << " Joules" << std::endl;
+        }
+        exit(0);
+    });
+
+    for (;;) {
+        using namespace std::chrono_literals;
+        std::this_thread::sleep_for(10s);
+
+        std::lock_guard<std::mutex> guard(previous_lock);
+        for (int package = 0; package < cpu::getNPackages(); ++package) {
+            const auto sample = msr::sample(package);
+            aggregate(total, msr::delta(previous[package], sample));
             previous[package] = sample;
         }
     }

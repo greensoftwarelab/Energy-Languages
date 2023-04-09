@@ -60,7 +60,7 @@ std::unordered_map<int, int> packages;
         int package;
         file >> package;
         if (!file) {
-            std::cout << "Error finding out which package CPU " << i << " belongs to" << std::endl;
+            std::cerr << "Error finding out which package CPU " << i << " belongs to" << std::endl;
             exit(1);
         }
 
@@ -95,7 +95,7 @@ int model() {
 
         if (key == "vendor_id") {
             if (value != "GenuineIntel") {
-                std::cout << value << " not an Intel chip" << std::endl;
+                std::cerr << value << " not an Intel chip" << std::endl;
                 return -1;
             }
         }
@@ -103,7 +103,7 @@ int model() {
         if (key == "cpu family") {
             const auto family = std::stoi(value);
             if (family != 6) {
-                std::cout << "Wrong CPU family " << family << std::endl;
+                std::cerr << "Wrong CPU family " << family << std::endl;
                 return -1;
             }
         }
@@ -112,7 +112,7 @@ int model() {
             model = std::stoi(value);
 
             if (!SUPPORTED.contains(model)) {
-                std::cout << "Unsupported CPU model " << model << std::endl;
+                std::cerr << "Unsupported CPU model " << model << std::endl;
                 return -1;
             }
         }

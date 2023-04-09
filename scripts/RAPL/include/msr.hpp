@@ -47,13 +47,13 @@ int open(int core) {
 
     if (fd < 0) {
         if (errno == ENXIO) {
-            std::cout << "No CPU " << core << std::endl;
+            std::cerr << "No CPU " << core << std::endl;
             exit(1);
         } else if (errno == EIO) {
-            std::cout << "CPU " << core << " doesn't support MSRs" << std::endl;
+            std::cerr << "CPU " << core << " doesn't support MSRs" << std::endl;
             exit(1);
         } else {
-            std::cout << "Error opening " << filename << std::endl;
+            std::cerr << "Error opening " << filename << std::endl;
             exit(1);
         }
     }
@@ -65,7 +65,7 @@ int64_t read(int fd, int which) {
     int64_t data;
 
     if (pread(fd, &data, sizeof data, which) != sizeof data) {
-        std::cout << "Error reading MSR" << std::endl;
+        std::cerr << "Error reading MSR" << std::endl;
         exit(1);
     }
 
@@ -89,5 +89,13 @@ Sample sample(int package) {
     close(fd);
 
     return sample;
+}
+
+Sample delta(const Sample& previous, const Sample& current) {
+    Sample delta;
+    for (size_t i = 0; i < delta.size(); ++i) {
+        delta[i] = current[i] - previous[i];
+    }
+    return delta;
 }
 } // namespace msr

@@ -6,9 +6,12 @@ project(RAPL)
 
 set(CMAKE_CXX_STANDARD 20)
 
+find_package(Threads REQUIRED)
+
 add_executable(rapl src/rapl.cpp)
 target_include_directories(rapl PRIVATE include)
 target_link_libraries(rapl PRIVATE m)
+target_link_libraries(rapl PRIVATE Threads::Threads)
 
 add_executable(rapl-read src/rapl-read.c)
 target_link_libraries(rapl-read PRIVATE m)
