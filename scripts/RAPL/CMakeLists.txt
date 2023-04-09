@@ -8,7 +8,7 @@ set(CMAKE_CXX_STANDARD 20)
 
 find_package(Threads REQUIRED)
 
-add_executable(rapl src/rapl.cpp src/cpu.cpp)
+add_executable(rapl src/rapl.cpp src/cpu.cpp src/msr.cpp)
 target_include_directories(rapl PRIVATE include)
 target_link_libraries(rapl PRIVATE m)
 target_link_libraries(rapl PRIVATE Threads::Threads)
