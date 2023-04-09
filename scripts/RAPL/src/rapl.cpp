@@ -38,7 +38,7 @@ int main(int argc, char* argv[]) {
 
     std::vector<double> energy_units(cpu::getNPackages());
     for (int j = 0; j < cpu::getNPackages(); j++) {
-        const auto fd = msr::open(cpu::getCpuForPackage(j));
+        const auto fd = msr::open(cpu::getLowestNumberedCpuForPackage(j));
         const auto result = msr::read(fd, MSR_RAPL_POWER_UNIT);
         energy_units[j] = pow(0.5, (double) ((result >> 8) & 0x1f));
         close(fd);

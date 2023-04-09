@@ -62,7 +62,7 @@ struct Sample {
 // Contains sample values for the package, PP0, PP1, DRAM, and PSYS domains.
 // The samples should be multiplied by the appropriate energy unit.
 Sample sample(int package) {
-    const auto fd = msr::open(cpu::getCpuForPackage(package));
+    const auto fd = msr::open(cpu::getLowestNumberedCpuForPackage(package));
 
     Sample sample{.pkg = msr::read(fd, MSR_PKG_ENERGY_STATUS),
                   .pp0 = msr::read(fd, MSR_PP0_ENERGY_STATUS),
