@@ -72,19 +72,24 @@ int64_t read(int fd, int which) {
     return data;
 }
 
-using Sample = std::array<int64_t, 5>;
+struct Sample {
+    int64_t pkg;
+    int64_t pp0;
+    int64_t pp1;
+    int64_t dram;
+    int64_t psys;
+};
 
 // Contains sample values for the package, PP0, PP1, DRAM, and PSYS domains.
 // The samples should be multiplied by the appropriate energy unit.
 Sample sample(int package) {
     const auto fd = msr::open(cpu::getCpuForPackage(package));
 
-    Sample sample;
-    sample[0] = msr::read(fd, MSR_PKG_ENERGY_STATUS);
-    sample[1] = msr::read(fd, MSR_PP0_ENERGY_STATUS);
-    sample[2] = msr::read(fd, MSR_PP1_ENERGY_STATUS);
-    sample[3] = msr::read(fd, MSR_DRAM_ENERGY_STATUS);
-    sample[4] = msr::read(fd, MSR_PLATFORM_ENERGY_STATUS);
+    Sample sample{.pkg = msr::read(fd, MSR_PKG_ENERGY_STATUS),
+                  .pp0 = msr::read(fd, MSR_PP0_ENERGY_STATUS),
+                  .pp1 = msr::read(fd, MSR_PP1_ENERGY_STATUS),
+                  .dram = msr::read(fd, MSR_DRAM_ENERGY_STATUS),
+                  .psys = msr::read(fd, MSR_PLATFORM_ENERGY_STATUS)};
 
     close(fd);
 
@@ -92,10 +97,10 @@ Sample sample(int package) {
 }
 
 Sample delta(const Sample& previous, const Sample& current) {
-    Sample delta;
-    for (size_t i = 0; i < delta.size(); ++i) {
-        delta[i] = current[i] - previous[i];
-    }
-    return delta;
+    return {.pkg = current.pkg - previous.pkg,
+            .pp0 = current.pp0 - previous.pp0,
+            .pp1 = current.pp1 - previous.pp1,
+            .dram = current.dram - previous.dram,
+            .psys = current.psys - previous.psys};
 }
 } // namespace msr

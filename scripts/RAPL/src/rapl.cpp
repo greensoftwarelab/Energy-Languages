@@ -18,10 +18,11 @@
 #include <msr.hpp>
 
 void aggregate(msr::Sample& total, const msr::Sample& sample) {
-    assert(total.size() == sample.size());
-    for (size_t i = 0; i < sample.size(); ++i) {
-        total[i] += sample[i];
-    }
+    total.pkg += sample.pkg;
+    total.pp0 += sample.pp0;
+    total.pp1 += sample.pp1;
+    total.dram += sample.dram;
+    total.psys += sample.psys;
 }
 
 int main(int argc, char* argv[]) {
@@ -43,6 +44,8 @@ int main(int argc, char* argv[]) {
         close(fd);
     }
 
+    // TODO: This should be doubles. Otherwise there is no reason to ever sample at fixed time, this will overflow just
+    // the same.
     msr::Sample total = {0, 0, 0, 0, 0};
     std::vector<msr::Sample> previous;
     std::mutex previous_lock;
@@ -51,7 +54,7 @@ int main(int argc, char* argv[]) {
         previous.emplace_back(msr::sample(package));
     }
 
-    std::thread subprocess = std::thread([&argv]() {
+    std::thread subprocess = std::thread([&]() {
         if (system(argv[1]) == -1) {
             std::cerr << "Failed to execute command: " << strerror(errno) << std::endl;
             exit(1);
@@ -66,10 +69,16 @@ int main(int argc, char* argv[]) {
             previous[package] = sample;
         }
 
-        std::cerr << "Subprocess exited." << std::endl;
-        for (size_t i = 0; i < total.size(); ++i) {
-            std::cerr << "Energy consumed: " << energy_units[0] * total[i] << " Joules" << std::endl;
+        for (int package = 0; package < cpu::getNPackages(); ++package) {
+            std::cerr << "Package " << package << ":" << std::endl;
+            std::cerr << "\tPKG  Energy: " << energy_units[package] * total.pkg << "J" << std::endl;
+            std::cerr << "\tPP0  Energy: " << energy_units[package] * total.pp0 << "J" << std::endl;
+            std::cerr << "\tPP1  Energy: " << energy_units[package] * total.pp1 << "J" << std::endl;
+            std::cerr << "\tDRAM Energy: " << energy_units[package] * total.dram << "J" << std::endl;
+            std::cerr << "\tPSYS Energy: " << energy_units[package] * total.psys << "J" << std::endl;
+            std::cout << std::endl;
         }
+
         exit(0);
     });
 
