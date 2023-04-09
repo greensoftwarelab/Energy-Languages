@@ -17,11 +17,10 @@ public class binarytrees {
     private static final int MIN_DEPTH = 4;
     
     public static void main(final String[] args) throws Exception {
-        // java-100 loop inserted here:
-        for (int java100Iterations = 0; java100Iterations < 100; java100Iterations++) {
+        // Number of iterations: NNNNN (will be replaced when running make)
+        for (int java100Iterations = 0; java100Iterations < NNNNN; java100Iterations++) {
             final ExecutorService EXECUTOR_SERVICE = 
                 Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());  // set number of threads
-            System.err.println("Iteration: " + java100Iterations);
 
             int n = 0;
             if (0 < args.length) {
