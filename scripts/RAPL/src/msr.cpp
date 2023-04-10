@@ -63,11 +63,23 @@ int64_t msr::read(int fd, int which) {
 msr::Sample msr::sample(int package) {
     const auto fd = msr::open(cpu::getLowestNumberedCpuForPackage(package));
 
-    Sample sample{.pkg = getEnergyUnitForPackage(package) * msr::read(fd, MSR_PKG_ENERGY_STATUS),
-                  .pp0 = getEnergyUnitForPackage(package) * msr::read(fd, MSR_PP0_ENERGY_STATUS),
-                  .pp1 = getEnergyUnitForPackage(package) * msr::read(fd, MSR_PP1_ENERGY_STATUS),
-                  .dram = getEnergyUnitForPackage(package) * msr::read(fd, MSR_DRAM_ENERGY_STATUS),
-                  .psys = getEnergyUnitForPackage(package) * msr::read(fd, MSR_PLATFORM_ENERGY_STATUS)};
+    Sample sample{
+#ifdef RAPL_MSR_PKG_SUPPORTED
+        .pkg = getEnergyUnitForPackage(package) * msr::read(fd, MSR_PKG_ENERGY_STATUS),
+#endif
+#ifdef RAPL_MSR_PP0_SUPPORTED
+        .pp0 = getEnergyUnitForPackage(package) * msr::read(fd, MSR_PP0_ENERGY_STATUS),
+#endif
+#ifdef RAPL_MSR_PP1_SUPPORTED
+        .pp1 = getEnergyUnitForPackage(package) * msr::read(fd, MSR_PP1_ENERGY_STATUS),
+#endif
+#ifdef RAPL_MSR_DRAM_SUPPORTED
+        .dram = getEnergyUnitForPackage(package) * msr::read(fd, MSR_DRAM_ENERGY_STATUS),
+#endif
+#ifdef RAPL_MSR_PSYS_SUPPORTED
+        .psys = getEnergyUnitForPackage(package) * msr::read(fd, MSR_PLATFORM_ENERGY_STATUS),
+#endif
+    };
 
     close(fd);
 
@@ -75,9 +87,21 @@ msr::Sample msr::sample(int package) {
 }
 
 msr::Sample msr::delta(const msr::Sample& previous, const msr::Sample& current) {
-    return {.pkg = current.pkg - previous.pkg,
-            .pp0 = current.pp0 - previous.pp0,
-            .pp1 = current.pp1 - previous.pp1,
-            .dram = current.dram - previous.dram,
-            .psys = current.psys - previous.psys};
+    return {
+#ifdef RAPL_MSR_PKG_SUPPORTED
+        .pkg = current.pkg - previous.pkg,
+#endif
+#ifdef RAPL_MSR_PP0_SUPPORTED
+        .pp0 = current.pp0 - previous.pp0,
+#endif
+#ifdef RAPL_MSR_PP1_SUPPORTED
+        .pp1 = current.pp1 - previous.pp1,
+#endif
+#ifdef RAPL_MSR_DRAM_SUPPORTED
+        .dram = current.dram - previous.dram,
+#endif
+#ifdef RAPL_MSR_PSYS_SUPPORTED
+        .psys = current.psys - previous.psys,
+#endif
+    };
 }

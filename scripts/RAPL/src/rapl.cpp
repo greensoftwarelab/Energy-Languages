@@ -59,15 +59,32 @@ struct Result {
 template <>
 struct glz::meta<msr::Sample> {
     using T = msr::Sample;
-    [[maybe_unused]] static constexpr auto value
-        = object("pkg", &T::pkg, "pp0", &T::pp0, "pp1", &T::pp1, "dram", &T::dram, "psys", &T::psys);
+    // clang-format off
+    [[maybe_unused]] static constexpr auto value = std::apply([](auto... args) { return glz::object(args...); }, std::tuple{
+#ifdef RAPL_MSR_PKG_SUPPORTED
+        "pkg", &T::pkg,
+#endif
+#ifdef RAPL_MSR_PP0_SUPPORTED
+        "pp0", &T::pp0,
+#endif
+#ifdef RAPL_MSR_PP1_SUPPORTED
+        "pp1", &T::pp1,
+#endif
+#ifdef RAPL_MSR_DRAM_SUPPORTED
+        "dram", &T::dram,
+#endif
+#ifdef RAPL_MSR_PSYS_SUPPORTED
+        "psys", &T::psys,
+#endif
+    });
+    // clang-format on
 };
 
 template <>
 struct glz::meta<Result> {
     using T = Result;
     [[maybe_unused]] static constexpr auto value
-        = object("runtime", &T::runtime, "energy", &T::energy, "cycles", &T::cycles);
+        = glz::object("runtime", &T::runtime, "energy", &T::energy, "cycles", &T::cycles);
 };
 
 int main(int argc, char* argv[]) {
