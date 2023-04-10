@@ -1,1 +1,1 @@
-CXXFLAGS := -O3 -DNDEBUG -fomit-frame-pointer -march=native -mtune=native
+CXXFLAGS := -O3 -DNDEBUG -march=native -mtune=native
