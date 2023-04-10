@@ -54,15 +54,11 @@ int main(int argc, char* argv[]) {
             previous[package] = sample;
         }
 
-        for (int package = 0; package < cpu::getNPackages(); ++package) {
-            std::cerr << "Package " << package << ":" << std::endl;
-            std::cerr << "\tPKG  Energy: " << total.pkg << "J" << std::endl;
-            std::cerr << "\tPP0  Energy: " << total.pp0 << "J" << std::endl;
-            std::cerr << "\tPP1  Energy: " << total.pp1 << "J" << std::endl;
-            std::cerr << "\tDRAM Energy: " << total.dram << "J" << std::endl;
-            std::cerr << "\tPSYS Energy: " << total.psys << "J" << std::endl;
-            std::cout << std::endl;
-        }
+        std::cerr << "PKG  Energy: " << total.pkg << "J" << std::endl;
+        std::cerr << "PP0  Energy: " << total.pp0 << "J" << std::endl;
+        std::cerr << "PP1  Energy: " << total.pp1 << "J" << std::endl;
+        std::cerr << "DRAM Energy: " << total.dram << "J" << std::endl;
+        std::cerr << "PSYS Energy: " << total.psys << "J" << std::endl;
 
         exit(0);
     });
