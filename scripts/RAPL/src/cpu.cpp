@@ -43,6 +43,8 @@ const std::unordered_map<int, int>& getLowestNumberedCpuByPackageMap() {
 };
 } // namespace
 
+// Note: This may not mork in multi-CPU configurations with different models.
+// Such systems are not common.
 int cpu::model() {
     int model = -1;
     std::ifstream file("/proc/cpuinfo");
