@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <mutex>
+#include <ratio>
 #include <thread>
 #include <vector>
 
@@ -36,9 +37,11 @@ void aggregate(msr::Sample& total, const msr::Sample& sample) {
     total.psys += sample.psys;
 }
 
+using Clock = std::chrono::high_resolution_clock;
+
 int main(int argc, char* argv[]) {
     if (argc < 2) {
-        std::cerr << "Usage: ./rapl <command> [args...]" << std::endl;
+        std::cerr << "Usage: ./rapl '<command> [args...]'" << std::endl;
         return 1;
     }
 
@@ -67,7 +70,10 @@ int main(int argc, char* argv[]) {
         }
     });
 
+    const auto start = Clock::now();
     const auto status = system(argv[1]);
+    const auto end = Clock::now();
+
     if (status != 0) {
         return 1;
     }
@@ -78,11 +84,13 @@ int main(int argc, char* argv[]) {
         aggregate(total, msr::delta(previous[package], sample));
     }
 
-    std::cerr << "PKG  Energy: " << total.pkg << "J" << std::endl;
-    std::cerr << "PP0  Energy: " << total.pp0 << "J" << std::endl;
-    std::cerr << "PP1  Energy: " << total.pp1 << "J" << std::endl;
-    std::cerr << "DRAM Energy: " << total.dram << "J" << std::endl;
-    std::cerr << "PSYS Energy: " << total.psys << "J" << std::endl;
+    const auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+    std::cerr << "Time elapsed: " << elapsed << "ms" << std::endl;
+    std::cerr << "PKG  Energy : " << total.pkg << "J" << std::endl;
+    std::cerr << "PP0  Energy : " << total.pp0 << "J" << std::endl;
+    std::cerr << "PP1  Energy : " << total.pp1 << "J" << std::endl;
+    std::cerr << "DRAM Energy : " << total.dram << "J" << std::endl;
+    std::cerr << "PSYS Energy : " << total.psys << "J" << std::endl;
 
     timer.kill();
     subprocess.join();
