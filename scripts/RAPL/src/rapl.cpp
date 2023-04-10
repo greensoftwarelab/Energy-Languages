@@ -1,9 +1,7 @@
 // Modernized from rapl-read.c originally grabbed from Vince Weaver's website.
 
-#include <cerrno>
 #include <chrono>
 #include <cstdlib>
-#include <cstring>
 #include <iostream>
 #include <mutex>
 #include <thread>
