@@ -33,6 +33,28 @@ const std::unordered_map<int, int>& getLowestNumberedCpuByPackageMap() {
 };
 } // namespace
 
+int cpu::getNCpus() {
+    static const auto n = []() {
+        std::ifstream file("/proc/cpuinfo");
+        if (!file) {
+            std::cerr << "Error opening /proc/cpuinfo" << std::endl;
+            exit(1);
+        }
+
+        int n;
+        std::string line;
+        while (std::getline(file, line)) {
+            if (line.starts_with("processor")) {
+                ++n;
+            }
+        }
+
+        return n;
+    }();
+
+    return n;
+}
+
 int cpu::getNPackages() {
     return getLowestNumberedCpuByPackageMap().size();
 }
