@@ -1,8 +1,8 @@
 #include <msr.hpp>
 
-#include <array>
 #include <cerrno>
 #include <cmath>
+#include <cstdlib>
 #include <iostream>
 #include <string>
 #include <vector>

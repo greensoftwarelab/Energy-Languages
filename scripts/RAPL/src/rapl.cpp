@@ -1,17 +1,13 @@
 // Modernized from rapl-read.c originally grabbed from Vince Weaver's website.
 
-#include <cassert>
 #include <cerrno>
 #include <chrono>
-#include <cstdio>
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
 #include <mutex>
 #include <thread>
 #include <vector>
-
-#include <unistd.h>
 
 #include <cpu.hpp>
 #include <msr.hpp>
@@ -35,8 +31,6 @@ int main(int argc, char* argv[]) {
         return -1;
     }
 
-    // TODO: This should be doubles. Otherwise there is no reason to ever sample at fixed time, this will overflow just
-    // the same.
     msr::Sample total = {0, 0, 0, 0, 0};
     std::vector<msr::Sample> previous;
     std::mutex previous_lock;

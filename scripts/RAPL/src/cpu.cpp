@@ -2,8 +2,11 @@
 
 #include <algorithm>
 #include <cassert>
+#include <cctype>
+#include <cstdlib>
 #include <fstream>
 #include <iostream>
+#include <string>
 #include <unordered_map>
 
 namespace {
