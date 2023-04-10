@@ -3,7 +3,7 @@ import os
 import subprocess
 import sys
 
-from rich.progress import Progress
+from rich.progress import *
 
 ROOT = os.path.join(os.path.dirname(__file__), "..")
 
@@ -28,7 +28,7 @@ def main(args):
                 print(f"[{language}] {benchmark}: Compilation failed.", file=sys.stderr)
                 benchmarks.remove(benchmark)
 
-        with Progress(transient=True) as progress:
+        with Progress(BarColumn(), MofNCompleteColumn(), transient=True) as progress:
             total = args.n * len(benchmarks)
             task = progress.add_task(f"[{language}]", total=total)
 
