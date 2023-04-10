@@ -1,6 +1,7 @@
 #include <chrono>
 #include <condition_variable>
 #include <cstdlib>
+#include <cstring>
 #include <fstream>
 #include <ios>
 #include <iostream>
@@ -8,6 +9,12 @@
 #include <ratio>
 #include <thread>
 #include <vector>
+
+#include <linux/hw_breakpoint.h>
+#include <linux/perf_event.h>
+#include <sys/ioctl.h>
+#include <sys/syscall.h>
+#include <unistd.h>
 
 #include <cpu.hpp>
 #include <msr.hpp>
@@ -47,6 +54,19 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
+    struct perf_event_attr pe;
+    memset(&pe, 0, sizeof(struct perf_event_attr));
+    pe.type = PERF_TYPE_HARDWARE;
+    pe.config = PERF_COUNT_HW_REF_CPU_CYCLES;
+    pe.size = sizeof(struct perf_event_attr);
+    pe.disabled = 1;
+
+    const auto fd = syscall(__NR_perf_event_open, &pe, 0, -1, -1, 0);
+    if (fd == -1) {
+        std::cerr << "perf_event_open failed" << std::endl;
+        return 1;
+    }
+
     msr::Sample total;
     std::vector<msr::Sample> previous;
     std::mutex previous_lock;
@@ -72,9 +92,19 @@ int main(int argc, char* argv[]) {
         }
     });
 
+    ioctl(fd, PERF_EVENT_IOC_RESET, 0);
+    ioctl(fd, PERF_EVENT_IOC_ENABLE, 0);
+
     const auto start = Clock::now();
     const auto status = system(argv[2]);
     const auto end = Clock::now();
+
+    ioctl(fd, PERF_EVENT_IOC_DISABLE, 0);
+    uint64_t cycles;
+    if (read(fd, &cycles, sizeof(uint64_t)) != sizeof(uint64_t)) {
+        std::cerr << "read failed" << std::endl;
+        return 1;
+    }
 
     if (status != 0) {
         return 1;
@@ -94,7 +124,8 @@ int main(int argc, char* argv[]) {
     file << total.pp0 << ",";
     file << total.pp1 << ",";
     file << total.dram << ",";
-    file << total.psys << std::endl;
+    file << total.psys << ",";
+    file << cycles << std::endl;
 
     timer.kill();
     subprocess.join();
