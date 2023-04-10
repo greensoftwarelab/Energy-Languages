@@ -86,7 +86,7 @@ msr::Sample msr::sample(int package) {
     return sample;
 }
 
-msr::Sample msr::delta(const msr::Sample& previous, const msr::Sample& current) {
+msr::Sample msr::delta([[maybe_unused]] const msr::Sample& previous, [[maybe_unused]] const msr::Sample& current) {
     return {
 #ifdef RAPL_MSR_PKG_SUPPORTED
         .pkg = current.pkg - previous.pkg,

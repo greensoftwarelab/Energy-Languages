@@ -40,12 +40,22 @@ struct KillableWait {
     bool killed = false;
 };
 
-void aggregate(msr::Sample& total, const msr::Sample& sample) {
+void aggregate([[maybe_unused]] msr::Sample& total, [[maybe_unused]] const msr::Sample& sample) {
+#ifdef RAPL_MSR_PKG_SUPPORTED
     total.pkg += sample.pkg;
+#endif
+#ifdef RAPL_MSR_PP0_SUPPORTED
     total.pp0 += sample.pp0;
+#endif
+#ifdef RAPL_MSR_PP1_SUPPORTED
     total.pp1 += sample.pp1;
+#endif
+#ifdef RAPL_MSR_DRAM_SUPPORTED
     total.dram += sample.dram;
+#endif
+#ifdef RAPL_MSR_PSYS_SUPPORTED
     total.psys += sample.psys;
+#endif
 }
 
 using Clock = std::chrono::high_resolution_clock;
