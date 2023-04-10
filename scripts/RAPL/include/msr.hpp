@@ -11,11 +11,11 @@
 
 namespace msr {
 struct Sample {
-    int64_t pkg;
-    int64_t pp0;
-    int64_t pp1;
-    int64_t dram;
-    int64_t psys;
+    double pkg;
+    double pp0;
+    double pp1;
+    double dram;
+    double psys;
 };
 
 // The returned file descriptor should be closed by the caller.

@@ -3,7 +3,6 @@
 #include <cassert>
 #include <cerrno>
 #include <chrono>
-#include <cmath>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
@@ -36,14 +35,6 @@ int main(int argc, char* argv[]) {
         return -1;
     }
 
-    std::vector<double> energy_units(cpu::getNPackages());
-    for (int j = 0; j < cpu::getNPackages(); j++) {
-        const auto fd = msr::open(cpu::getLowestNumberedCpuForPackage(j));
-        const auto result = msr::read(fd, MSR_RAPL_POWER_UNIT);
-        energy_units[j] = pow(0.5, (double) ((result >> 8) & 0x1f));
-        close(fd);
-    }
-
     // TODO: This should be doubles. Otherwise there is no reason to ever sample at fixed time, this will overflow just
     // the same.
     msr::Sample total = {0, 0, 0, 0, 0};
@@ -71,11 +62,11 @@ int main(int argc, char* argv[]) {
 
         for (int package = 0; package < cpu::getNPackages(); ++package) {
             std::cerr << "Package " << package << ":" << std::endl;
-            std::cerr << "\tPKG  Energy: " << energy_units[package] * total.pkg << "J" << std::endl;
-            std::cerr << "\tPP0  Energy: " << energy_units[package] * total.pp0 << "J" << std::endl;
-            std::cerr << "\tPP1  Energy: " << energy_units[package] * total.pp1 << "J" << std::endl;
-            std::cerr << "\tDRAM Energy: " << energy_units[package] * total.dram << "J" << std::endl;
-            std::cerr << "\tPSYS Energy: " << energy_units[package] * total.psys << "J" << std::endl;
+            std::cerr << "\tPKG  Energy: " << total.pkg << "J" << std::endl;
+            std::cerr << "\tPP0  Energy: " << total.pp0 << "J" << std::endl;
+            std::cerr << "\tPP1  Energy: " << total.pp1 << "J" << std::endl;
+            std::cerr << "\tDRAM Energy: " << total.dram << "J" << std::endl;
+            std::cerr << "\tPSYS Energy: " << total.psys << "J" << std::endl;
             std::cout << std::endl;
         }
 

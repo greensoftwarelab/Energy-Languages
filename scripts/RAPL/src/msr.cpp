@@ -2,13 +2,32 @@
 
 #include <array>
 #include <cerrno>
+#include <cmath>
 #include <iostream>
 #include <string>
+#include <vector>
 
 #include <fcntl.h>
 #include <unistd.h>
 
 #include <cpu.hpp>
+
+namespace {
+double getEnergyUnitForPackage(int package) {
+    static const auto units = []() {
+        std::vector<double> units;
+        for (int i = 0; i < cpu::getNPackages(); ++i) {
+            const auto fd = msr::open(cpu::getLowestNumberedCpuForPackage(i));
+            const auto result = msr::read(fd, MSR_RAPL_POWER_UNIT);
+            units.push_back(pow(0.5, (double) ((result >> 8) & 0x1f)));
+            close(fd);
+        }
+        return units;
+    }();
+
+    return units.at(package);
+}
+} // namespace
 
 int msr::open(int core) {
     const auto filename = "/dev/cpu/" + std::to_string(core) + "/msr";
@@ -44,11 +63,11 @@ int64_t msr::read(int fd, int which) {
 msr::Sample msr::sample(int package) {
     const auto fd = msr::open(cpu::getLowestNumberedCpuForPackage(package));
 
-    Sample sample{.pkg = msr::read(fd, MSR_PKG_ENERGY_STATUS),
-                  .pp0 = msr::read(fd, MSR_PP0_ENERGY_STATUS),
-                  .pp1 = msr::read(fd, MSR_PP1_ENERGY_STATUS),
-                  .dram = msr::read(fd, MSR_DRAM_ENERGY_STATUS),
-                  .psys = msr::read(fd, MSR_PLATFORM_ENERGY_STATUS)};
+    Sample sample{.pkg = getEnergyUnitForPackage(package) * msr::read(fd, MSR_PKG_ENERGY_STATUS),
+                  .pp0 = getEnergyUnitForPackage(package) * msr::read(fd, MSR_PP0_ENERGY_STATUS),
+                  .pp1 = getEnergyUnitForPackage(package) * msr::read(fd, MSR_PP1_ENERGY_STATUS),
+                  .dram = getEnergyUnitForPackage(package) * msr::read(fd, MSR_DRAM_ENERGY_STATUS),
+                  .psys = getEnergyUnitForPackage(package) * msr::read(fd, MSR_PLATFORM_ENERGY_STATUS)};
 
     close(fd);
 

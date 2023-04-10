@@ -14,15 +14,9 @@ std::string trim(std::string s) {
     return s;
 }
 
-// Maps package # to the lowest numbered core in that package
-static std::unordered_map<int, int> packages;
-
-struct Initialization {
-    Initialization() {
-        if (!packages.empty()) {
-            return;
-        }
-
+const std::unordered_map<int, int>& getLowestNumberedCpuByPackageMap() {
+    static const auto packages = []() {
+        std::unordered_map<int, int> packages;
         for (int i = 0;; ++i) {
             std::ifstream file("/sys/devices/system/cpu/cpu" + std::to_string(i) + "/topology/physical_package_id");
             if (!file) {
@@ -38,10 +32,12 @@ struct Initialization {
 
             packages.emplace(package, i);
         }
-    }
-};
 
-static const Initialization _;
+        return packages;
+    }();
+
+    return packages;
+};
 } // namespace
 
 int cpu::model() {
@@ -88,9 +84,9 @@ int cpu::model() {
 }
 
 int cpu::getNPackages() {
-    return packages.size();
+    return getLowestNumberedCpuByPackageMap().size();
 }
 
 int cpu::getLowestNumberedCpuForPackage(int package) {
-    return packages.at(package);
+    return getLowestNumberedCpuByPackageMap().at(package);
 }
