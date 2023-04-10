@@ -100,7 +100,7 @@ int main(int argc, char* argv[]) {
     }
 
     KillableWait timer;
-    std::thread subprocess = std::thread([&]() {
+    std::thread subprocess = std::thread([&] {
         for (;;) {
             using namespace std::chrono_literals;
             if (!timer.wait(10s)) {
