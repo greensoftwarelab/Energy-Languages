@@ -1,18 +1,10 @@
 import argparse
-from collections import defaultdict, OrderedDict
+from collections import defaultdict
 import os
 import subprocess
-import time
 import sys
 
 from rich.progress import Progress
-
-import rapl
-
-
-# Default values
-LANGUAGES = ["C", "C++", "Go", "Java", "JavaScript", "Python", "Java_100"]
-N = 101
 
 ROOT = os.path.join(os.path.dirname(__file__), "..")
 CSV_SEPARATOR = ","
@@ -37,52 +29,35 @@ def main(args):
             if compilation_status != 0:
                 print(f"[{language}] {benchmark}: Compilation failed.", file=sys.stderr)
                 benchmarks.remove(benchmark)
-                continue
 
-        runtimes = defaultdict(lambda: [])
-        consumptions = defaultdict(lambda: [])
         with Progress(transient=True) as progress:
             total = args.n * len(benchmarks)
             task = progress.add_task(f"[{language}]", total=total)
+
+            for benchmark in benchmarks:
+                path = os.path.join(ROOT, args.output, language)
+                if not os.path.exists(path):
+                    os.makedirs(path)
 
             for i in range(args.n):
                 for benchmark in benchmarks:
                     directory = os.path.join(ROOT, language, benchmark)
 
-                    rapl_start_sample = rapl.RAPLMonitor.sample()
-                    start = time.time()
+                    csv = os.path.join(ROOT, args.output, language, f"{benchmark}.csv")
                     run_status = subprocess.run(
-                        ["make", "run"],
+                        ["make", "measure"],
                         cwd=directory,
                         stdout=subprocess.DEVNULL,
                         stderr=subprocess.DEVNULL,
+                        env={**os.environ, "CSV": csv},
                     ).returncode
-                    end = time.time()
-                    rapl_end_sample = rapl.RAPLMonitor.sample()
 
                     if run_status != 0:
                         print(
                             f"[{language}] {benchmark}: Run #{i + 1} failed.",
                             file=sys.stderr,
                         )
-                    else:
-                        rapl_difference = rapl_end_sample - rapl_start_sample
-                        runtimes[benchmark].append(end - start)
-                        consumptions[benchmark].append(rapl_difference.average_power(package="package-0"))
                     progress.update(task, advance=1)
-
-        with open(os.path.join(args.output, f"{language}.csv"), "w") as output:
-            output.write(CSV_SEPARATOR.join([f"{b} ({t})" for b in benchmarks for t in ["runtime", "energy"]]))
-            output.write("\n")
-            for i in range(args.n):
-                row = []
-                for b in benchmarks:
-                    if i >= len(runtimes[b]):
-                        row.extend(["", ""])
-                    else:
-                        row.extend([str(runtimes[b][i]), str(consumptions[b][i])])
-                output.write(CSV_SEPARATOR.join(row))
-                output.write("\n")
 
 
 if __name__ == "__main__":
@@ -90,28 +65,23 @@ if __name__ == "__main__":
 
     parser.add_argument(
         "--languages",
-        nargs="+",
+        required=True,
         metavar="PL",
-        default=LANGUAGES,
+        nargs="+",
         help="List of PLs to measure. Names must match directory names",
     )
     parser.add_argument(
         "-n",
+        required=True,
         type=int,
-        default=N,
         help="Number of iterations per language and benchmark",
     )
     parser.add_argument(
         "--output",
         "-o",
-        type=str,
         required=True,
-        help="Path to output directory. A CSV file will be generated for each language",
+        type=str,
+        help="Path to output directory",
     )
 
-    args = parser.parse_args()
-
-    if not os.path.exists(args.output):
-        os.makedirs(args.output)
-
-    main(args)
+    main(parser.parse_args())
