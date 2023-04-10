@@ -1,6 +1,8 @@
 #include <chrono>
 #include <condition_variable>
 #include <cstdlib>
+#include <fstream>
+#include <ios>
 #include <iostream>
 #include <mutex>
 #include <ratio>
@@ -40,8 +42,8 @@ void aggregate(msr::Sample& total, const msr::Sample& sample) {
 using Clock = std::chrono::high_resolution_clock;
 
 int main(int argc, char* argv[]) {
-    if (argc < 2) {
-        std::cerr << "Usage: ./rapl '<command> [args...]'" << std::endl;
+    if (argc < 3) {
+        std::cerr << "Usage: ./rapl <csv> '<command> [args...]'" << std::endl;
         return 1;
     }
 
@@ -71,7 +73,7 @@ int main(int argc, char* argv[]) {
     });
 
     const auto start = Clock::now();
-    const auto status = system(argv[1]);
+    const auto status = system(argv[2]);
     const auto end = Clock::now();
 
     if (status != 0) {
@@ -85,12 +87,14 @@ int main(int argc, char* argv[]) {
     }
 
     const auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
-    std::cerr << "Time elapsed: " << elapsed << "ms" << std::endl;
-    std::cerr << "PKG  Energy : " << total.pkg << "J" << std::endl;
-    std::cerr << "PP0  Energy : " << total.pp0 << "J" << std::endl;
-    std::cerr << "PP1  Energy : " << total.pp1 << "J" << std::endl;
-    std::cerr << "DRAM Energy : " << total.dram << "J" << std::endl;
-    std::cerr << "PSYS Energy : " << total.psys << "J" << std::endl;
+
+    std::ofstream file(argv[1], std::ios_base::app);
+    file << elapsed << ",";
+    file << total.pkg << ",";
+    file << total.pp0 << ",";
+    file << total.pp1 << ",";
+    file << total.dram << ",";
+    file << total.psys << std::endl;
 
     timer.kill();
     subprocess.join();
