@@ -1,5 +1,3 @@
-// Modernized from rapl-read.c originally grabbed from Vince Weaver's website.
-
 #include <chrono>
 #include <condition_variable>
 #include <cstdlib>
@@ -44,12 +42,7 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    if (cpu::model() == -1) {
-        std::cerr << "Unsupported CPU model.\n" << std::endl;
-        return 1;
-    }
-
-    msr::Sample total = {0, 0, 0, 0, 0};
+    msr::Sample total;
     std::vector<msr::Sample> previous;
     std::mutex previous_lock;
 

@@ -43,51 +43,6 @@ const std::unordered_map<int, int>& getLowestNumberedCpuByPackageMap() {
 };
 } // namespace
 
-// Note: This may not mork in multi-CPU configurations with different models.
-// Such systems are not common.
-int cpu::model() {
-    int model = -1;
-    std::ifstream file("/proc/cpuinfo");
-    std::string line;
-
-    while (std::getline(file, line)) {
-        if (line.empty()) {
-            continue;
-        }
-
-        const auto index = line.find(':');
-        assert(index != std::string::npos);
-        const auto key = trim(line.substr(0, index));
-        const auto value = trim(line.substr(index + 1));
-
-        if (key == "vendor_id") {
-            if (value != "GenuineIntel") {
-                std::cerr << value << " not an Intel chip" << std::endl;
-                return -1;
-            }
-        }
-
-        if (key == "cpu family") {
-            const auto family = std::stoi(value);
-            if (family != 6) {
-                std::cerr << "Wrong CPU family " << family << std::endl;
-                return -1;
-            }
-        }
-
-        if (key == "model") {
-            model = std::stoi(value);
-
-            if (!SUPPORTED.contains(model)) {
-                std::cerr << "Unsupported CPU model " << model << std::endl;
-                return -1;
-            }
-        }
-    }
-
-    return model;
-}
-
 int cpu::getNPackages() {
     return getLowestNumberedCpuByPackageMap().size();
 }
