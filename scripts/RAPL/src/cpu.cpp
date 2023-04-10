@@ -30,7 +30,7 @@ const std::unordered_map<int, int>& getLowestNumberedCpuByPackageMap() {
     }();
 
     return packages;
-};
+}
 } // namespace
 
 int cpu::getNCpus() {
