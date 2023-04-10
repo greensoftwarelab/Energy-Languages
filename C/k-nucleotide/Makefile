@@ -1,12 +1,14 @@
+-include ../Makefile.defaults
+
 compile:
-	$(CC) -pipe -Wall -O3 -fomit-frame-pointer -march=native -fopenmp -std=c99 -IInclude knucleotide.c -o knucleotide.gcc_run
-	
-measure:
-	sudo modprobe msr
-	sudo ../../RAPL/main "./knucleotide.gcc_run 0 < ../../knucleotide-input25000000.txt" C k-nucleotide
+	$(CC) $(CFLAGS) -fopenmp -std=c99 knucleotide.c -o knucleotide.gcc_run
 
 run:
 	./knucleotide.gcc_run 0 < ../../knucleotide-input25000000.txt
 
-mem:
-	/usr/bin/time -v ./knucleotide.gcc_run 0 < ../../knucleotide-input25000000.txt
+measure:
+ifndef CSV
+	$(error CSV is not defined)
+endif
+	sudo modprobe msr
+	sudo ../../scripts/RAPL/build/rapl $(CSV) './knucleotide.gcc_run 0' < ../../knucleotide-input25000000.txt

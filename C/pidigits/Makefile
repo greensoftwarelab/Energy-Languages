@@ -3,12 +3,12 @@
 compile:
 	$(CC) $(CFLAGS) pidigits.c -o pidigits_run -lgmp
 
-measure:
-	sudo modprobe msr
-	sudo ../../RAPL/main "./pidigits_run 10000" C pidigits
-
 run:
 	./pidigits_run 10000
 
-mem:
-	/usr/bin/time -v ./pidigits_run 10000
+measure:
+ifndef CSV
+	$(error CSV is not defined)
+endif
+	sudo modprobe msr
+	sudo ../../scripts/RAPL/build/rapl $(CSV) './pidigits_run 10000'
