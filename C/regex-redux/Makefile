@@ -7,8 +7,8 @@ run:
 	./regexredux_run 0 < ../../regexredux-input5000000.txt
 
 measure:
-ifndef CSV
-	$(error CSV is not defined)
+ifndef JSON
+	$(error JSON is not defined)
 endif
 	sudo modprobe msr
-	sudo ../../scripts/RAPL/build/rapl $(CSV) './regexredux_run 0' < ../../regexredux-input5000000.txt
+	sudo ../../scripts/RAPL/build/rapl $(JSON) './regexredux_run 0' < ../../regexredux-input5000000.txt

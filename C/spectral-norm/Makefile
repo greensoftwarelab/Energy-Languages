@@ -7,8 +7,8 @@ run:
 	./spectralnorm_run 5500
 
 measure:
-ifndef CSV
-	$(error CSV is not defined)
+ifndef JSON
+	$(error JSON is not defined)
 endif
 	sudo modprobe msr
-	sudo ../../scripts/RAPL/build/rapl $(CSV) './spectralnorm_run 5500'
+	sudo ../../scripts/RAPL/build/rapl $(JSON) './spectralnorm_run 5500'

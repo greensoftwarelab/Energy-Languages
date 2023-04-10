@@ -7,8 +7,8 @@ run:
 	./mandelbrot_run 16000
 
 measure:
-ifndef CSV
-	$(error CSV is not defined)
+ifndef JSON
+	$(error JSON is not defined)
 endif
 	sudo modprobe msr
-	sudo ../../scripts/RAPL/build/rapl $(CSV) './mandelbrot_run 16000'
+	sudo ../../scripts/RAPL/build/rapl $(JSON) './mandelbrot_run 16000'

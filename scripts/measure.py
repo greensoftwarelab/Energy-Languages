@@ -1,5 +1,4 @@
 import argparse
-from collections import defaultdict
 import os
 import subprocess
 import sys
@@ -7,7 +6,6 @@ import sys
 from rich.progress import Progress
 
 ROOT = os.path.join(os.path.dirname(__file__), "..")
-CSV_SEPARATOR = ","
 
 
 def main(args):
@@ -43,13 +41,15 @@ def main(args):
                 for benchmark in benchmarks:
                     directory = os.path.join(ROOT, language, benchmark)
 
-                    csv = os.path.join(ROOT, args.output, language, f"{benchmark}.csv")
+                    json = os.path.join(
+                        ROOT, args.output, language, f"{benchmark}.json"
+                    )
                     run_status = subprocess.run(
                         ["make", "measure"],
                         cwd=directory,
                         stdout=subprocess.DEVNULL,
                         stderr=subprocess.DEVNULL,
-                        env={**os.environ, "CSV": csv},
+                        env={**os.environ, "JSON": json},
                     ).returncode
 
                     if run_status != 0:

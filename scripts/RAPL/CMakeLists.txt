@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.19)
 
+include(FetchContent)
 include(CheckIPOSupported)
 
 project(RAPL)
@@ -8,8 +9,18 @@ set(CMAKE_CXX_STANDARD 20)
 
 find_package(Threads REQUIRED)
 
+FetchContent_Declare(
+    glaze
+    GIT_REPOSITORY https://github.com/stephenberry/glaze.git
+    GIT_TAG cf3d92042ecd375b0f08db78d16272a87cb168f0 # v1.1.2
+)
+
+message(STATUS "Downloading and configuring Glaze")
+FetchContent_MakeAvailable(glaze)
+
 add_executable(rapl src/rapl.cpp src/cpu.cpp src/msr.cpp)
 target_include_directories(rapl PRIVATE include)
+target_link_libraries(rapl PRIVATE glaze::glaze)
 target_link_libraries(rapl PRIVATE m)
 target_link_libraries(rapl PRIVATE Threads::Threads)
 

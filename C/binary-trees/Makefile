@@ -7,8 +7,8 @@ run:
 	./binarytrees_run 21
 
 measure:
-ifndef CSV
-	$(error CSV is not defined)
+ifndef JSON
+	$(error JSON is not defined)
 endif
 	sudo modprobe msr
-	sudo ../../scripts/RAPL/build/rapl $(CSV) './binarytrees_run 21'
+	sudo ../../scripts/RAPL/build/rapl $(JSON) './binarytrees_run 21'

@@ -16,6 +16,8 @@
 #include <sys/syscall.h>
 #include <unistd.h>
 
+#include <glaze/glaze.hpp>
+
 #include <cpu.hpp>
 #include <msr.hpp>
 
@@ -48,9 +50,29 @@ void aggregate(msr::Sample& total, const msr::Sample& sample) {
 
 using Clock = std::chrono::high_resolution_clock;
 
+struct Result {
+    Clock::rep runtime;
+    msr::Sample energy;
+    uint64_t cycles;
+};
+
+template <>
+struct glz::meta<msr::Sample> {
+    using T = msr::Sample;
+    [[maybe_unused]] static constexpr auto value
+        = object("pkg", &T::pkg, "pp0", &T::pp0, "pp1", &T::pp1, "dram", &T::dram, "psys", &T::psys);
+};
+
+template <>
+struct glz::meta<Result> {
+    using T = Result;
+    [[maybe_unused]] static constexpr auto value
+        = object("runtime", &T::runtime, "energy", &T::energy, "cycles", &T::cycles);
+};
+
 int main(int argc, char* argv[]) {
     if (argc < 3) {
-        std::cerr << "Usage: ./rapl <csv> '<command> [args...]'" << std::endl;
+        std::cerr << "Usage: ./rapl <json-file> '<command> [args...]'" << std::endl;
         return 1;
     }
 
@@ -69,7 +91,7 @@ int main(int argc, char* argv[]) {
     }
     ioctl(fd, PERF_EVENT_IOC_RESET, 0);
 
-    msr::Sample total;
+    Result result;
     std::vector<msr::Sample> previous;
     std::mutex previous_lock;
 
@@ -88,7 +110,7 @@ int main(int argc, char* argv[]) {
             std::lock_guard<std::mutex> guard(previous_lock);
             for (int package = 0; package < cpu::getNPackages(); ++package) {
                 const auto sample = msr::sample(package);
-                aggregate(total, msr::delta(previous[package], sample));
+                aggregate(result.energy, msr::delta(previous[package], sample));
                 previous[package] = sample;
             }
         }
@@ -100,8 +122,7 @@ int main(int argc, char* argv[]) {
     const auto end = Clock::now();
     ioctl(fd, PERF_EVENT_IOC_DISABLE, 0);
 
-    uint64_t cycles;
-    if (read(fd, &cycles, sizeof(uint64_t)) != sizeof(uint64_t)) {
+    if (read(fd, &result.cycles, sizeof(uint64_t)) != sizeof(uint64_t)) {
         std::cerr << "read failed" << std::endl;
         return 1;
     }
@@ -113,19 +134,12 @@ int main(int argc, char* argv[]) {
     std::lock_guard<std::mutex> guard(previous_lock);
     for (int package = 0; package < cpu::getNPackages(); ++package) {
         const auto sample = msr::sample(package);
-        aggregate(total, msr::delta(previous[package], sample));
+        aggregate(result.energy, msr::delta(previous[package], sample));
     }
 
-    const auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+    result.runtime = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
 
-    std::ofstream file(argv[1], std::ios_base::app);
-    file << elapsed << ",";
-    file << total.pkg << ",";
-    file << total.pp0 << ",";
-    file << total.pp1 << ",";
-    file << total.dram << ",";
-    file << total.psys << ",";
-    file << cycles << std::endl;
+    std::ofstream(argv[1], std::ios_base::app) << glz::write_json(result) << "\n";
 
     timer.kill();
     subprocess.join();
