@@ -1,6 +1,7 @@
 // Modernized from rapl-read.c originally grabbed from Vince Weaver's website.
 
 #include <chrono>
+#include <condition_variable>
 #include <cstdlib>
 #include <iostream>
 #include <mutex>
@@ -9,6 +10,25 @@
 
 #include <cpu.hpp>
 #include <msr.hpp>
+
+struct KillableWait {
+    template <typename Rep, typename Period>
+    bool wait(const std::chrono::duration<Rep, Period>& time) {
+        std::unique_lock<std::mutex> lock(mutex);
+        return !cv.wait_for(lock, time, [&] { return killed; });
+    }
+
+    void kill() {
+        std::unique_lock<std::mutex> lock(mutex);
+        killed = true;
+        cv.notify_all();
+    }
+
+  private:
+    std::mutex mutex;
+    std::condition_variable cv;
+    bool killed = false;
+};
 
 void aggregate(msr::Sample& total, const msr::Sample& sample) {
     total.pkg += sample.pkg;
@@ -37,10 +57,13 @@ int main(int argc, char* argv[]) {
         previous.emplace_back(msr::sample(package));
     }
 
+    KillableWait timer;
     std::thread subprocess = std::thread([&]() {
         for (;;) {
             using namespace std::chrono_literals;
-            std::this_thread::sleep_for(10s);
+            if (!timer.wait(10s)) {
+                break;
+            }
 
             std::lock_guard<std::mutex> guard(previous_lock);
             for (int package = 0; package < cpu::getNPackages(); ++package) {
@@ -67,4 +90,7 @@ int main(int argc, char* argv[]) {
     std::cerr << "PP1  Energy: " << total.pp1 << "J" << std::endl;
     std::cerr << "DRAM Energy: " << total.dram << "J" << std::endl;
     std::cerr << "PSYS Energy: " << total.psys << "J" << std::endl;
+
+    timer.kill();
+    subprocess.join();
 }

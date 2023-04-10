@@ -4,3 +4,4 @@ PointerAlignment: Left
 SpaceAfterCStyleCast: true
 BreakBeforeBinaryOperators: All
 AllowShortFunctionsOnASingleLine: Empty
+AlwaysBreakTemplateDeclarations: Yes
