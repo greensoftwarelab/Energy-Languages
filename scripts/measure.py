@@ -33,7 +33,7 @@ def main(args):
             task = progress.add_task(f"[{language}]", total=total)
 
             for benchmark in benchmarks:
-                path = os.path.join(args.output, language)
+                path = os.path.join(os.path.abspath(args.output), language)
                 if not os.path.exists(path):
                     os.makedirs(path)
 
@@ -41,7 +41,9 @@ def main(args):
                 for benchmark in benchmarks:
                     directory = os.path.join(ROOT, language, benchmark)
 
-                    json = os.path.join(args.output, language, f"{benchmark}.json")
+                    json = os.path.join(
+                        os.path.abspath(args.output), language, f"{benchmark}.json"
+                    )
                     run_status = subprocess.run(
                         ["make", "measure"],
                         cwd=directory,
