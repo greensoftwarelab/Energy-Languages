@@ -61,6 +61,9 @@ def main(args):
 
 
 if __name__ == "__main__":
+    if not os.path.exists(os.path.join(ROOT, "scripts", "RAPL", "build", "rapl")):
+        raise "Could not find the RAPL executable. Make sure you build it first."
+
     parser = argparse.ArgumentParser(description="Runs the measurements.")
 
     parser.add_argument(
