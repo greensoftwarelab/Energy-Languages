@@ -21,7 +21,7 @@
 #include <cpu.hpp>
 #include <msr.hpp>
 
-struct KillableWait {
+struct KillableTimer {
     template <typename Rep, typename Period>
     bool wait(const std::chrono::duration<Rep, Period>& time) {
         std::unique_lock<std::mutex> lock(mutex);
@@ -122,11 +122,8 @@ int main(int argc, char* argv[]) {
     std::vector<msr::Sample> previous;
     std::mutex previous_lock;
 
-    for (int package = 0; package < cpu::getNPackages(); ++package) {
-        previous.emplace_back(msr::sample(package));
-    }
-
-    KillableWait timer;
+    KillableTimer timer;
+    // Assume that previous will be populated within the first 10 seconds, which will be the case in normal situations.
     std::thread subprocess = std::thread([&] {
         for (;;) {
             using namespace std::chrono_literals;
@@ -143,11 +140,21 @@ int main(int argc, char* argv[]) {
         }
     });
 
+    for (int package = 0; package < cpu::getNPackages(); ++package) {
+        previous.emplace_back(msr::sample(package));
+    }
+
     ioctl(fd, PERF_EVENT_IOC_ENABLE, 0);
     const auto start = Clock::now();
     const auto status = system(argv[2]);
     const auto end = Clock::now();
     ioctl(fd, PERF_EVENT_IOC_DISABLE, 0);
+
+    std::lock_guard<std::mutex> guard(previous_lock);
+    for (int package = 0; package < cpu::getNPackages(); ++package) {
+        const auto sample = msr::sample(package);
+        aggregate(result.energy, msr::delta(previous[package], sample));
+    }
 
     if (read(fd, &result.cycles, sizeof(uint64_t)) != sizeof(uint64_t)) {
         std::cerr << "read failed" << std::endl;
@@ -156,12 +163,6 @@ int main(int argc, char* argv[]) {
 
     if (status != 0) {
         return 1;
-    }
-
-    std::lock_guard<std::mutex> guard(previous_lock);
-    for (int package = 0; package < cpu::getNPackages(); ++package) {
-        const auto sample = msr::sample(package);
-        aggregate(result.energy, msr::delta(previous[package], sample));
     }
 
     result.runtime = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
