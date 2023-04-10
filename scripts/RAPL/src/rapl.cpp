@@ -23,12 +23,12 @@ void aggregate(msr::Sample& total, const msr::Sample& sample) {
 int main(int argc, char* argv[]) {
     if (argc < 2) {
         std::cerr << "Usage: ./rapl <command> [args...]" << std::endl;
-        exit(1);
+        return 1;
     }
 
     if (cpu::model() == -1) {
         std::cerr << "Unsupported CPU model.\n" << std::endl;
-        return -1;
+        return 1;
     }
 
     msr::Sample total = {0, 0, 0, 0, 0};
@@ -40,38 +40,33 @@ int main(int argc, char* argv[]) {
     }
 
     std::thread subprocess = std::thread([&]() {
-        if (system(argv[1]) == -1) {
-            std::cerr << "Failed to execute command: " << strerror(errno) << std::endl;
-            exit(1);
+        for (;;) {
+            using namespace std::chrono_literals;
+            std::this_thread::sleep_for(10s);
+
+            std::lock_guard<std::mutex> guard(previous_lock);
+            for (int package = 0; package < cpu::getNPackages(); ++package) {
+                const auto sample = msr::sample(package);
+                aggregate(total, msr::delta(previous[package], sample));
+                previous[package] = sample;
+            }
         }
     });
-    std::thread joiner = std::thread([&]() {
-        subprocess.join();
-        std::lock_guard<std::mutex> guard(previous_lock);
-        for (int package = 0; package < cpu::getNPackages(); ++package) {
-            const auto sample = msr::sample(package);
-            aggregate(total, msr::delta(previous[package], sample));
-            previous[package] = sample;
-        }
 
-        std::cerr << "PKG  Energy: " << total.pkg << "J" << std::endl;
-        std::cerr << "PP0  Energy: " << total.pp0 << "J" << std::endl;
-        std::cerr << "PP1  Energy: " << total.pp1 << "J" << std::endl;
-        std::cerr << "DRAM Energy: " << total.dram << "J" << std::endl;
-        std::cerr << "PSYS Energy: " << total.psys << "J" << std::endl;
-
-        exit(0);
-    });
-
-    for (;;) {
-        using namespace std::chrono_literals;
-        std::this_thread::sleep_for(10s);
-
-        std::lock_guard<std::mutex> guard(previous_lock);
-        for (int package = 0; package < cpu::getNPackages(); ++package) {
-            const auto sample = msr::sample(package);
-            aggregate(total, msr::delta(previous[package], sample));
-            previous[package] = sample;
-        }
+    const auto status = system(argv[1]);
+    if (status != 0) {
+        return 1;
     }
+
+    std::lock_guard<std::mutex> guard(previous_lock);
+    for (int package = 0; package < cpu::getNPackages(); ++package) {
+        const auto sample = msr::sample(package);
+        aggregate(total, msr::delta(previous[package], sample));
+    }
+
+    std::cerr << "PKG  Energy: " << total.pkg << "J" << std::endl;
+    std::cerr << "PP0  Energy: " << total.pp0 << "J" << std::endl;
+    std::cerr << "PP1  Energy: " << total.pp1 << "J" << std::endl;
+    std::cerr << "DRAM Energy: " << total.dram << "J" << std::endl;
+    std::cerr << "PSYS Energy: " << total.psys << "J" << std::endl;
 }
