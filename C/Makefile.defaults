@@ -1,1 +1,1 @@
-CFLAGS := -O3 -DNDEBUG -Wall -Wextra -fomit-frame-pointer -march=native -mtune=native
+CFLAGS := -O3 -DNDEBUG -march=native -mtune=native
