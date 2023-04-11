@@ -1,0 +1,10 @@
+[package]
+name = "fasta"
+version = "1.0.0"
+
+[[bin]]
+name = "fasta"
+path = "fasta.rs"
+
+[dependencies]
+num_cpus = "1.15.0"
