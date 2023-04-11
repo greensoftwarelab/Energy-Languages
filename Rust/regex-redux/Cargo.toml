@@ -1,0 +1,10 @@
+[package]
+name = "regex-redux"
+version = "1.0.0"
+
+[[bin]]
+name = "regex-redux"
+path = "regexredux.rs"
+
+[dependencies]
+regex = "1.7.3"

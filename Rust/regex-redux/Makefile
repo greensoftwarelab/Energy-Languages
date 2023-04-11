@@ -1,15 +1,14 @@
-compile:
-	$(RUSTC) -C opt-level=3 -C target-cpu=core2 -C lto -L $(RUSTLIB) regexredux.rs -o regexredux.rust_run
+-include ../Makefile.defaults
 
-measure:
-	sudo modprobe msr
-	sudo ../../RAPL/main "./regexredux.rust_run 0 < ../../regexredux-input5000000.txt" Rust regex-redux
+compile:
+	RUSTFLAGS="$(RUSTFLAGS)" cargo build --release
 
 run:
-	./regexredux.rust_run 0 < ../../regexredux-input5000000.txt
+	./target/release/regex-redux 0 < ../../regexredux-input5000000.txt
 
-mem:
-	/usr/bin/time -v ./regexredux.rust_run 0 < ../../regexredux-input5000000.txt
-
-valgrind:
-	valgrind --tool=massif --stacks=yes ./regexredux.rust_run 0 < ../../regexredux-input5000000.txt
+measure:
+ifndef JSON
+	$(error JSON is not defined)
+endif
+	sudo modprobe msr
+	sudo ../../scripts/RAPL/build/rapl $(JSON) './target/release/regex-redux 0 < ../../regexredux-input5000000.txt'
