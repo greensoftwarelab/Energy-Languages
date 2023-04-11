@@ -1,0 +1,10 @@
+[package]
+name = "reverse-complement"
+version = "1.0.0"
+
+[[bin]]
+name = "reverse-complement"
+path = "revcomp.rs"
+
+[dependencies]
+rayon = "1.7.0"

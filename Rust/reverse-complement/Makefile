@@ -1,15 +1,14 @@
-compile:
-	$(RUSTC) -C opt-level=3 -C target-cpu=core2 -C lto -L $(RUSTLIB) revcomp.rs -o revcomp.rust-2.rust_run
+-include ../Makefile.defaults
 
-measure:
-	sudo modprobe msr
-	sudo ../../RAPL/main "./revcomp.rust-2.rust_run 0 < ../../revcomp-input25000000.txt" Rust reverse-complement
+compile:
+	RUSTFLAGS="$(RUSTFLAGS)" cargo build --release
 
 run:
-	./revcomp.rust-2.rust_run 0 < ../../revcomp-input25000000.txt
+	./target/release/reverse-complement 0 < ../../revcomp-input25000000.txt
 
-mem:
-	/usr/bin/time -v ./revcomp.rust-2.rust_run 0 < ../../revcomp-input25000000.txt
-
-valgrind:
-	valgrind --tool=massif --stacks=yes ./revcomp.rust-2.rust_run 0 < ../../revcomp-input25000000.txt
+measure:
+ifndef JSON
+	$(error JSON is not defined)
+endif
+	sudo modprobe msr
+	sudo ../../scripts/RAPL/build/rapl $(JSON) './target/release/reverse-complement 0 < ../../revcomp-input25000000.txt'
