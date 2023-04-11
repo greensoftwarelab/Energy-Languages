@@ -1,0 +1,9 @@
+[package]
+name = "n-body"
+version = "1.0.0"
+
+[[bin]]
+name = "n-body"
+path = "nbody.rs"
+
+[dependencies]

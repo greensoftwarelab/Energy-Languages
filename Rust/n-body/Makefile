@@ -1,15 +1,14 @@
-compile:
-	$(RUSTC) -C opt-level=3 -C target-cpu=core2 -C lto -C llvm-args='-unroll-threshold=500' nbody.rs -o nbody.rust-2.rust_run
+-include ../Makefile.defaults
 
-measure:
-	sudo modprobe msr
-	sudo ../../RAPL/main "./nbody.rust-2.rust_run 50000000" Rust n-body
+compile:
+	RUSTFLAGS="$(RUSTFLAGS) -C llvm-args=-unroll-threshold=500" cargo build --release
 
 run:
-	./nbody.rust-2.rust_run 50000000
+	./target/release/n-body 50000000
 
-mem:
-	/usr/bin/time -v ./nbody.rust-2.rust_run 50000000
-
-valgrind:
-	valgrind --tool=massif --stacks=yes ./nbody.rust-2.rust_run 50000000
+measure:
+ifndef JSON
+	$(error JSON is not defined)
+endif
+	sudo modprobe msr
+	sudo ../../scripts/RAPL/build/rapl $(JSON) './target/release/n-body 50000000'
