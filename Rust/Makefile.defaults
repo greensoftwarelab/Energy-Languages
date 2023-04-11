@@ -1,0 +1,1 @@
+RUSTFLAGS := -C opt-level=3 -C target-cpu=native -C lto -C debug-assertions=off -C embed-bitcode=yes

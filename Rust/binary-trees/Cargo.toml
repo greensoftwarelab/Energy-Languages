@@ -1,0 +1,11 @@
+[package]
+name = "binary-trees"
+version = "1.0.0"
+
+[[bin]]
+name = "binary-trees"
+path = "binarytrees.rs"
+
+[dependencies]
+rayon = "1.7.0"
+typed-arena = "2.0.2"
