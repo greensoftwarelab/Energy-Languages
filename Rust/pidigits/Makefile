@@ -1,15 +1,14 @@
-compile:
-	$(RUSTC) -C opt-level=3 -C target-cpu=core2 -C lto  pidigits.rs -o pidigits.rust-2.rust_run
+-include ../Makefile.defaults
 
-measure:
-	sudo modprobe msr
-	sudo ../../RAPL/main "./pidigits.rust-2.rust_run 10000" Rust pidigits
+compile:
+	RUSTFLAGS="$(RUSTFLAGS)" cargo build --release
 
 run:
-	./pidigits.rust-2.rust_run 10000
+	./target/release/pidigits 10000
 
-mem:
-	/usr/bin/time -v ./pidigits.rust-2.rust_run 10000
-
-valgrind:
-	valgrind --tool=massif --stacks=yes ./pidigits.rust-2.rust_run 10000
+measure:
+ifndef JSON
+	$(error JSON is not defined)
+endif
+	sudo modprobe msr
+	sudo ../../scripts/RAPL/build/rapl $(JSON) './target/release/pidigits 10000'
