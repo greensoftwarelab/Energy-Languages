@@ -3,34 +3,47 @@ import os
 import subprocess
 import sys
 
+from rich.console import Console
 from rich.progress import *
 
 ROOT = os.path.join(os.path.dirname(__file__), "..")
 
+console = Console()
+
 
 def main(args):
     for language in args.languages:
-        benchmarks = [
-            d
-            for d in os.listdir(os.path.join(ROOT, language))
-            if os.path.isdir(os.path.join(ROOT, language, d))
-        ]
-        benchmarks.sort()
-        for benchmark in list(benchmarks):
+        benchmarks = sorted(
+            [
+                d
+                for d in os.listdir(os.path.join(ROOT, language))
+                if os.path.isdir(os.path.join(ROOT, language, d))
+            ]
+        )
+
+        for benchmark in track(
+            list(benchmarks), description=f"[{language}] Compile", console=console
+        ):
             directory = os.path.join(ROOT, language, benchmark)
-            compilation_status = subprocess.run(
+            compilation = subprocess.run(
                 ["make", "compile"],
                 cwd=directory,
-                stdout=subprocess.DEVNULL,
-                stderr=subprocess.DEVNULL,
-            ).returncode
-            if compilation_status != 0:
-                print(f"[{language}] {benchmark}: Compilation failed.", file=sys.stderr)
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+            )
+            console.print(compilation.stdout.decode("utf-8"), end="")
+            if compilation.returncode != 0:
                 benchmarks.remove(benchmark)
 
-        with Progress(BarColumn(), MofNCompleteColumn(), transient=True) as progress:
+        with Progress(
+            TextColumn("[progress.description]{task.description}"),
+            BarColumn(),
+            MofNCompleteColumn(),
+            console=console,
+            transient=True,
+        ) as progress:
             total = args.n * len(benchmarks)
-            task = progress.add_task(f"[{language}]", total=total)
+            task = progress.add_task(f"[{language}] Run", total=total)
 
             for benchmark in benchmarks:
                 path = os.path.join(os.path.abspath(args.output), language)
@@ -53,7 +66,7 @@ def main(args):
                     ).returncode
 
                     if run_status != 0:
-                        print(
+                        console.print(
                             f"[{language}] {benchmark}: Run #{i + 1} failed.",
                             file=sys.stderr,
                         )
