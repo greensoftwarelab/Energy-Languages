@@ -1,7 +1,7 @@
 -include ../Makefile.defaults
 
 compile:
-	$(CXX) $(CXXFLAGS) -pthread fasta.cpp -o fasta_run
+	$(CXX) $(CXXFLAGS) -mfpmath=sse -msse3 -pthread fasta.cpp -o fasta_run
 
 run:
 	./fasta_run 25000000
