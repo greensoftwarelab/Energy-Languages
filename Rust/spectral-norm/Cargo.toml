@@ -1,0 +1,10 @@
+[package]
+name = "spectral-norm"
+version = "1.0.0"
+
+[[bin]]
+name = "spectral-norm"
+path = "spectralnorm.rs"
+
+[dependencies]
+rayon = "1.7.0"

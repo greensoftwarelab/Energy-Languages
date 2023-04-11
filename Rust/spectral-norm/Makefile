@@ -1,15 +1,14 @@
-compile:
-	$(RUSTC) -C opt-level=3 -C target-cpu=core2 -C lto -L $(RUSTLIB) spectralnorm.rs -o spectralnorm.rust-4.rust_run
+-include ../Makefile.defaults
 
-measure:
-	sudo modprobe msr
-	sudo ../../RAPL/main "./spectralnorm.rust-4.rust_run 5500" Rust spectral-norm
+compile:
+	RUSTFLAGS="$(RUSTFLAGS)" cargo build --release
 
 run:
-	./spectralnorm.rust-4.rust_run 5500
+	./target/release/spectral-norm 5500
 
-mem:
-	/usr/bin/time -v ./spectralnorm.rust-4.rust_run 5500
-
-valgrind:
-	valgrind --tool=massif --stacks=yes ./spectralnorm.rust-4.rust_run 5500
+measure:
+ifndef JSON
+	$(error JSON is not defined)
+endif
+	sudo modprobe msr
+	sudo ../../scripts/RAPL/build/rapl $(JSON) './target/release/spectral-norm 5500'
