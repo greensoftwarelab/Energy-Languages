@@ -9,6 +9,11 @@ from rich.progress import *
 ROOT = os.path.join(os.path.dirname(__file__), "..")
 
 console = Console()
+progress_columns = [
+    TextColumn("[progress.description]{task.description}"),
+    BarColumn(),
+    MofNCompleteColumn(),
+]
 
 
 def main(args):
@@ -21,27 +26,22 @@ def main(args):
             ]
         )
 
-        for benchmark in track(
-            list(benchmarks), description=f"[{language}] Compile", console=console
-        ):
-            directory = os.path.join(ROOT, language, benchmark)
-            compilation = subprocess.run(
-                ["make", "compile"],
-                cwd=directory,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.STDOUT,
-            )
-            console.print(compilation.stdout.decode("utf-8"), end="")
-            if compilation.returncode != 0:
-                benchmarks.remove(benchmark)
+        with Progress(*progress_columns, console=console) as progress:
+            task = progress.add_task(f"[{language}] Compile", total=len(benchmarks))
+            for benchmark in list(benchmarks):
+                directory = os.path.join(ROOT, language, benchmark)
+                compilation = subprocess.run(
+                    ["make", "compile"],
+                    cwd=directory,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.STDOUT,
+                )
+                console.print(compilation.stdout.decode("utf-8"), end="")
+                if compilation.returncode != 0:
+                    benchmarks.remove(benchmark)
+                progress.update(task, advance=1)
 
-        with Progress(
-            TextColumn("[progress.description]{task.description}"),
-            BarColumn(),
-            MofNCompleteColumn(),
-            console=console,
-            transient=True,
-        ) as progress:
+        with Progress(*progress_columns, console=console) as progress:
             total = args.n * len(benchmarks)
             task = progress.add_task(f"[{language}] Run", total=total)
 
@@ -57,17 +57,24 @@ def main(args):
                     json = os.path.join(
                         os.path.abspath(args.output), language, f"{benchmark}.json"
                     )
-                    run_status = subprocess.run(
-                        ["make", "measure"],
-                        cwd=directory,
-                        stdout=subprocess.DEVNULL,
-                        stderr=subprocess.DEVNULL,
-                        env={**os.environ, "JSON": json},
-                    ).returncode
+                    try:
+                        run_status = subprocess.run(
+                            ["make", "measure"],
+                            cwd=directory,
+                            stdout=subprocess.DEVNULL,
+                            stderr=subprocess.DEVNULL,
+                            env={**os.environ, "JSON": json},
+                            timeout=args.timeout,
+                        ).returncode
 
-                    if run_status != 0:
+                        if run_status != 0:
+                            console.print(
+                                f"[{language}] {benchmark}: Run #{i + 1} failed.",
+                                file=sys.stderr,
+                            )
+                    except subprocess.TimeoutExpired:
                         console.print(
-                            f"[{language}] {benchmark}: Run #{i + 1} failed.",
+                            f"[{language}] {benchmark}: Run #{i + 1} timed out.",
                             file=sys.stderr,
                         )
                     progress.update(task, advance=1)
@@ -98,6 +105,12 @@ if __name__ == "__main__":
         required=True,
         type=str,
         help="Path to output directory",
+    )
+    parser.add_argument(
+        "--timeout",
+        type=str,
+        default=None,
+        help="Timeout for process execution",
     )
 
     main(parser.parse_args())
