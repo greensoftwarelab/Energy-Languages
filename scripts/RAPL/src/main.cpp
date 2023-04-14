@@ -1,6 +1,5 @@
 #include <chrono>
 #include <condition_variable>
-#include <cstdlib>
 #include <cstring>
 #include <fstream>
 #include <ios>
@@ -14,6 +13,8 @@
 #include <linux/perf_event.h>
 #include <sys/ioctl.h>
 #include <sys/syscall.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 #include <unistd.h>
 
 #include <glaze/glaze.hpp>
@@ -103,10 +104,9 @@ int main(int argc, char* argv[]) {
 
     Result result;
     std::vector<rapl::Sample> previous;
-    std::mutex previous_lock;
+    std::mutex lock;
 
     KillableTimer timer;
-    // Assume that previous will be populated within the first 10 seconds, which will be the case in normal situations.
     std::thread subprocess = std::thread([&] {
         for (;;) {
             using namespace std::chrono_literals;
@@ -114,7 +114,7 @@ int main(int argc, char* argv[]) {
                 break;
             }
 
-            std::lock_guard<std::mutex> guard(previous_lock);
+            std::lock_guard<std::mutex> guard(lock);
             for (int package = 0; package < cpu::getNPackages(); ++package) {
                 const auto sample = rapl::sample(package);
                 result.energy += sample - previous[package];
@@ -123,17 +123,35 @@ int main(int argc, char* argv[]) {
         }
     });
 
-    for (int package = 0; package < cpu::getNPackages(); ++package) {
-        previous.emplace_back(rapl::sample(package));
+    {
+        std::lock_guard<std::mutex> guard(lock);
+        for (int package = 0; package < cpu::getNPackages(); ++package) {
+            previous.emplace_back(rapl::sample(package));
+        }
     }
 
-    ioctl(fd, PERF_EVENT_IOC_ENABLE, 0);
     const auto start = Clock::now();
-    const auto status = system(argv[2]);
+    ioctl(fd, PERF_EVENT_IOC_ENABLE, 0);
+
+    const auto pid = fork();
+    if (pid == -1) {
+        std::cerr << "fork failed" << std::endl;
+        return 1;
+    }
+
+    if (pid == 0) {
+        if (!execvp(argv[2], argv + 2)) {
+            std::cerr << "execvp failed" << std::endl;
+            return 1;
+        }
+    }
+
+    int status;
+    waitpid(pid, &status, 0);
     const auto end = Clock::now();
     ioctl(fd, PERF_EVENT_IOC_DISABLE, 0);
 
-    std::lock_guard<std::mutex> guard(previous_lock);
+    std::lock_guard<std::mutex> guard(lock);
     for (int package = 0; package < cpu::getNPackages(); ++package) {
         const auto sample = rapl::sample(package);
         result.energy += sample - previous[package];
