@@ -43,9 +43,6 @@ rapl::Sample rapl::sample(int package) {
 #ifdef RAPL_MSR_DRAM_SUPPORTED
         .dram = unit * static_cast<uint32_t>(msr::read(fd, MSR_DRAM_ENERGY_STATUS)),
 #endif
-#ifdef RAPL_MSR_PSYS_SUPPORTED
-        .psys = unit * static_cast<uint32_t>(msr::read(fd, MSR_PLATFORM_ENERGY_COUNTER)),
-#endif
     };
 
     close(fd);
@@ -67,9 +64,6 @@ rapl::Sample rapl::operator+([[maybe_unused]] const rapl::Sample& left, [[maybe_
 #ifdef RAPL_MSR_DRAM_SUPPORTED
         .dram = left.dram + right.dram,
 #endif
-#ifdef RAPL_MSR_PSYS_SUPPORTED
-        .psys = left.psys + right.psys,
-#endif
     };
 }
 
@@ -86,9 +80,6 @@ rapl::Sample rapl::operator-([[maybe_unused]] const rapl::Sample& left, [[maybe_
 #endif
 #ifdef RAPL_MSR_DRAM_SUPPORTED
         .dram = left.dram - right.dram,
-#endif
-#ifdef RAPL_MSR_PSYS_SUPPORTED
-        .psys = left.psys - right.psys,
 #endif
     };
 }
