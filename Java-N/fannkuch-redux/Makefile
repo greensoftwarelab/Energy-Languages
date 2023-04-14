@@ -7,6 +7,10 @@ JAVA := java
 endif
 
 compile:
+ifndef NNNNN
+	$(error NNNNN is not defined)
+endif
+	sed s/NNNNN/$(NNNNN)/ fannkuchredux.java.in > fannkuchredux.java
 	$(JAVAC) -d . fannkuchredux.java
 
 measure:

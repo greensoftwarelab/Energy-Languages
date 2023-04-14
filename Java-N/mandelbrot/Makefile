@@ -7,6 +7,10 @@ JAVA := java
 endif
 
 compile:
+ifndef NNNNN
+	$(error NNNNN is not defined)
+endif
+	sed s/NNNNN/$(NNNNN)/ mandelbrot.java.in > mandelbrot.java
 	$(JAVAC) -d . mandelbrot.java
 
 measure:

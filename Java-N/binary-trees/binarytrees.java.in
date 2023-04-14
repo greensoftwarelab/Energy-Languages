@@ -5,7 +5,6 @@
  * based on Jarkko Miettinen's Java program
  * contributed by Tristan Dupont
  * *reset*
- * Modified by Hyuk-Je Kwon to run 100 times
  */
 
 import java.util.concurrent.ExecutorService;
@@ -18,7 +17,7 @@ public class binarytrees {
     
     public static void main(final String[] args) throws Exception {
         // Number of iterations: NNNNN (will be replaced when running make)
-        for (int java100Iterations = 0; java100Iterations < NNNNN; java100Iterations++) {
+        for (int java_N_Iterations = 0; java_N_Iterations < NNNNN; java_N_Iterations++) {
             final ExecutorService EXECUTOR_SERVICE = 
                 Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());  // set number of threads
 

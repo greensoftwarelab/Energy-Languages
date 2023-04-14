@@ -3,7 +3,6 @@
    http://benchmarksgame.alioth.debian.org/
 
    contributed by Francois Green
-   Modified by Hyuk-Je Kwon to run 100 times
 */
 
 import java.io.*;
@@ -16,21 +15,25 @@ import java.util.regex.*;
 
 import static java.util.stream.Collectors.*;
 
+import java.io.FileInputStream;
+
 public class regexredux {
 
   public static void main(String[] args) throws IOException {
-    // java-100 loop inserted here:
-    for (int java100Iterations = 0; java100Iterations < 100; java100Iterations++) {
-      System.err.println("Iteration: " + java100Iterations);
+    // Number of iterations: NNNNN (will be replaced when running make)
+    for (int java_N_Iterations = 0; java_N_Iterations < NNNNN; java_N_Iterations++) {
+      System.err.println("Iteration: " + java_N_Iterations);
 
+      FileInputStream reader = new FileInputStream(args[0]);
       ByteArrayOutputStream baos = new ByteArrayOutputStream();
       {
           byte[] buf = new byte[65536];
           int count;
-          while ((count = System.in.read(buf)) > 0) {
+          while ((count = reader.read(buf)) > 0) {
               baos.write(buf, 0, count);
           }
       }
+      reader.close();
       final String input = baos.toString("US-ASCII");
 
       final int initialLength = input.length();

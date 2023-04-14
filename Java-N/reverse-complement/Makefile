@@ -7,6 +7,10 @@ JAVA := java
 endif
 
 compile:
+ifndef NNNNN
+	$(error NNNNN is not defined)
+endif
+	sed s/NNNNN/$(NNNNN)/ revcomp.java.in > revcomp.java
 	$(JAVAC) -d . revcomp.java
 
 measure:
@@ -14,7 +18,7 @@ measure:
 	sudo ../../RAPL/main "$(JAVA) revcomp 0 < ../../revcomp-input25000000.txt" Java reverse-complement
 
 run:
-	$(JAVA) revcomp 0 < ../../revcomp-input25000000.txt
+	$(JAVA) revcomp ../../revcomp-input25000000.txt 0
 
 mem:
 	/usr/bin/time -v $(JAVA) revcomp 0 < ../../revcomp-input25000000.txt

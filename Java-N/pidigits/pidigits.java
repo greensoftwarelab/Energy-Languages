@@ -3,7 +3,6 @@
  * http://benchmarksgame.alioth.debian.org/
  * contributed by Mike Pall
  * java port by Stefan Krause
- * Modified by Hyuk-Je Kwon to run 100 times
 */
 
 

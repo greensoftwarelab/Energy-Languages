@@ -3,8 +3,6 @@
  
    contributed by Leonhard Holz
    thanks to Anthony Donnefort for the basic mapping idea
-   Modified by Hyuk-Je Kwon to run 100 times
-   TODO: Fix concurrency issues
 */
 
 import java.io.IOException;
@@ -15,11 +13,13 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import java.io.FileInputStream;
+
 public class revcomp
 {
-   private static final byte[] map = new byte[256];      
+   private static final byte[] map = new byte[256];
    private static final int CHUNK_SIZE = 1024 * 1024 * 16;
-   // private static final int NUMBER_OF_CORES = Runtime.getRuntime().availableProcessors();
+   private static final int NUMBER_OF_CORES = Runtime.getRuntime().availableProcessors();
    private static final List<byte[]> list = Collections.synchronizedList(new ArrayList<byte[]>());
 
    static {
@@ -43,10 +43,12 @@ public class revcomp
 
    public static void main(String[] args) throws IOException
    {
-      // java-100 loop inserted here:
-      for (int java100Iterations = 0; java100Iterations < 100; java100Iterations++) {
-         final ExecutorService service = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
-         System.err.println("Iteration: " + java100Iterations);
+      // Number of iterations: NNNNN (will be replaced when running make)
+      for (int java_N_Iterations = 0; java_N_Iterations < NNNNN; java_N_Iterations++) {
+         // list.clear();
+         final ExecutorService service = Executors.newFixedThreadPool(NUMBER_OF_CORES);
+         System.err.println("Iteration: " + java_N_Iterations);
+         FileInputStream reader = new FileInputStream(args[0]);
 
          int read;
          byte[] buffer;
@@ -54,7 +56,7 @@ public class revcomp
          
          do {
             buffer = new byte[CHUNK_SIZE];
-            read = System.in.read(buffer);
+            read = reader.read(buffer);
             list.add(buffer);
 
             Finder finder = new Finder(buffer, read, lastFinder, service);
@@ -62,6 +64,7 @@ public class revcomp
             lastFinder = finder;
 
          } while (read == CHUNK_SIZE);
+         reader.close();
 
          Status status = lastFinder.finish();
          Mapper mapper = new Mapper(status.lastFinding, status.count - 1, status.lastMapper);
@@ -175,7 +178,8 @@ public class revcomp
          while (tob[p1] != '\n') p1++;
 
          int p2 = positions[3];
-      
+         // System.err.println(lp1 + " " + lp2 + " " + p1 + " " + p2);
+         // System.err.println(list.toString());
          while (lp1 < lp2 || p1 < p2) {
             if (tob[p1] == '\n') {
                p1++;

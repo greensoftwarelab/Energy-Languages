@@ -7,7 +7,6 @@
  * reduce synchronization cost by The Anh Tran
  * optimizations and refactoring by Enotus 2010-11-11
  * optimization by John Stalcup 2012-2-19
- * Modified by Hyuk-Je Kwon to run 100 times
  */
 
 
@@ -53,9 +52,9 @@ public final class mandelbrot {
    }
 
    public static void main(String[] args) throws Exception {
-      // java-100 loop inserted here:
-      for (int java100Iterations = 0; java100Iterations < 100; java100Iterations++) {
-         System.err.println("Iteration: " + java100Iterations);
+      // Number of iterations: NNNNN (will be replaced when running make)
+      for (int java_N_Iterations = 0; java_N_Iterations < NNNNN; java_N_Iterations++) {
+         System.err.println("Iteration: " + java_N_Iterations);
 
          int N=6000;
          if (args.length>=1) N=Integer.parseInt(args[0]);

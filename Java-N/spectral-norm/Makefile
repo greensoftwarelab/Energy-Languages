@@ -7,6 +7,10 @@ JAVA := java
 endif
 
 compile:
+ifndef NNNNN
+	$(error NNNNN is not defined)
+endif
+	sed s/NNNNN/$(NNNNN)/ spectralnorm.java.in > spectralnorm.java
 	$(JAVAC) -d . spectralnorm.java
 
 measure:
