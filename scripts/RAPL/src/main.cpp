@@ -67,9 +67,6 @@ struct glz::meta<rapl::Sample> {
 #ifdef RAPL_MSR_DRAM_SUPPORTED
         "dram", &T::dram,
 #endif
-#ifdef RAPL_MSR_PSYS_SUPPORTED
-        "psys", &T::psys,
-#endif
     });
     // clang-format on
 };
