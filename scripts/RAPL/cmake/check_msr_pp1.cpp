@@ -10,10 +10,8 @@ int main() {
         return 1;
     }
 
-    int64_t data;
-    if (pread(fd, &data, sizeof(int64_t), MSR_PP1_ENERGY_STATUS) != sizeof(int64_t)) {
+    uint64_t data;
+    if (pread(fd, &data, sizeof(uint64_t), MSR_PP1_ENERGY_STATUS) != sizeof(uint64_t)) {
         return 1;
     }
-
-    close(fd);
 }
