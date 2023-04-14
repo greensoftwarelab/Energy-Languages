@@ -32,19 +32,19 @@ rapl::Sample rapl::sample(int package) {
 
     const auto sample = Sample{
 #ifdef RAPL_MSR_PKG_SUPPORTED
-        .pkg = unit * msr::read(fd, MSR_PKG_ENERGY_STATUS),
+        .pkg = unit * static_cast<uint32_t>(msr::read(fd, MSR_PKG_ENERGY_STATUS)),
 #endif
 #ifdef RAPL_MSR_PP0_SUPPORTED
-        .pp0 = unit * msr::read(fd, MSR_PP0_ENERGY_STATUS),
+        .pp0 = unit * static_cast<uint32_t>(msr::read(fd, MSR_PP0_ENERGY_STATUS)),
 #endif
 #ifdef RAPL_MSR_PP1_SUPPORTED
-        .pp1 = unit * msr::read(fd, MSR_PP1_ENERGY_STATUS),
+        .pp1 = unit * static_cast<uint32_t>(msr::read(fd, MSR_PP1_ENERGY_STATUS)),
 #endif
 #ifdef RAPL_MSR_DRAM_SUPPORTED
-        .dram = unit * msr::read(fd, MSR_DRAM_ENERGY_STATUS),
+        .dram = unit * static_cast<uint32_t>(msr::read(fd, MSR_DRAM_ENERGY_STATUS)),
 #endif
 #ifdef RAPL_MSR_PSYS_SUPPORTED
-        .psys = unit * msr::read(fd, MSR_PLATFORM_ENERGY_STATUS),
+        .psys = unit * static_cast<uint32_t>(msr::read(fd, MSR_PLATFORM_ENERGY_COUNTER)),
 #endif
     };
 
