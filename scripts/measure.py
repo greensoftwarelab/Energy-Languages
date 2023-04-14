@@ -108,7 +108,7 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--timeout",
-        type=str,
+        type=int,
         default=None,
         help="Timeout for process execution",
     )
