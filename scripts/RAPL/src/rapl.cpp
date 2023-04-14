@@ -49,37 +49,3 @@ rapl::Sample rapl::sample(int package) {
 
     return sample;
 }
-
-rapl::Sample rapl::operator+([[maybe_unused]] const rapl::Sample& left, [[maybe_unused]] const rapl::Sample& right) {
-    return {
-#ifdef RAPL_MSR_PKG_SUPPORTED
-        .pkg = left.pkg + right.pkg,
-#endif
-#ifdef RAPL_MSR_PP0_SUPPORTED
-        .pp0 = left.pp0 + right.pp0,
-#endif
-#ifdef RAPL_MSR_PP1_SUPPORTED
-        .pp1 = left.pp1 + right.pp1,
-#endif
-#ifdef RAPL_MSR_DRAM_SUPPORTED
-        .dram = left.dram + right.dram,
-#endif
-    };
-}
-
-rapl::Sample rapl::operator-([[maybe_unused]] const rapl::Sample& left, [[maybe_unused]] const rapl::Sample& right) {
-    return {
-#ifdef RAPL_MSR_PKG_SUPPORTED
-        .pkg = left.pkg - right.pkg,
-#endif
-#ifdef RAPL_MSR_PP0_SUPPORTED
-        .pp0 = left.pp0 - right.pp0,
-#endif
-#ifdef RAPL_MSR_PP1_SUPPORTED
-        .pp1 = left.pp1 - right.pp1,
-#endif
-#ifdef RAPL_MSR_DRAM_SUPPORTED
-        .dram = left.dram - right.dram,
-#endif
-    };
-}

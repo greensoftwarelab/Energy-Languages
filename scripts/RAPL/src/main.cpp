@@ -117,7 +117,7 @@ int main(int argc, char* argv[]) {
             std::lock_guard<std::mutex> guard(previous_lock);
             for (int package = 0; package < cpu::getNPackages(); ++package) {
                 const auto sample = rapl::sample(package);
-                result.energy = result.energy + sample - previous[package];
+                result.energy += sample - previous[package];
                 previous[package] = sample;
             }
         }
@@ -136,7 +136,7 @@ int main(int argc, char* argv[]) {
     std::lock_guard<std::mutex> guard(previous_lock);
     for (int package = 0; package < cpu::getNPackages(); ++package) {
         const auto sample = rapl::sample(package);
-        result.energy = result.energy + sample - previous[package];
+        result.energy += sample - previous[package];
     }
 
     if (read(fd, &result.cycles, sizeof(uint64_t)) != sizeof(uint64_t)) {
