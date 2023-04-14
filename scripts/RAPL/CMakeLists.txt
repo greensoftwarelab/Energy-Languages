@@ -18,7 +18,7 @@ FetchContent_Declare(
 message(STATUS "Downloading and configuring Glaze")
 FetchContent_MakeAvailable(glaze)
 
-add_executable(rapl src/rapl.cpp src/cpu.cpp src/msr.cpp)
+add_executable(rapl src/main.cpp src/cpu.cpp src/msr.cpp)
 target_compile_options(rapl PRIVATE -Wall -Wextra -Wpedantic -Werror)
 target_include_directories(rapl PRIVATE include)
 target_link_libraries(rapl PRIVATE glaze::glaze)
@@ -42,14 +42,10 @@ if(RAPL_MSR_PSYS_SUPPORTED)
     target_compile_options(rapl PUBLIC -DRAPL_MSR_PSYS_SUPPORTED)
 endif()
 
-add_executable(rapl-read src/rapl-read.c)
-target_link_libraries(rapl-read PRIVATE m)
-
 check_ipo_supported(RESULT IPO_SUPPORTED)
 if(IPO_SUPPORTED)
     message(DEBUG "Enabling IPO/LTO")
     set_property(TARGET rapl PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
-    set_property(TARGET rapl-read PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
 else()
     message(DEBUG "IPO/LTO is not supported")
 endif()
