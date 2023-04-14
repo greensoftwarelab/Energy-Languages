@@ -69,13 +69,11 @@ def main(args):
 
                         if run_status != 0:
                             console.print(
-                                f"[{language}] {benchmark}: Run #{i + 1} failed.",
-                                file=sys.stderr,
+                                f"[{language}] {benchmark}: Run #{i + 1} failed."
                             )
                     except subprocess.TimeoutExpired:
                         console.print(
-                            f"[{language}] {benchmark}: Run #{i + 1} timed out.",
-                            file=sys.stderr,
+                            f"[{language}] {benchmark}: Run #{i + 1} timed out."
                         )
                     progress.update(task, advance=1)
 
