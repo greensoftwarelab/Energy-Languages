@@ -11,4 +11,4 @@ ifndef JSON
 	$(error JSON is not defined)
 endif
 	sudo modprobe msr
-	sudo ../../scripts/RAPL/build/rapl $(JSON) './fannkuchredux_run 12'
+	sudo ../../scripts/RAPL/build/rapl $(JSON) ./fannkuchredux_run 12
