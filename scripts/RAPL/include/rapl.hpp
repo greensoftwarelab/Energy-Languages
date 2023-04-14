@@ -21,6 +21,9 @@ struct Sample {
 #endif
 };
 
+Sample operator+(const Sample& left, const Sample& right);
+Sample operator-(const Sample& left, const Sample& right);
+
 Sample sample(int package);
 Sample delta(const Sample& previous, const Sample& current);
 } // namespace rapl

@@ -18,7 +18,7 @@ FetchContent_Declare(
 message(STATUS "Downloading and configuring Glaze")
 FetchContent_MakeAvailable(glaze)
 
-add_executable(rapl src/main.cpp src/cpu.cpp src/msr.cpp)
+add_executable(rapl src/main.cpp src/cpu.cpp src/msr.cpp src/rapl.cpp)
 target_compile_options(rapl PRIVATE -Wall -Wextra -Wpedantic -Werror)
 target_include_directories(rapl PRIVATE include)
 target_link_libraries(rapl PRIVATE glaze::glaze)

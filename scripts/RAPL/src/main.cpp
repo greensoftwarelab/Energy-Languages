@@ -20,6 +20,7 @@
 
 #include <cpu.hpp>
 #include <msr.hpp>
+#include <rapl.hpp>
 
 struct KillableTimer {
     template <typename Rep, typename Period>
@@ -40,35 +41,17 @@ struct KillableTimer {
     bool killed = false;
 };
 
-void aggregate([[maybe_unused]] msr::Sample& total, [[maybe_unused]] const msr::Sample& sample) {
-#ifdef RAPL_MSR_PKG_SUPPORTED
-    total.pkg += sample.pkg;
-#endif
-#ifdef RAPL_MSR_PP0_SUPPORTED
-    total.pp0 += sample.pp0;
-#endif
-#ifdef RAPL_MSR_PP1_SUPPORTED
-    total.pp1 += sample.pp1;
-#endif
-#ifdef RAPL_MSR_DRAM_SUPPORTED
-    total.dram += sample.dram;
-#endif
-#ifdef RAPL_MSR_PSYS_SUPPORTED
-    total.psys += sample.psys;
-#endif
-}
-
 using Clock = std::chrono::high_resolution_clock;
 
 struct Result {
     Clock::rep runtime;
-    msr::Sample energy;
+    rapl::Sample energy;
     uint64_t cycles;
 };
 
 template <>
-struct glz::meta<msr::Sample> {
-    using T = msr::Sample;
+struct glz::meta<rapl::Sample> {
+    using T = rapl::Sample;
     // clang-format off
     [[maybe_unused]] static constexpr auto value = std::apply([](auto... args) { return glz::object(args...); }, std::tuple{
 #ifdef RAPL_MSR_PKG_SUPPORTED
@@ -119,7 +102,7 @@ int main(int argc, char* argv[]) {
     ioctl(fd, PERF_EVENT_IOC_RESET, 0);
 
     Result result;
-    std::vector<msr::Sample> previous;
+    std::vector<rapl::Sample> previous;
     std::mutex previous_lock;
 
     KillableTimer timer;
@@ -133,15 +116,15 @@ int main(int argc, char* argv[]) {
 
             std::lock_guard<std::mutex> guard(previous_lock);
             for (int package = 0; package < cpu::getNPackages(); ++package) {
-                const auto sample = msr::sample(package);
-                aggregate(result.energy, msr::delta(previous[package], sample));
+                const auto sample = rapl::sample(package);
+                result.energy = result.energy + sample - previous[package];
                 previous[package] = sample;
             }
         }
     });
 
     for (int package = 0; package < cpu::getNPackages(); ++package) {
-        previous.emplace_back(msr::sample(package));
+        previous.emplace_back(rapl::sample(package));
     }
 
     ioctl(fd, PERF_EVENT_IOC_ENABLE, 0);
@@ -152,8 +135,8 @@ int main(int argc, char* argv[]) {
 
     std::lock_guard<std::mutex> guard(previous_lock);
     for (int package = 0; package < cpu::getNPackages(); ++package) {
-        const auto sample = msr::sample(package);
-        aggregate(result.energy, msr::delta(previous[package], sample));
+        const auto sample = rapl::sample(package);
+        result.energy = result.energy + sample - previous[package];
     }
 
     if (read(fd, &result.cycles, sizeof(uint64_t)) != sizeof(uint64_t)) {
