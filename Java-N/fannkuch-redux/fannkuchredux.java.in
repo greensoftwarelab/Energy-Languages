@@ -3,7 +3,6 @@
  * http://benchmarksgame.alioth.debian.org/
  *
  * Contributed by Oleg Mazurov, June 2010
- * TODO: Make sure not creating zombie threads
  */
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -135,8 +134,6 @@ public final class fannkuchredux implements Runnable
     {
         // Number of iterations: NNNNN (will be replaced when running make)
         for (int java_N_Iterations = 0; java_N_Iterations < NNNNN; java_N_Iterations++) {
-            System.err.println("Iteration: " + java_N_Iterations);
-
             n = args.length > 0 ? Integer.parseInt( args[0] ) : 12;
             if ( n < 0 || n > 12 ) {         // 13! won't fit into int
                 printResult( n, -1, -1 );

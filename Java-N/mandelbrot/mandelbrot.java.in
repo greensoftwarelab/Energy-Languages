@@ -54,8 +54,6 @@ public final class mandelbrot {
    public static void main(String[] args) throws Exception {
       // Number of iterations: NNNNN (will be replaced when running make)
       for (int java_N_Iterations = 0; java_N_Iterations < NNNNN; java_N_Iterations++) {
-         System.err.println("Iteration: " + java_N_Iterations);
-
          int N=6000;
          if (args.length>=1) N=Integer.parseInt(args[0]);
 
