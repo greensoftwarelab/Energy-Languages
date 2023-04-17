@@ -13,15 +13,12 @@ endif
 	sed s/NNNNN/$(NNNNN)/ regexredux.java.in > regexredux.java
 	$(JAVAC) -d . regexredux.java
 
-measure:
-	sudo modprobe msr
-	sudo ../../RAPL/main "$(JAVA) regexredux 0 < ../../regexredux-input5000000.txt" Java regex-redux
-
 run:
 	$(JAVA) regexredux ../../regexredux-input5000000.txt 0
 
-mem:
-	/usr/bin/time -v $(JAVA) regexredux 0 < ../../regexredux-input5000000.txt
-
-valgrind:
-	valgrind --tool=massif --stacks=yes $(JAVA) regexredux 0 < ../../regexredux-input5000000.txt
+measure:
+ifndef JSON
+	$(error JSON is not defined)
+endif
+	sudo modprobe msr
+	sudo ../../scripts/RAPL/build/rapl $(JSON) $(JAVA) regexredux ../../regexredux-input5000000.txt 0

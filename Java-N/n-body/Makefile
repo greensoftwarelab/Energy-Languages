@@ -13,15 +13,12 @@ endif
 	sed s/NNNNN/$(NNNNN)/ nbody.java.in > nbody.java
 	$(JAVAC) -d . nbody.java
 
-measure:
-	sudo modprobe msr
-	sudo ../../RAPL/main "$(JAVA) nbody 50000000" Java n-body
-
 run:
 	$(JAVA) nbody 50000000
 
-mem:
-	/usr/bin/time -v $(JAVA) nbody 50000000
-
-valgrind:
-	valgrind --tool=massif --stacks=yes $(JAVA) nbody 50000000
+measure:
+ifndef JSON
+	$(error JSON is not defined)
+endif
+	sudo modprobe msr
+	sudo ../../scripts/RAPL/build/rapl $(JSON) $(JAVA) nbody 50000000

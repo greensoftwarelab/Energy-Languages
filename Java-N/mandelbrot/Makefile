@@ -13,15 +13,12 @@ endif
 	sed s/NNNNN/$(NNNNN)/ mandelbrot.java.in > mandelbrot.java
 	$(JAVAC) -d . mandelbrot.java
 
-measure:
-	sudo modprobe msr
-	sudo ../../RAPL/main "$(JAVA) mandelbrot 16000" Java mandelbrot
-
 run:
 	$(JAVA) mandelbrot 16000
 
-mem:
-	/usr/bin/time -v $(JAVA) mandelbrot 16000
-
-valgrind:
-	valgrind --tool=massif --stacks=yes $(JAVA) mandelbrot 16000
+measure:
+ifndef JSON
+	$(error JSON is not defined)
+endif
+	sudo modprobe msr
+	sudo ../../scripts/RAPL/build/rapl $(JSON) $(JAVA) mandelbrot 16000

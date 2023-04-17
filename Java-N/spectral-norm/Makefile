@@ -13,15 +13,12 @@ endif
 	sed s/NNNNN/$(NNNNN)/ spectralnorm.java.in > spectralnorm.java
 	$(JAVAC) -d . spectralnorm.java
 
-measure:
-	sudo modprobe msr
-	sudo ../../RAPL/main "$(JAVA) spectralnorm 5500" Java spectral-norm
-
 run:
 	$(JAVA) spectralnorm 5500
 
-mem:
-	/usr/bin/time -v $(JAVA) spectralnorm 5500
-
-valgrind:
-	valgrind --tool=massif --stacks=yes $(JAVA) spectralnorm 5500
+measure:
+ifndef JSON
+	$(error JSON is not defined)
+endif
+	sudo modprobe msr
+	sudo ../../scripts/RAPL/build/rapl $(JSON) $(JAVA) spectralnorm 5500
