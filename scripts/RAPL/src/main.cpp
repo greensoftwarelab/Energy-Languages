@@ -107,7 +107,7 @@ int main(int argc, char* argv[]) {
     std::thread subprocess = std::thread([&] {
         for (;;) {
             using namespace std::chrono_literals;
-            if (!timer.wait(10s)) {
+            if (!timer.wait(1s)) {
                 break;
             }
 
