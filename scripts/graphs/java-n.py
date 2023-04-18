@@ -1,6 +1,5 @@
 import json
 import os
-import statistics
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -22,14 +21,22 @@ if __name__ == "__main__":
             with open(os.path.join(DATA_ROOT, benchmark, file), "r") as fd:
                 for line in fd:
                     data[n].append(json.loads(line))
-        x = sorted(data.keys())
-        y_runtime = [statistics.median([r["runtime"] for r in data[n]]) / n for n in x]
+
+        x = np.sort(np.array(list(data.keys())))
+        runtime = np.array(list([r["runtime"] for r in data[n]] for n in x))
+        enery = np.array(list([r["energy"]["pkg"] for r in data[n]] for n in x))
+        cycles = np.array(list([r["cycles"] for r in data[n]] for n in x))
+
+        y = np.median(runtime, axis=1) / x
+        sigma = np.std(runtime, axis=1) / x
 
         fig, ax = plt.subplots()
-        ax.scatter(x, y_runtime, marker=".")
+        ax.scatter(x, y, marker=".")
+        ax.errorbar(x, y, sigma, linestyle="", elinewidth=1, capsize=2, alpha=0.5)
         ax.grid(which="both")
         ax.set_axisbelow(True)
         ax.set_ylabel("Time [ms]")
         ax.set_xlabel("Number of iterations")
-        ax.set_title("Relative time per iteration for the Java binary-trees benchmark")
+        ax.set_title(f"Relative time per iteration for the Java {benchmark} benchmark")
+
         plt.savefig(f"{benchmark}.{FORMAT}", format=FORMAT)
