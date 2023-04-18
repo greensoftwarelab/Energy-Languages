@@ -20,7 +20,7 @@ def main(args):
         task = progress.add_task("Total", total=args.n * (args.max - args.min + 1))
         for i in range(args.n):
             for NNNNN in range(args.min, args.max + 1):
-                progress.console.log(f"Iteration = {i} / NNNNN = {NNNNN}")
+                progress.console.log(f"Iteration = {i + 1} / NNNNN = {NNNNN}")
 
                 # Build
                 process = subprocess.run(
