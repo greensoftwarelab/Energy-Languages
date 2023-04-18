@@ -10,7 +10,7 @@ ROOT = os.path.join(os.path.dirname(__file__), "..")
 
 console = Console()
 progress_columns = [
-    TextColumn("[progress.description]{task.description}"),
+    TextColumn("{task.description}"),
     BarColumn(),
     MofNCompleteColumn(),
 ]
@@ -39,7 +39,7 @@ def main(args):
                 console.print(compilation.stdout.decode("utf-8"), end="")
                 if compilation.returncode != 0:
                     benchmarks.remove(benchmark)
-                progress.update(task, advance=1)
+                progress.advance(task)
 
         with Progress(*progress_columns, console=console) as progress:
             total = args.n * len(benchmarks)
@@ -75,7 +75,7 @@ def main(args):
                         console.print(
                             f"[{language}] {benchmark}: Run #{i + 1} timed out."
                         )
-                    progress.update(task, advance=1)
+                    progress.advance(task)
 
 
 if __name__ == "__main__":
