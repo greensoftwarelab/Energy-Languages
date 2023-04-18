@@ -23,9 +23,9 @@ if __name__ == "__main__":
                     data[n].append(json.loads(line))
 
         x = np.sort(np.array(list(data.keys())))
-        runtime = np.array(list([r["runtime"] for r in data[n]] for n in x))
-        enery = np.array(list([r["energy"]["pkg"] for r in data[n]] for n in x))
-        cycles = np.array(list([r["cycles"] for r in data[n]] for n in x))
+        runtime = list([r["runtime"] for r in data[n]] for n in x)
+        energy = list([r["energy"]["pkg"] for r in data[n]] for n in x)
+        cycles = list([r["cycles"] for r in data[n]] for n in x)
 
         y = np.median(runtime, axis=1) / x
         sigma = np.std(runtime, axis=1) / x
