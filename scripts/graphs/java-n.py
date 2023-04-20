@@ -35,6 +35,7 @@ if __name__ == "__main__":
             ax.scatter(x, y, marker=".")
             ax.errorbar(x, y, sigma, linestyle="", elinewidth=1, capsize=2, alpha=0.5)
             ax.set_axisbelow(True)
+            ax.set_ylim(0, ax.get_ylim()[1])
             ax.set_ylabel("Time [ms]")
             ax.set_xlabel("Number of iterations")
             ax.set_title(f"Java {benchmark}\nRelative time per iteration")
