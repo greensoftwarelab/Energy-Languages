@@ -3,13 +3,14 @@ PYTHON := python3
 endif
 
 compile:
-
-measure:
-	sudo modprobe msr
-	sudo ../../RAPL/main "$(PYTHON) -OO mandelbrot.py 16000" Python mandelbrot
+	$(PYTHON) -m compileall -o 2 mandelbrot.py
 
 run:
 	$(PYTHON) -OO mandelbrot.py 16000
 
-mem:
-	/usr/bin/time -v $(PYTHON) -OO mandelbrot.py 16000
+measure:
+ifndef JSON
+	$(error JSON is not defined)
+endif
+	sudo modprobe msr
+	sudo ../../scripts/RAPL/build/rapl $(JSON) $(PYTHON) -OO mandelbrot.py 16000

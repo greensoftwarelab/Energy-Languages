@@ -3,13 +3,14 @@ PYTHON := python3
 endif
 
 compile:
-
-measure:
-	sudo modprobe msr
-	sudo ../../RAPL/main "$(PYTHON) -OO fannkuchredux.py 12" Python fannkuch-redux
+	$(PYTHON) -m compileall -o 2 fannkuchredux.py
 
 run:
 	$(PYTHON) -OO fannkuchredux.py 12
 
-mem:
-	/usr/bin/time -v $(PYTHON) -OO fannkuchredux.py 12
+measure:
+ifndef JSON
+	$(error JSON is not defined)
+endif
+	sudo modprobe msr
+	sudo ../../scripts/RAPL/build/rapl $(JSON) $(PYTHON) -OO fannkuchredux.py 12

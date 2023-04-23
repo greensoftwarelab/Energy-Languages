@@ -3,13 +3,14 @@ PYTHON := python3
 endif
 
 compile:
-
-measure:
-	sudo modprobe msr
-	sudo ../../RAPL/main "$(PYTHON) -OO regexredux.py 0 < ../../regexredux-input5000000.txt" Python regex-redux
+	$(PYTHON) -m compileall -o 2 regexredux.py
 
 run:
 	$(PYTHON) -OO regexredux.py 0 < ../../regexredux-input5000000.txt
 
-mem:
-	/usr/bin/time -v $(PYTHON) -OO regexredux.py 0 < ../../regexredux-input5000000.txt
+measure:
+ifndef JSON
+	$(error JSON is not defined)
+endif
+	sudo modprobe msr
+	sudo ../../scripts/RAPL/build/rapl $(JSON) $(PYTHON) -OO regexredux.py 0 < ../../regexredux-input5000000.txt

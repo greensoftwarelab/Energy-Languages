@@ -3,13 +3,14 @@ PYTHON := python3
 endif
 
 compile:
-
-measure:
-	sudo modprobe msr
-	sudo ../../RAPL/main "$(PYTHON) -OO fasta.py 25000000" Python fasta
+	$(PYTHON) -m compileall -o 2 fasta.py
 
 run:
 	$(PYTHON) -OO fasta.py 25000000
 
-mem:
-	/usr/bin/time -v $(PYTHON) -OO fasta.py 25000000
+measure:
+ifndef JSON
+	$(error JSON is not defined)
+endif
+	sudo modprobe msr
+	sudo ../../scripts/RAPL/build/rapl $(JSON) $(PYTHON) -OO fasta.py 25000000

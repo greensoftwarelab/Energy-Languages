@@ -3,13 +3,14 @@ PYTHON := python3
 endif
 
 compile:
-
-measure:
-	sudo modprobe msr
-	sudo ../../RAPL/main "$(PYTHON) -OO nbody.py 50000000" Python n-body
+	$(PYTHON) -m compileall -o 2 nbody.py
 
 run:
 	$(PYTHON) -OO nbody.py 50000000
 
-mem:
-	/usr/bin/time -v $(PYTHON) -OO nbody.py 50000000
+measure:
+ifndef JSON
+	$(error JSON is not defined)
+endif
+	sudo modprobe msr
+	sudo ../../scripts/RAPL/build/rapl $(JSON) $(PYTHON) -OO nbody.py 50000000

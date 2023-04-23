@@ -3,13 +3,14 @@ PYTHON := python3
 endif
 
 compile:
-
-measure:
-	sudo modprobe msr
-	sudo ../../RAPL/main "$(PYTHON) -OO binarytrees.py 21" Python binary-trees
+	$(PYTHON) -m compileall -o 2 binarytrees.py
 
 run:
 	$(PYTHON) -OO binarytrees.py 21
 
-mem:
-	/usr/bin/time -v $(PYTHON) -OO binarytrees.py 21
+measure:
+ifndef JSON
+	$(error JSON is not defined)
+endif
+	sudo modprobe msr
+	sudo ../../scripts/RAPL/build/rapl $(JSON) $(PYTHON) -OO binarytrees.py 21

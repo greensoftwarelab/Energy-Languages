@@ -3,13 +3,14 @@ PYTHON := python3
 endif
 
 compile:
-
-measure:
-	sudo modprobe msr
-	sudo ../../RAPL/main "$(PYTHON) -OO pidigits.py 10000" Python pidigits
+	$(PYTHON) -m compileall -o 2 pidigits.py
 
 run:
 	$(PYTHON) -OO pidigits.py 10000
 
-mem:
-	/usr/bin/time -v $(PYTHON) -OO pidigits.py 10000
+measure:
+ifndef JSON
+	$(error JSON is not defined)
+endif
+	sudo modprobe msr
+	sudo ../../scripts/RAPL/build/rapl $(JSON) $(PYTHON) -OO pidigits.py 10000
