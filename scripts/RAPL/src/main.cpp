@@ -171,5 +171,8 @@ int main(int argc, char* argv[]) {
 
     result.runtime = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
 
-    std::ofstream(argv[1], std::ios_base::app) << glz::write_json(result) << "\n";
+    if (!(std::ofstream(argv[1], std::ios_base::app) << glz::write_json(result) << "\n")) {
+        std::cerr << "write failed" << std::endl;
+        return 1;
+    }
 }
