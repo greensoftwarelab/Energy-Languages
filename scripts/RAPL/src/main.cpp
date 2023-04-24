@@ -1,5 +1,6 @@
 #include <chrono>
 #include <condition_variable>
+#include <cstdlib>
 #include <cstring>
 #include <fstream>
 #include <ios>
@@ -71,6 +72,14 @@ struct glz::meta<rapl::Sample> {
     // clang-format on
 };
 
+struct ScopeExit {
+    ScopeExit(std::function<void()> f) : f(std::move(f)) {}
+    ~ScopeExit() {
+        f();
+    }
+    std::function<void()> f;
+};
+
 template <>
 struct glz::meta<Result> {
     using T = Result;
@@ -82,6 +91,12 @@ int main(int argc, char* argv[]) {
     if (argc < 3) {
         std::cerr << "Usage: ./rapl <json-file> '<command> [args...]'" << std::endl;
         return 1;
+    }
+
+    std::string command = argv[2];
+    for (int i = 3; i < argc; ++i) {
+        command.append(" ");
+        command.append(argv[i]);
     }
 
     struct perf_event_attr pe;
@@ -119,6 +134,11 @@ int main(int argc, char* argv[]) {
             }
         }
     });
+    ScopeExit _([&] {
+        std::cerr << "exiting..." << std::endl;
+        timer.kill();
+        subprocess.join();
+    });
 
     {
         std::lock_guard<std::mutex> guard(lock);
@@ -127,24 +147,9 @@ int main(int argc, char* argv[]) {
         }
     }
 
-    const auto start = Clock::now();
     ioctl(fd, PERF_EVENT_IOC_ENABLE, 0);
-
-    const auto pid = fork();
-    if (pid == -1) {
-        std::cerr << "fork failed" << std::endl;
-        return 1;
-    }
-
-    if (pid == 0) {
-        if (!execvp(argv[2], argv + 2)) {
-            std::cerr << "execvp failed" << std::endl;
-            return 1;
-        }
-    }
-
-    int status;
-    waitpid(pid, &status, 0);
+    const auto start = Clock::now();
+    const auto status = std::system(command.c_str());
     const auto end = Clock::now();
     ioctl(fd, PERF_EVENT_IOC_DISABLE, 0);
 
@@ -160,13 +165,11 @@ int main(int argc, char* argv[]) {
     }
 
     if (status != 0) {
+        std::cerr << "child process failed" << std::endl;
         return 1;
     }
 
     result.runtime = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
 
     std::ofstream(argv[1], std::ios_base::app) << glz::write_json(result) << "\n";
-
-    timer.kill();
-    subprocess.join();
 }
