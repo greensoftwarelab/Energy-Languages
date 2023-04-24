@@ -61,5 +61,4 @@ struct Sample {
 };
 
 Sample sample(int package);
-Sample delta(const Sample& previous, const Sample& current);
 } // namespace rapl
