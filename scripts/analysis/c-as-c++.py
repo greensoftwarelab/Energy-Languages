@@ -3,13 +3,13 @@ import json
 import os
 import statistics
 
-import matplotlib.pyplot as plt
 import numpy as np
+from rich.console import Console
+from rich.table import Table
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 DATA_ROOT = os.path.join(ROOT, "data", "obelix96")
 LANGUAGES = ["C", "C as C++"]
-FORMAT = "png"
 
 
 if __name__ == "__main__":
@@ -29,48 +29,29 @@ if __name__ == "__main__":
     benchmarks = sorted(list({b for l in data.values() for b in l.keys()}))
     benchmarks = [b for b in benchmarks if np.all([b in data[l] for l in LANGUAGES])]
 
-    normalizations = [
-        statistics.geometric_mean([r["runtime"] for r in data[LANGUAGES[0]][b]])
-        for b in benchmarks
-    ]
+    table = Table(
+        title="Runtime geometric mean of C source benchmarks compiled in C and C++ modes"
+    )
+    table.add_column("Benchmark")
+    table.add_column("C runtime [ms]")
+    table.add_column("C++ runtime [ms]")
+    table.add_column("Ratio [%]")
 
-    subdata = [
-        [r["runtime"] / normalizations[i] for r in data[language][benchmark]]
-        for i, benchmark in enumerate(benchmarks)
+    runtimes = [
+        [
+            statistics.geometric_mean([r["runtime"] for r in data[language][b]])
+            for b in benchmarks
+        ]
         for language in LANGUAGES
     ]
 
-    delta = 0.175
-    positions = [i // 2 + (2 * (i % 2) - 1) * delta for i in range(len(subdata))]
-
-    with plt.style.context("bmh"):
-        fig, ax = plt.subplots()
-        fig.set_size_inches(12, 8)
-        bp = ax.boxplot(subdata, positions=positions, widths=(2 * delta - delta / 2))
-
-        for i in range(len(subdata)):
-            color = "blue" if i % 2 == 0 else "red"
-            plt.setp(bp["boxes"][i], color=color)
-            plt.setp(bp["medians"][i], color=color)
-            plt.setp(bp["caps"][2 * i], color=color)
-            plt.setp(bp["caps"][2 * i + 1], color=color)
-            plt.setp(bp["whiskers"][2 * i], color=color)
-            plt.setp(bp["whiskers"][2 * i + 1], color=color)
-
-        ax.set_xticks(
-            [i for i in range(len(benchmarks))], labels=benchmarks, rotation=90
-        )
-        ax.set_ylim(0, ax.get_ylim()[1])
-        ax.set_ylabel("Time [ms]")
-        ax.set_title(
-            f"Comparing C source benchmarks compiled in C and C++ modes\nNormalized to the geometric mean of the C version"
+    for i, benchmark in enumerate(benchmarks):
+        table.add_row(
+            benchmark,
+            f"{runtimes[0][i]:.0f}",
+            f"{runtimes[1][i]:.0f}",
+            f"{100 * runtimes[1][i] / runtimes[0][i]:.1f}",
         )
 
-        (blue,) = ax.plot([1, 1], "b-")
-        (red,) = ax.plot([1, 1], "r-")
-        ax.legend((blue, red), LANGUAGES)
-        blue.set_visible(False)
-        red.set_visible(False)
-
-        fig.tight_layout()
-        plt.savefig(f"c-as-c++.{FORMAT}", format=FORMAT)
+    console = Console()
+    console.print(table)
