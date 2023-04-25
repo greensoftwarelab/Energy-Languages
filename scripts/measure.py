@@ -7,6 +7,7 @@ from rich.console import Console
 from rich.progress import *
 
 ROOT = os.path.join(os.path.dirname(__file__), "..")
+RAPL_ROOT = os.path.join(ROOT, "scripts", "RAPL", "build", "rapl")
 
 console = Console()
 progress_columns = [
@@ -79,9 +80,6 @@ def main(args):
 
 
 if __name__ == "__main__":
-    if not os.path.exists(os.path.join(ROOT, "scripts", "RAPL", "build", "rapl")):
-        raise "Could not find the RAPL executable. Make sure you build it first."
-
     parser = argparse.ArgumentParser(description="Runs the measurements.")
 
     parser.add_argument(
@@ -111,4 +109,9 @@ if __name__ == "__main__":
         help="Timeout for process execution",
     )
 
-    main(parser.parse_args())
+    args = parser.parse_args()
+
+    if args.n > 0 and not os.path.exists(RAPL_ROOT):
+        raise "Could not find the RAPL executable. Make sure you build it first."
+
+    main(args)
