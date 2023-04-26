@@ -25,12 +25,12 @@ double getEnergyUnitForPackage(int package) {
 }
 } // namespace
 
-rapl::Sample rapl::sample(int package) {
+rapl::DoubleSample rapl::sample(int package) {
     const auto fd = msr::open(cpu::getLowestNumberedCpuForPackage(package));
 
     const auto unit = getEnergyUnitForPackage(package);
 
-    const auto sample = Sample{
+    const auto sample = DoubleSample{
 #ifdef RAPL_MSR_PKG_SUPPORTED
         .pkg = unit * static_cast<uint32_t>(msr::read(fd, MSR_PKG_ENERGY_STATUS)),
 #endif

@@ -3,7 +3,7 @@
 #include <msr.hpp>
 
 namespace rapl {
-struct Sample {
+struct DoubleSample {
 #ifdef RAPL_MSR_PKG_SUPPORTED
     double pkg = 0;
 #endif
@@ -17,7 +17,7 @@ struct Sample {
     double dram = 0;
 #endif
 
-    rapl::Sample& operator+=([[maybe_unused]] const rapl::Sample& right) {
+    rapl::DoubleSample& operator+=([[maybe_unused]] const rapl::DoubleSample& right) {
 #ifdef RAPL_MSR_PKG_SUPPORTED
         this->pkg += right.pkg;
 #endif
@@ -33,12 +33,12 @@ struct Sample {
         return *this;
     }
 
-    friend rapl::Sample operator+(rapl::Sample left, const rapl::Sample& right) {
+    friend rapl::DoubleSample operator+(rapl::DoubleSample left, const rapl::DoubleSample& right) {
         left += right;
         return left;
     }
 
-    rapl::Sample& operator-=([[maybe_unused]] const rapl::Sample& right) {
+    rapl::DoubleSample& operator-=([[maybe_unused]] const rapl::DoubleSample& right) {
 #ifdef RAPL_MSR_PKG_SUPPORTED
         this->pkg -= right.pkg;
 #endif
@@ -54,11 +54,11 @@ struct Sample {
         return *this;
     }
 
-    friend rapl::Sample operator-(rapl::Sample left, const rapl::Sample& right) {
+    friend rapl::DoubleSample operator-(rapl::DoubleSample left, const rapl::DoubleSample& right) {
         left -= right;
         return left;
     }
 };
 
-Sample sample(int package);
+DoubleSample sample(int package);
 } // namespace rapl

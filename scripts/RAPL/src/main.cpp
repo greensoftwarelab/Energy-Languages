@@ -47,13 +47,13 @@ using Clock = std::chrono::high_resolution_clock;
 
 struct Result {
     Clock::rep runtime;
-    rapl::Sample energy;
+    rapl::DoubleSample energy;
     uint64_t cycles;
 };
 
 template <>
-struct glz::meta<rapl::Sample> {
-    using T = rapl::Sample;
+struct glz::meta<rapl::DoubleSample> {
+    using T = rapl::DoubleSample;
     // clang-format off
     [[maybe_unused]] static constexpr auto value = std::apply([](auto... args) { return glz::object(args...); }, std::tuple{
 #ifdef RAPL_MSR_PKG_SUPPORTED
@@ -89,7 +89,7 @@ struct glz::meta<Result> {
 
 int main(int argc, char* argv[]) {
     if (argc < 3) {
-        std::cerr << "Usage: ./rapl <json-file> '<command> [args...]'" << std::endl;
+        std::cerr << "Usage: ./rapl <json-file> <command> [args...]" << std::endl;
         return 1;
     }
 
@@ -115,7 +115,7 @@ int main(int argc, char* argv[]) {
     ioctl(fd, PERF_EVENT_IOC_RESET, 0);
 
     Result result;
-    std::vector<rapl::Sample> previous;
+    std::vector<rapl::DoubleSample> previous;
     std::mutex lock;
 
     KillableTimer timer;
@@ -135,7 +135,6 @@ int main(int argc, char* argv[]) {
         }
     });
     ScopeExit _([&] {
-        std::cerr << "exiting..." << std::endl;
         timer.kill();
         subprocess.join();
     });
