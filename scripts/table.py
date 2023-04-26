@@ -1,71 +1,60 @@
-import argparse
-from collections import defaultdict
-import csv
+import collections
 import os
+import json
 import statistics
+
+import numpy as np
 
 from rich.console import Console
 from rich.table import Table
 from rich.text import Text
 
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA_ROOT = os.path.join(ROOT, "data", "obelix96")
+LANGUAGES = ["C", "C++", "Rust", "Java", "Go", "JavaScript", "Python"]
+BASELINE = LANGUAGES[0]
 
-def main(args):
-    languages = [
-        f[:-4]
-        for f in os.listdir(args.data)
-        if os.path.isfile(os.path.join(args.data, f)) and f.endswith(".csv")
-    ]
-    languages.sort()
-    assert args.baseline in languages
 
-    all_benchmarks = set()
+if __name__ == "__main__":
+    data = collections.defaultdict(lambda: collections.defaultdict(list))
+    for language in LANGUAGES:
+        LANGUAGES_ROOT = os.path.join(DATA_ROOT, language)
+        assert os.path.isdir(LANGUAGES_ROOT)
+        for benchmark in os.listdir(LANGUAGES_ROOT):
+            path = os.path.join(LANGUAGES_ROOT, benchmark)
+            assert os.path.isfile(path) and path.endswith(".json")
+            benchmark = benchmark[:-5]
+            with open(path, "r") as file:
+                for line in file:
+                    line = json.loads(line)
+                    data[language][benchmark].append(line)
 
-    data = defaultdict(lambda: defaultdict(lambda: []))
-    for language in languages:
-        with open(os.path.join(args.data, f"{language}.csv"), "r") as f:
-            reader = csv.reader(f)
-            benchmarks = next(reader)
-            all_benchmarks.update(benchmarks)
-            for line in reader:
-                assert len(line) == len(benchmarks)
-                for i in range(len(benchmarks)):
-                    line[i] = line[i].strip()
-                    if line[i] != "":
-                        data[language][benchmarks[i]].append(float(line[i]))
+    benchmarks = sorted(list({b for l in data.values() for b in l.keys()}))
 
-    all_benchmarks = sorted(list(all_benchmarks))
-
-    averages = {
-        l: {b: statistics.mean(data[l][b]) for b in all_benchmarks if b in data[l]}
-        for l in languages
-    }
-
-    median_n = statistics.median(
-        [len(r) for language in languages for r in data[language].values()]
-    )
-
-    table = Table(title=f"Runtimes")
+    table = Table(title="Runtimes")
     table.add_column("Benchmark")
-    for language in languages:
-        table.add_column(f"{language} / {args.baseline}", justify="right")
+    for language in LANGUAGES:
+        table.add_column(f"{language} / {BASELINE}")
 
     missing_benchmarks = []
-    for benchmark in all_benchmarks:
-        if benchmark not in data[args.baseline]:
+    for benchmark in benchmarks:
+        if benchmark not in data[BASELINE]:
             missing_benchmarks.append(benchmark)
             continue
 
+        baseline = statistics.geometric_mean(
+            [e["runtime"] for e in data[BASELINE][benchmark]]
+        )
+
         entries = []
-        for language in languages:
-            baseline = averages[args.baseline][benchmark]
+        for language in LANGUAGES:
             if benchmark not in data[language]:
                 entries.append("")
             else:
-                normalized = averages[language][benchmark] / baseline
-                text = Text(f"{normalized:.2f}")
-                if len(data[language][benchmark]) < median_n:
-                    text.stylize("red")
-                entries.append(text)
+                value = statistics.geometric_mean(
+                    [e["runtime"] for e in data[language][benchmark]]
+                )
+                entries.append(f"{value / baseline:.2f}")
         table.add_row(*(benchmark, *entries))
 
     for benchmark in missing_benchmarks:
@@ -74,28 +63,3 @@ def main(args):
         table.add_row(text)
 
     Console().print(table)
-
-
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-        description="Generates a normalized runtime table."
-    )
-
-    parser.add_argument(
-        "--data",
-        type=str,
-        required=True,
-        metavar="DIRECTORY",
-        help="Directory where the CSV files live",
-    )
-    parser.add_argument(
-        "--baseline",
-        type=str,
-        metavar="PL",
-        default="C",
-        help="Language to use when normalizing runtimes",
-    )
-
-    args = parser.parse_args()
-
-    main(args)
