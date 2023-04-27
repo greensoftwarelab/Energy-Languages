@@ -12,3 +12,4 @@ sysinfo.*
 .cache
 .vscode
 __pycache__
+env
