@@ -10,18 +10,12 @@ compile:
 	npm install
 	$(TSC) --alwaysStrict -t ESNEXT spectralnorm.ts
 
-measure:
-	sudo modprobe msr
-	sudo ../../RAPL/main "$(NODE) spectralnorm.js 5500" TypeScript spectral-norm
-
 run:
 	$(NODE) spectralnorm.js 5500
 
-clean:
-	rm -rf *.js *.ts
-
-mem:
-	/usr/bin/time -v $(NODE) spectralnorm.js 5500
-
-valgrind:
-	valgrind --tool=massif --stacks=yes $(NODE) spectralnorm.js 5500
+measure:
+ifndef JSON
+	$(error JSON is not defined)
+endif
+	sudo modprobe msr
+	sudo ../../scripts/RAPL/build/rapl $(JSON) $(NODE) spectralnorm.js 5500

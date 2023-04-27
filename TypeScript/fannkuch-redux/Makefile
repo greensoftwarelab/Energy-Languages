@@ -10,18 +10,12 @@ compile:
 	npm install
 	$(TSC) --alwaysStrict -t ESNEXT fannkuchredux.ts
 
-measure:
-	sudo modprobe msr
-	sudo ../../RAPL/main "$(NODE) fannkuchredux.js 12" TypeScript fannkuch-redux
-
 run:
 	$(NODE) fannkuchredux.js 12
 
-clean:
-	rm -rf *.js *.ts
-
-mem:
-	/usr/bin/time -v $(NODE) fannkuchredux.js 12
-
-valgrind:
-	valgrind --tool=massif --stacks=yes $(NODE) fannkuchredux.js 12
+measure:
+ifndef JSON
+	$(error JSON is not defined)
+endif
+	sudo modprobe msr
+	sudo ../../scripts/RAPL/build/rapl $(JSON) $(NODE) fannkuchredux.js 12
