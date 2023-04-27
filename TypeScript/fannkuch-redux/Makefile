@@ -7,6 +7,7 @@ NODE := node
 endif
 
 compile:
+	npm install
 	$(TSC) --alwaysStrict -t ESNEXT fannkuchredux.ts
 
 measure:
