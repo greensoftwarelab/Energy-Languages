@@ -115,7 +115,7 @@ int main(int argc, char* argv[]) {
     ioctl(fd, PERF_EVENT_IOC_RESET, 0);
 
     Result result;
-    std::vector<rapl::DoubleSample> previous;
+    std::vector<rapl::U32Sample> previous;
     std::mutex lock;
 
     KillableTimer timer;
@@ -129,7 +129,7 @@ int main(int argc, char* argv[]) {
             std::lock_guard<std::mutex> guard(lock);
             for (int package = 0; package < cpu::getNPackages(); ++package) {
                 const auto sample = rapl::sample(package);
-                result.energy += sample - previous[package];
+                result.energy += rapl::scale(sample - previous[package], package);
                 previous[package] = sample;
             }
         }
@@ -155,7 +155,7 @@ int main(int argc, char* argv[]) {
     std::lock_guard<std::mutex> guard(lock);
     for (int package = 0; package < cpu::getNPackages(); ++package) {
         const auto sample = rapl::sample(package);
-        result.energy += sample - previous[package];
+        result.energy += rapl::scale(sample - previous[package], package);
     }
 
     if (read(fd, &result.cycles, sizeof(uint64_t)) != sizeof(uint64_t)) {
