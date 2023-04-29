@@ -9,13 +9,16 @@ from rich.table import Table
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_ROOT = os.path.join(ROOT, "data", "obelix96")
-LANGUAGES = ["C", "C as C++"]
+X = "C"
+Y = "C++"
+LANGUAGES = [X, f"{X} as {Y}"]
 
 
 if __name__ == "__main__":
     data = collections.defaultdict(lambda: collections.defaultdict(list))
     for language in LANGUAGES:
         LANGUAGES_ROOT = os.path.join(DATA_ROOT, language)
+        print(LANGUAGES_ROOT)
         assert os.path.isdir(LANGUAGES_ROOT)
         for benchmark in os.listdir(LANGUAGES_ROOT):
             path = os.path.join(LANGUAGES_ROOT, benchmark)
@@ -30,11 +33,11 @@ if __name__ == "__main__":
     benchmarks = [b for b in benchmarks if np.all([b in data[l] for l in LANGUAGES])]
 
     table = Table(
-        title="Runtime geometric mean of C source benchmarks compiled in C and C++ modes"
+        title=f"Runtime geometric mean of {X} source benchmarks compiled in {X} and {Y} modes"
     )
     table.add_column("Benchmark")
-    table.add_column("C runtime [ms]")
-    table.add_column("C++ runtime [ms]")
+    table.add_column(f"{X} runtime [ms]")
+    table.add_column(f"{Y} runtime [ms]")
     table.add_column("Ratio [%]")
 
     runtimes = [
