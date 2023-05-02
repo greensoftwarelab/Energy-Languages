@@ -1,16 +1,14 @@
 compile:
-	cp mandelbrot.csharpcore-5.csharpcore Program.cs
-	$(DOTNET) build -c Release
-
-measure:
-	sudo modprobe msr
-	sudo ../../RAPL/main "$(DOTNET) ./bin/Release/netcoreapp1.1/tmp.dll 16000" CSharp mandelbrot
+	$(DOTNET) new console -o build -n build --force
+	cp mandelbrot.csharpcore-5.csharpcore build/Program.cs
+	$(DOTNET) build build/ -c Release --no-incremental
 
 run:
-	$(DOTNET) ./bin/Release/netcoreapp1.1/tmp.dll 16000
+	$(DOTNET) run -c Release --project build/ --no-build -- 16000
 
-mem:
-	/usr/bin/time -v $(DOTNET) ./bin/Release/netcoreapp1.1/tmp.dll 16000
-
-valgrind:
-	valgrind --tool=massif --stacks=yes $(DOTNET) ./bin/Release/netcoreapp1.1/tmp.dll 16000
+measure:
+ifndef JSON
+	$(error JSON is not defined)
+endif
+	sudo modprobe msr
+	sudo ../../scripts/RAPL/build/rapl $(JSON) $(DOTNET) run -c Release --project build/ --no-build -- 16000
