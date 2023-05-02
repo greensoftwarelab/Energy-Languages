@@ -18,7 +18,6 @@ if __name__ == "__main__":
     data = collections.defaultdict(lambda: collections.defaultdict(list))
     for language in LANGUAGES:
         LANGUAGES_ROOT = os.path.join(DATA_ROOT, language)
-        print(LANGUAGES_ROOT)
         assert os.path.isdir(LANGUAGES_ROOT)
         for benchmark in os.listdir(LANGUAGES_ROOT):
             path = os.path.join(LANGUAGES_ROOT, benchmark)
