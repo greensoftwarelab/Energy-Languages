@@ -10,12 +10,15 @@ mdurl==0.1.2
 mypy-extensions==1.0.0
 numpy==1.24.2
 packaging==23.0
+pandas==2.0.1
 pathspec==0.11.1
 Pillow==9.5.0
 platformdirs==3.2.0
 Pygments==2.14.0
 pyparsing==3.0.9
 python-dateutil==2.8.2
+pytz==2023.3
 rich==13.3.3
 six==1.16.0
 tomli==2.0.1
+tzdata==2023.3
