@@ -67,9 +67,7 @@ if __name__ == "__main__":
         )
         # ax.set_ylim(0, ax.get_ylim()[1])
         ax.set_ylabel("Time [ms]")
-        ax.set_title(
-            f"Comparing C source benchmarks compiled in C and C++ modes\nNormalized to the geometric mean of the C version"
-        )
+        ax.set_title(f"TODO")
 
         (blue,) = ax.plot([1, 1], "b-")
         (red,) = ax.plot([1, 1], "r-")
@@ -78,4 +76,4 @@ if __name__ == "__main__":
         red.set_visible(False)
 
         fig.tight_layout()
-        plt.savefig(f"c-as-c++.{FORMAT}", format=FORMAT)
+        plt.savefig(f"boxplot.{FORMAT}", format=FORMAT)
