@@ -1,11 +1,15 @@
+-include ../Makefile.defaults
+
 compile:
-	/usr/bin/gcc -pipe -Wall -O3 -fomit-frame-pointer -march=native -fopenmp -std=c99 -IInclude knucleotide.c -o knucleotide.gcc_run
-measure:
-	sudo modprobe msr
-	sudo ../../RAPL/main "./knucleotide.gcc_run 0 < knucleotide-input25000000.txt" C k-nucleotide
+	wget https://github.com/samtools/htslib/releases/download/1.17/htslib-1.17.tar.bz2 -O - | tar xj
+	$(CC) $(CFLAGS) -fopenmp -Ihtslib-1.17  knucleotide.c -o knucleotide_run
 
 run:
-	./knucleotide.gcc_run 0 < knucleotide-input25000000.txt
+	./knucleotide_run 0 < ../../knucleotide-input25000000.txt
 
-mem:
-	/usr/bin/time -v ./knucleotide.gcc_run 0 < knucleotide-input25000000.txt
+measure:
+ifndef JSON
+	$(error JSON is not defined)
+endif
+	sudo modprobe msr
+	sudo ../../scripts/RAPL/build/rapl $(JSON) ./knucleotide_run 0 < ../../knucleotide-input25000000.txt
