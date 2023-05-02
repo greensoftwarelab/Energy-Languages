@@ -37,9 +37,9 @@ def main(args):
                     stdout=subprocess.PIPE,
                     stderr=subprocess.STDOUT,
                 )
-                console.print(compilation.stdout.decode("utf-8"), end="")
                 if compilation.returncode != 0:
                     benchmarks.remove(benchmark)
+                    console.print(compilation.stdout.decode("utf-8"), end="")
                 progress.advance(task)
 
         with Progress(*progress_columns, console=console) as progress:
