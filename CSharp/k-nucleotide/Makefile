@@ -1,3 +1,7 @@
+ifndef DOTNET
+	DOTNET := dotnet
+endif
+
 compile:
 	$(DOTNET) new console -o build -n build --force
 	cp knucleotide.csharpcore-6.csharpcore build/Program.cs

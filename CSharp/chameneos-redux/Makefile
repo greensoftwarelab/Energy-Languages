@@ -1,3 +1,7 @@
+ifndef DOTNET
+	DOTNET := dotnet
+endif
+
 compile:
 	$(DOTNET) new console -o build -n build --force
 	cp chameneosredux.csharpcore build/Program.cs

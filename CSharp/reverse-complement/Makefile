@@ -1,3 +1,7 @@
+ifndef DOTNET
+	DOTNET := dotnet
+endif
+
 compile:
 	$(DOTNET) new console -o build -n build --force
 	cp revcomp.csharpcore-2.csharpcore build/Program.cs

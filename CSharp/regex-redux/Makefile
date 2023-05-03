@@ -1,3 +1,7 @@
+ifndef DOTNET
+	DOTNET := dotnet
+endif
+
 compile:
 	$(DOTNET) new console -o build -n build --force
 	cp regexredux.csharpcore-4.csharpcore build/Program.cs
