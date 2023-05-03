@@ -38,6 +38,7 @@ def main(args):
                     stderr=subprocess.STDOUT,
                 )
                 if compilation.returncode != 0:
+                    console.print(compilation.stdout.decode("utf-8"), end="", markup=False)
                     benchmarks.remove(benchmark)
                     console.print(compilation.stdout.decode("utf-8"), end="")
                 progress.advance(task)
