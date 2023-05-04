@@ -52,10 +52,7 @@ if __name__ == "__main__":
         d = 2  # Horizontal distance between benchmarks
         w = 1  # Width for a single benchmark.
 
-        colors = {
-            language: plt.get_cmap("hsv")(i / len(LANGUAGES))
-            for i, language in enumerate(LANGUAGES)
-        }
+        colors = plt.rcParams["axes.prop_cycle"].by_key()["color"]
 
         for i, benchmark in enumerate(benchmarks):
             m = i * d
@@ -63,9 +60,7 @@ if __name__ == "__main__":
 
             for j, language in enumerate(LANGUAGES):
                 y = data[language][benchmark]
-                ax.scatter(
-                    np.repeat(x[j], len(y)), y, color=colors[language], s=5, alpha=0.3
-                )
+                ax.scatter(np.repeat(x[j], len(y)), y, color=colors[j], s=5, alpha=0.3)
 
         ax.set_xticks(
             [i * d for i in range(len(benchmarks))], labels=benchmarks, rotation=30
@@ -84,8 +79,8 @@ if __name__ == "__main__":
             f"Comparing benchmark runtimes for {', '.join(LANGUAGES[:-1])} and {LANGUAGES[-1]}"
         )
 
-        for language, color in colors.items():
-            ax.plot([], [], color=color, label=language)
+        for j, language in enumerate(LANGUAGES):
+            ax.plot([], [], color=colors[j], label=language)
         ax.legend()
 
         fig.tight_layout()
