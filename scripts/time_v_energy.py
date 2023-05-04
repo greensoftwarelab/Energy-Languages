@@ -1,6 +1,7 @@
 import collections
 import json
 import os
+import statistics
 import sys
 
 import matplotlib.pyplot as plt
@@ -8,26 +9,18 @@ import matplotlib.pyplot as plt
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_ROOT = os.path.join(ROOT, "data", "obelix96")
-LANGUAGES = ["C", "C++", "Rust", "Java", "Go", "JavaScript", "TypeScript", "Python"]
-STYLES = {
-    "C": "black",
-    "C++": "turquoise",
-    "Rust": "brown",
-    "Java": "red",
-    "Go": "orange",
-    "JavaScript": "green",
-    "TypeScript": "blue",
-    "Python": "purple",
-}
-
-
-def get_avg(langbench_pair: list[tuple]) -> tuple:
-    """Returns average time and energy pair of a set of runs."""
-    result = (0, 0)
-    N = len(langbench_pair)
-    for time, energy in langbench_pair:
-        result = result[0] + (time / N), result[1] + (energy / N)
-    return result
+LANGUAGES = [
+    "C",
+    "C++",
+    "Rust",
+    "Java",
+    "Go",
+    "C#",
+    "JavaScript",
+    "TypeScript",
+    "Python",
+]
+FORMAT = "png"
 
 
 if __name__ == "__main__":
@@ -45,32 +38,69 @@ if __name__ == "__main__":
             with open(path, "r") as file:
                 for line in file:
                     line = json.loads(line)
-                    # TODO: This is safe to remove once measurements are fixed.
-                    if line["energy"]["pkg"] < 0:
-                        continue
-                    data[language][benchmark].append(
-                        (line["runtime"], line["energy"]["pkg"])
-                    )
+                    data[language][benchmark].append(line)
 
     benchmarks = sorted(list({b for l in data.values() for b in l.keys()}))
-    plt.figure(figsize=(10, 7))
-    if view == "medium":
-        plt.axis([0, 40000, 0, 2000])
-    elif view == "large":
-        plt.axis([0, 10000, 0, 750])
-    elif view == "logscale":
-        plt.xscale("log")
-        plt.yscale("log")
-    plt.title(f"Time v. Energy: {view} view")
-    plt.xlabel("Time (ms)")
-    plt.ylabel("Energy (J)")
-    for language in data:
-        times, energies = [], []
-        for benchmark in data[language]:
-            time, energy = get_avg(data[language][benchmark])
-            times.append(time)
-            energies.append(energy)
-        plt.scatter(times, energies, color=STYLES[language], label=language)
-    plt.legend(loc="upper left")
-    plt.savefig(f"time_v_energy_{view}.jpg")
-    plt.show()
+
+    runtimes = {
+        language: {
+            benchmark: statistics.geometric_mean(
+                [r["runtime"] for r in data[language][benchmark]]
+            )
+            for benchmark in benchmarks
+            if benchmark in data[language]
+        }
+        for language in LANGUAGES
+    }
+
+    energies = {
+        language: {
+            benchmark: statistics.geometric_mean(
+                # TODO: Hack because of some faulty data. Can remove >= 0 in the future.
+                [
+                    r["energy"]["pkg"]
+                    for r in data[language][benchmark]
+                    if r["energy"]["pkg"] >= 0
+                ]
+            )
+            for benchmark in benchmarks
+            if benchmark in data[language]
+        }
+        for language in LANGUAGES
+    }
+
+    with plt.style.context("bmh"):
+        fig, ax = plt.subplots()
+        fig.set_size_inches(10, 7)
+        ax.set_title(f"Time v. Energy")
+        ax.set_xlabel("Time (ms)")
+        ax.set_ylabel("Energy (J)")
+        axins = ax.inset_axes([0.02, 0.48, 0.5, 0.5])
+        for language in data:
+            ax.scatter(
+                runtimes[language].values(),
+                energies[language].values(),
+                label=language,
+                s=10,
+            )
+            axins.scatter(
+                runtimes[language].values(),
+                energies[language].values(),
+                label=language,
+                s=10,
+            )
+        ax.legend(loc="lower right")
+
+        ax.set_xlim(0, ax.get_xlim()[1])
+        ax.set_ylim(0, ax.get_ylim()[1])
+        ax.set_axisbelow(True)
+
+        axins.set_axisbelow(True)
+        axins.set_xlim(0, 9000)
+        axins.set_ylim(0, 800)
+        axins.set_xticklabels([])
+        axins.set_yticklabels([])
+        ax.indicate_inset_zoom(axins)
+
+        fig.tight_layout()
+        plt.savefig(f"time_v_energy_{view}.{FORMAT}", format=FORMAT)
