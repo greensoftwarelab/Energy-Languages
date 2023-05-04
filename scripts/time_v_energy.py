@@ -86,7 +86,7 @@ if __name__ == "__main__":
                 runtimes[language].values(),
                 energies[language].values(),
                 label=language,
-                s=10,
+                s=20,
             )
         ax.legend(loc="lower right")
 
