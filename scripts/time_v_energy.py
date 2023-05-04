@@ -24,9 +24,6 @@ FORMAT = "png"
 
 
 if __name__ == "__main__":
-    argc = len(sys.argv)
-    view = "default" if argc < 2 else sys.argv[1]
-
     data = collections.defaultdict(lambda: collections.defaultdict(list))
     for language in LANGUAGES:
         LANGUAGES_ROOT = os.path.join(DATA_ROOT, language)
@@ -72,9 +69,11 @@ if __name__ == "__main__":
     with plt.style.context("bmh"):
         fig, ax = plt.subplots()
         fig.set_size_inches(10, 7)
-        ax.set_title(f"Time v. Energy")
-        ax.set_xlabel("Time (ms)")
-        ax.set_ylabel("Energy (J)")
+        ax.set_title(
+            f"Energy consumed as a function of runtime for all (language, benchmark) pairs"
+        )
+        ax.set_xlabel("Time [ms]")
+        ax.set_ylabel("Energy [J]")
         axins = ax.inset_axes([0.02, 0.48, 0.5, 0.5])
         for language in data:
             ax.scatter(
@@ -103,4 +102,4 @@ if __name__ == "__main__":
         ax.indicate_inset_zoom(axins)
 
         fig.tight_layout()
-        plt.savefig(f"time_v_energy_{view}.{FORMAT}", format=FORMAT)
+        plt.savefig(f"time_v_energy.{FORMAT}", format=FORMAT)
