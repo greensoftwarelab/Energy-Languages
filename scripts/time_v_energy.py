@@ -40,7 +40,7 @@ if __name__ == "__main__":
 
     with plt.style.context("bmh"):
         benchmarks = sorted(list({b for l in data.values() for b in l.keys()}))
-        markers = matplotlib.markers.MarkerStyle.filled_markers
+        markers = [".", "v", "^", "<", ">", "s", "*", "x", "D", "2", "+"]
         colors = plt.rcParams["axes.prop_cycle"].by_key()["color"]
 
         runtimes = {
@@ -108,26 +108,28 @@ if __name__ == "__main__":
         axins.set_yticklabels([])
         ax.indicate_inset_zoom(axins)
 
-        language_legend = ax.legend(
-            handles=[
-                mpatches.Patch(color=colors[i], label=language)
-                for i, language in enumerate(LANGUAGES)
-            ],
+        ax.add_artist(
+            ax.legend(
+                handles=[
+                    mpatches.Patch(color=colors[i], label=language)
+                    for i, language in enumerate(LANGUAGES)
+                ],
+            )
         )
-        benchmark_legend = ax.legend(
-            handles=[
-                ax.scatter(
-                    [],
-                    [],
-                    color=plt.rcParams["axes.edgecolor"],
-                    marker=markers[i],
-                    label=benchmark,
-                )
-                for i, benchmark in enumerate(benchmarks)
-            ],
+        ax.add_artist(
+            ax.legend(
+                handles=[
+                    ax.scatter(
+                        [],
+                        [],
+                        color=plt.rcParams["axes.edgecolor"],
+                        marker=markers[i],
+                        label=benchmark,
+                    )
+                    for i, benchmark in enumerate(benchmarks)
+                ],
+            )
         )
-        ax.add_artist(language_legend)
-        ax.add_artist(benchmark_legend)
 
         fig.tight_layout()
         plt.savefig(f"time_v_energy.{FORMAT}", format=FORMAT)
