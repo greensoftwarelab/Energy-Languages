@@ -29,6 +29,7 @@ if __name__ == "__main__":
 
     benchmarks = sorted(list({b for l in data.values() for b in l.keys()}))
     benchmarks = [b for b in benchmarks if np.all([b in data[l] for l in LANGUAGES])]
+    benchmarks = list(reversed(benchmarks))
 
     normalizations = [
         statistics.geometric_mean([r["runtime"] for r in data[LANGUAGES[0]][b]])
@@ -52,35 +53,37 @@ if __name__ == "__main__":
         d = 2  # Horizontal distance between benchmarks
         w = 1  # Width for a single benchmark.
 
-        colors = plt.rcParams["axes.prop_cycle"].by_key()["color"]
+        colors = {
+            language: plt.rcParams["axes.prop_cycle"].by_key()["color"][i]
+            for i, language in enumerate(LANGUAGES)
+        }
 
         for i, benchmark in enumerate(benchmarks):
             m = i * d
             x = np.linspace(m - w / 2, m + w / 2, len(LANGUAGES))
 
-            for j, language in enumerate(LANGUAGES):
+            for j, language in enumerate(reversed(LANGUAGES)):
                 y = data[language][benchmark]
-                ax.scatter(np.repeat(x[j], len(y)), y, color=colors[j], s=5, alpha=0.3)
+                ax.scatter(
+                    y, np.repeat(x[j], len(y)), color=colors[language], s=5, alpha=0.3
+                )
 
-        ax.set_xticks(
-            [i * d for i in range(len(benchmarks))], labels=benchmarks, rotation=30
-        )
-        ax.set_xticks(
+        ax.set_yticks([i * d for i in range(len(benchmarks))], labels=benchmarks)
+        ax.set_yticks(
             [(2 * i - 1) * d / 2 for i in range(1, len(benchmarks))], minor=True
         )
-        ax.grid(axis="y", visible=False)
-        ax.grid(axis="x", which="major", visible=False)
-        ax.grid(axis="x", which="minor", visible=True)
-        # ax.set_ylim(0, ax.get_ylim()[1])
-        ax.set_ylim(0, 6)
-        ax.set_xlim(-d / 2, (len(benchmarks) - 1) * d + d / 2)
-        ax.set_ylabel(f"Time (Normalized to {LANGUAGES[0]})")
+        ax.grid(axis="x", visible=False)
+        ax.grid(axis="y", which="major", visible=False)
+        ax.grid(axis="y", which="minor", visible=True)
+        ax.set_ylim(-d / 2, (len(benchmarks) - 1) * d + d / 2)
+        ax.set_xlim(0, ax.get_xlim()[1])
+        ax.set_xlabel(f"Time (Normalized to {LANGUAGES[0]})")
         ax.set_title(
             f"Comparing benchmark runtimes for {', '.join(LANGUAGES[:-1])} and {LANGUAGES[-1]}"
         )
 
-        for j, language in enumerate(LANGUAGES):
-            ax.plot([], [], color=colors[j], label=language)
+        for language in LANGUAGES:
+            ax.plot([], [], color=colors[language], label=language)
         ax.legend()
 
         fig.tight_layout()
