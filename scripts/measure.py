@@ -1,5 +1,6 @@
 import argparse
 import os
+import random
 import subprocess
 
 from rich.console import Console
@@ -17,6 +18,10 @@ progress_columns = [
 
 
 def run_benchmark(language, benchmark, timeout, type, env=os.environ):
+    # Todd Mytkowicz, Amer Diwan, Matthias Hauswirth, and Peter F. Sweeney. 2009.
+    # Producing wrong data without doing anything obviously wrong!
+    # SIGPLAN Not. 44, 3 (March 2009), 265–276. https://doi.org/10.1145/1508284.1508275
+    env["RANDOMIZED_ENVIRONMENT_OFFSET"] = "".join(["X"] * random.randint(0, 4096))
     try:
         return subprocess.run(
             ["make", type],
