@@ -1,7 +1,6 @@
 import argparse
 import os
 import subprocess
-import sys
 
 from rich.console import Console
 from rich.progress import *
@@ -9,12 +8,26 @@ from rich.progress import *
 ROOT = os.path.join(os.path.dirname(__file__), "..")
 RAPL_ROOT = os.path.join(ROOT, "scripts", "RAPL", "build", "rapl")
 
-console = Console()
+console = Console(markup=False)
 progress_columns = [
     TextColumn("{task.description}"),
     BarColumn(),
     MofNCompleteColumn(),
 ]
+
+
+def run_benchmark(language, benchmark, timeout, type, env=os.environ):
+    try:
+        return subprocess.run(
+            ["make", type],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            cwd=os.path.join(ROOT, language, benchmark),
+            timeout=timeout,
+            env=env,
+        ).returncode
+    except subprocess.TimeoutExpired:
+        return -1
 
 
 def main(args):
@@ -28,7 +41,7 @@ def main(args):
         )
 
         with Progress(*progress_columns, console=console) as progress:
-            task = progress.add_task(f"[{language}] Compile", total=len(benchmarks))
+            task = progress.add_task(f"{language}::Compile", total=len(benchmarks))
             for benchmark in list(benchmarks):
                 directory = os.path.join(ROOT, language, benchmark)
                 compilation = subprocess.run(
@@ -38,45 +51,51 @@ def main(args):
                     stderr=subprocess.STDOUT,
                 )
                 if compilation.returncode != 0:
-                    console.print(compilation.stdout.decode("utf-8"), end="", markup=False)
-                    benchmarks.remove(benchmark)
                     console.print(compilation.stdout.decode("utf-8"), end="")
+                    benchmarks.remove(benchmark)
                 progress.advance(task)
 
-        with Progress(*progress_columns, console=console) as progress:
-            total = args.n * len(benchmarks)
-            task = progress.add_task(f"[{language}] Run", total=total)
+        for benchmark in benchmarks:
+            os.makedirs(
+                os.path.join(os.path.abspath(args.output), language), exist_ok=True
+            )
+    for language in args.languages:
+        for benchmark in benchmarks:
+            codes = []
+            with Progress(*progress_columns, console=console) as progress:
+                task = progress.add_task(
+                    f"{language}::{benchmark}::Warmup", total=args.warmup
+                )
+                for i in range(args.warmup):
+                    status = run_benchmark(language, benchmark, args.timeout, "run")
+                    if status == -1:
+                        console.print(f"{language}::{benchmark} Warmup #{i} timed out.")
+                    elif status != 0:
+                        console.print(f"{language}::{benchmark} Warmup #{i} failed.")
+                    codes.append(status)
+                    progress.advance(task)
+            if all([code != 0 for code in codes]):
+                print("[{language}] [{benchmark}] All warmup runs failed. Skipping.")
+                continue
 
-            for benchmark in benchmarks:
-                path = os.path.join(os.path.abspath(args.output), language)
-                if not os.path.exists(path):
-                    os.makedirs(path)
-
-            for i in range(args.n):
-                for benchmark in benchmarks:
-                    directory = os.path.join(ROOT, language, benchmark)
-
+            with Progress(*progress_columns, console=console) as progress:
+                task = progress.add_task(
+                    f"{language}::{benchmark}::Measure", total=args.n
+                )
+                for i in range(args.n):
                     json = os.path.join(
                         os.path.abspath(args.output), language, f"{benchmark}.json"
                     )
-                    try:
-                        run_status = subprocess.run(
-                            ["make", "measure"],
-                            cwd=directory,
-                            stdout=subprocess.DEVNULL,
-                            stderr=subprocess.DEVNULL,
-                            env={**os.environ, "JSON": json},
-                            timeout=args.timeout,
-                        ).returncode
 
-                        if run_status != 0:
-                            console.print(
-                                f"[{language}] {benchmark}: Run #{i + 1} failed."
-                            )
-                    except subprocess.TimeoutExpired:
-                        console.print(
-                            f"[{language}] {benchmark}: Run #{i + 1} timed out."
-                        )
+                    env = {**os.environ, "JSON": json}
+
+                    status = run_benchmark(
+                        language, benchmark, args.timeout, "measure", env
+                    )
+                    if status == -1:
+                        console.print(f"{language}::{benchmark} Run #{i} timed out.")
+                    elif status != 0:
+                        console.print(f"{language}::{benchmark} Run #{i} failed.")
                     progress.advance(task)
 
 
@@ -108,6 +127,12 @@ if __name__ == "__main__":
         type=int,
         default=None,
         help="Timeout for process execution",
+    )
+    parser.add_argument(
+        "--warmup",
+        type=int,
+        default=1,
+        help="Number of warmup runs for each benchmark",
     )
 
     args = parser.parse_args()
