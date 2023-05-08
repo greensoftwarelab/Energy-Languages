@@ -30,6 +30,7 @@ if __name__ == "__main__":
         y = np.median(runtime, axis=1) / x
         sigma = np.std(runtime, axis=1) / x
 
+        plt.rcParams.update({"text.usetex": True, "font.family": "serif"})
         with plt.style.context("bmh"):
             fig, ax = plt.subplots()
             ax.scatter(x, y, marker=".")
@@ -38,6 +39,5 @@ if __name__ == "__main__":
             ax.set_ylim(0, ax.get_ylim()[1])
             ax.set_ylabel("Time [ms]")
             ax.set_xlabel("Number of iterations")
-            ax.set_title(f"Java {benchmark}\nRelative time per iteration")
 
             plt.savefig(f"{benchmark}.{FORMAT}", format=FORMAT)

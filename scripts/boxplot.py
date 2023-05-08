@@ -49,7 +49,7 @@ if __name__ == "__main__":
     plt.rcParams.update({"text.usetex": True, "font.family": "serif"})
     with plt.style.context("bmh"):
         fig, ax = plt.subplots()
-        fig.set_size_inches(12, 6)
+        fig.set_size_inches(10, 4)
 
         d = 2  # Horizontal distance between benchmarks.
         w = 1  # Width for a single benchmark.
@@ -80,9 +80,6 @@ if __name__ == "__main__":
         ax.set_xlim(0, ax.get_xlim()[1])
         ax.set_xlabel(
             f"Runtime (Normalized to to the geometric mean for {LANGUAGES[0]} for each benchmark)"
-        )
-        ax.set_title(
-            f"Comparing benchmark runtimes for {', '.join(LANGUAGES[:-1])} and {LANGUAGES[-1]}\nEach dot represents a single run"
         )
 
         for language in LANGUAGES:

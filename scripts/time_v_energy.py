@@ -38,6 +38,7 @@ if __name__ == "__main__":
                     line = json.loads(line)
                     data[language][benchmark].append(line)
 
+    plt.rcParams.update({"text.usetex": True, "font.family": "serif"})
     with plt.style.context("bmh"):
         benchmarks = sorted(list({b for l in data.values() for b in l.keys()}))
         markers = [".", "v", "^", "<", ">", "s", "*", "x", "D", "2", "+"]
@@ -111,7 +112,7 @@ if __name__ == "__main__":
         ax.add_artist(
             ax.legend(
                 handles=[
-                    mpatches.Patch(color=colors[i], label=language)
+                    mpatches.Patch(color=colors[i], label=language.replace("#", "\\#"))
                     for i, language in enumerate(LANGUAGES)
                 ],
             )
