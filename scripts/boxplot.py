@@ -10,7 +10,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_ROOT = os.path.join(ROOT, "data", "obelix96")
 LANGUAGES = ["C", "C++", "Rust"]
 # LANGUAGES = ["JavaScript", "TypeScript"]
-FORMAT = "png"
+FORMAT = "pdf"
 
 
 if __name__ == "__main__":

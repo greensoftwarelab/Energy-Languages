@@ -21,7 +21,7 @@ LANGUAGES = [
     "TypeScript",
     "Python",
 ]
-FORMAT = "png"
+FORMAT = "pdf"
 
 
 if __name__ == "__main__":
