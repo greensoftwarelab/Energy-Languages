@@ -56,7 +56,7 @@ def main(args):
                     stderr=subprocess.STDOUT,
                 )
                 if compilation.returncode != 0:
-                    console.print(compilation.stdout.decode("utf-8"), end="")
+                    console.print(f"{language}::Compile failed.")
                     benchmarks.remove(benchmark)
                 progress.advance(task)
 
