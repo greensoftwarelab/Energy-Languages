@@ -1,14 +1,15 @@
-compile:
+ifndef PHP
+PHP := php
+endif
 
-measure:
-	sudo modprobe msr
-	sudo ../../RAPL/main "php -d memory_limit=512M regexredux.php 0 < ../../regexredux-input5000000.txt" PHP regex-redux
+compile:
 
 run:
 	php -d memory_limit=512M regexredux.php 0 < ../../regexredux-input5000000.txt
 
-mem:
-	/usr/bin/time -v php -d memory_limit=512M regexredux.php 0 < ../../regexredux-input5000000.txt
-
-valgrind:
-	valgrind --tool=massif --stacks=yes php -d memory_limit=512M regexredux.php 0 < ../../regexredux-input5000000.txt
+measure:
+ifndef JSON
+	$(error JSON is not defined)
+endif
+	sudo modprobe msr
+	sudo ../../scripts/RAPL/build/rapl $(JSON) php -d memory_limit=512M regexredux.php 0 < ../../regexredux-input5000000.txt

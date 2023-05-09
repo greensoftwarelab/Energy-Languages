@@ -1,14 +1,16 @@
+ifndef PHP
+PHP := php
+endif
+
 compile:
 
-measure:
-	sudo modprobe msr
-	sudo ../../RAPL/main "php  fannkuchredux.php-3.php 12" PHP fannkuch-redux
-
 run:
-	php  fannkuchredux.php-3.php 12
+	php fannkuchredux.php 12
 
-mem:
-	/usr/bin/time -v php  fannkuchredux.php-3.php 12
+measure:
+ifndef JSON
+	$(error JSON is not defined)
+endif
+	sudo modprobe msr
+	sudo ../../scripts/RAPL/build/rapl $(JSON) php fannkuchredux.php 12
 
-valgrind:
-	valgrind --tool=massif --stacks=yes php  fannkuchredux.php-3.php 12

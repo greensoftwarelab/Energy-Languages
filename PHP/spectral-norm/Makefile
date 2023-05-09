@@ -1,14 +1,15 @@
+ifndef PHP
+PHP := php
+endif
+
 compile:
 
-measure:
-	sudo modprobe msr
-	sudo ../../RAPL/main "php -n  spectralnorm.php 5500" PHP spectral-norm
-
 run:
-	php -n  spectralnorm.php 5500
+	php -n spectralnorm.php 5500
 
-mem:
-	/usr/bin/time -v php -n  spectralnorm.php 5500
-
-valgrind:
-	valgrind --tool=massif --stacks=yes php -n  spectralnorm.php 5500
+measure:
+ifndef JSON
+	$(error JSON is not defined)
+endif
+	sudo modprobe msr
+	sudo ../../scripts/RAPL/build/rapl $(JSON) php -n spectralnorm.php 5500
