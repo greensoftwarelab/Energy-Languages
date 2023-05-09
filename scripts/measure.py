@@ -56,7 +56,7 @@ def main(args):
                     stderr=subprocess.STDOUT,
                 )
                 if compilation.returncode != 0:
-                    console.print(f"{language}::Compile failed.")
+                    console.print(f"{language}::{benchmark}::Compile failed.")
                     benchmarks.remove(benchmark)
                 progress.advance(task)
 
