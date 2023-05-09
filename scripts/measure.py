@@ -64,7 +64,7 @@ def main(args):
             os.makedirs(
                 os.path.join(os.path.abspath(args.output), language), exist_ok=True
             )
-    for language in args.languages:
+
         for benchmark in benchmarks:
             codes = []
             with Progress(*progress_columns, console=console) as progress:
