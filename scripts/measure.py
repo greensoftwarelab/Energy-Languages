@@ -79,7 +79,7 @@ def main(args):
                         console.print(f"{language}::{benchmark} Warmup #{i} failed.")
                     codes.append(status)
                     progress.advance(task)
-            if all([code != 0 for code in codes]):
+            if args.warmup > 0 and all([code != 0 for code in codes]):
                 print("[{language}] [{benchmark}] All warmup runs failed. Skipping.")
                 continue
 
