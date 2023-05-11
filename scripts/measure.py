@@ -67,41 +67,43 @@ def main(args):
 
         for benchmark in benchmarks:
             codes = []
-            with Progress(*progress_columns, console=console) as progress:
-                task = progress.add_task(
-                    f"{language}::{benchmark}::Warmup", total=args.warmup
-                )
-                for i in range(args.warmup):
-                    status = run_benchmark(language, benchmark, args.timeout, "run")
-                    if status == -1:
-                        console.print(f"{language}::{benchmark} Warmup #{i} timed out.")
-                    elif status != 0:
-                        console.print(f"{language}::{benchmark} Warmup #{i} failed.")
-                    codes.append(status)
-                    progress.advance(task)
-            if args.warmup > 0 and all([code != 0 for code in codes]):
-                print("[{language}] [{benchmark}] All warmup runs failed. Skipping.")
-                continue
-
-            with Progress(*progress_columns, console=console) as progress:
-                task = progress.add_task(
-                    f"{language}::{benchmark}::Measure", total=args.n
-                )
-                for i in range(args.n):
-                    json = os.path.join(
-                        os.path.abspath(args.output), language, f"{benchmark}.json"
+            if args.warmup > 0:
+                with Progress(*progress_columns, console=console) as progress:
+                    task = progress.add_task(
+                        f"{language}::{benchmark}::Warmup", total=args.warmup
                     )
+                    for i in range(args.warmup):
+                        status = run_benchmark(language, benchmark, args.timeout, "run")
+                        if status == -1:
+                            console.print(f"{language}::{benchmark} Warmup #{i} timed out.")
+                        elif status != 0:
+                            console.print(f"{language}::{benchmark} Warmup #{i} failed.")
+                        codes.append(status)
+                        progress.advance(task)
+                if all([code != 0 for code in codes]):
+                    print("[{language}] [{benchmark}] All warmup runs failed. Skipping.")
+                    continue
 
-                    env = {**os.environ, "JSON": json}
-
-                    status = run_benchmark(
-                        language, benchmark, args.timeout, "measure", env
+            if args.n > 0:
+                with Progress(*progress_columns, console=console) as progress:
+                    task = progress.add_task(
+                        f"{language}::{benchmark}::Measure", total=args.n
                     )
-                    if status == -1:
-                        console.print(f"{language}::{benchmark} Run #{i} timed out.")
-                    elif status != 0:
-                        console.print(f"{language}::{benchmark} Run #{i} failed.")
-                    progress.advance(task)
+                    for i in range(args.n):
+                        json = os.path.join(
+                            os.path.abspath(args.output), language, f"{benchmark}.json"
+                        )
+
+                        env = {**os.environ, "JSON": json}
+
+                        status = run_benchmark(
+                            language, benchmark, args.timeout, "measure", env
+                        )
+                        if status == -1:
+                            console.print(f"{language}::{benchmark} Run #{i} timed out.")
+                        elif status != 0:
+                            console.print(f"{language}::{benchmark} Run #{i} failed.")
+                        progress.advance(task)
 
 
 if __name__ == "__main__":
