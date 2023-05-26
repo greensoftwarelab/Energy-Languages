@@ -102,7 +102,7 @@ int main(int argc, char* argv[]) {
     struct perf_event_attr pe;
     memset(&pe, 0, sizeof(struct perf_event_attr));
     pe.type = PERF_TYPE_HARDWARE;
-    pe.config = PERF_COUNT_HW_CPU_CYCLES;
+    pe.config = PERF_COUNT_HW_REF_CPU_CYCLES;
     pe.size = sizeof(struct perf_event_attr);
     pe.inherit = 1;
     pe.disabled = 1;
