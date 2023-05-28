@@ -8,7 +8,7 @@ from rich.console import Console
 from rich.table import Table
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATA_ROOT = os.path.join(ROOT, "data", "obelix96")
+DATA_ROOT = os.path.join(ROOT, "data", "obelix96", "default")
 X = "C"
 Y = "C++"
 LANGUAGES = [X, f"{X} as {Y}"]
