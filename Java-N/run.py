@@ -1,5 +1,6 @@
 import argparse
 import os
+import random
 import subprocess
 
 from rich.progress import *
@@ -31,6 +32,7 @@ def main(args):
                     env={
                         **os.environ,
                         "NNNNN": str(NNNNN),
+                        "RANDOMIZED_ENVIRONMENT_OFFSET": "".join(["X"] * random.randint(0, 4096)),
                     },
                 )
 
