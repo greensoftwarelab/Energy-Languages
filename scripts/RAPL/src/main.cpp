@@ -109,7 +109,6 @@ int main(int argc, char* argv[]) {
                                                {PERF_TYPE_HARDWARE, PERF_COUNT_HW_CACHE_MISSES},
                                                {PERF_TYPE_HARDWARE, PERF_COUNT_HW_BRANCH_INSTRUCTIONS},
                                                {PERF_TYPE_HARDWARE, PERF_COUNT_HW_BRANCH_MISSES},
-                                               {PERF_TYPE_HARDWARE, PERF_COUNT_HW_STALLED_CYCLES_FRONTEND},
                                                {PERF_TYPE_HARDWARE, PERF_COUNT_HW_STALLED_CYCLES_BACKEND},
                                                {PERF_TYPE_HARDWARE, PERF_COUNT_HW_REF_CPU_CYCLES}};
 
