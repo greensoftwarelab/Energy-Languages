@@ -103,18 +103,16 @@ int main(int argc, char* argv[]) {
         command.append(argv[i]);
     }
 
-    std::vector<std::pair<int, int>> events
-        = {{PERF_TYPE_HARDWARE, PERF_COUNT_HW_REF_CPU_CYCLES},
-           {PERF_TYPE_HARDWARE, PERF_COUNT_HW_CPU_CYCLES},
-           {PERF_TYPE_HARDWARE, PERF_COUNT_HW_INSTRUCTIONS},
-           {PERF_TYPE_HW_CACHE,
-            PERF_COUNT_HW_CACHE_LL | (PERF_COUNT_HW_CACHE_OP_READ << 8) | (PERF_COUNT_HW_CACHE_RESULT_ACCESS << 16)},
-           {PERF_TYPE_HW_CACHE,
-            PERF_COUNT_HW_CACHE_LL | (PERF_COUNT_HW_CACHE_OP_READ << 8) | (PERF_COUNT_HW_CACHE_RESULT_MISS << 16)},
-           {PERF_TYPE_HW_CACHE,
-            PERF_COUNT_HW_CACHE_LL | (PERF_COUNT_HW_CACHE_OP_WRITE << 8) | (PERF_COUNT_HW_CACHE_RESULT_ACCESS << 16)},
-           {PERF_TYPE_HW_CACHE,
-            PERF_COUNT_HW_CACHE_LL | (PERF_COUNT_HW_CACHE_OP_WRITE << 8) | (PERF_COUNT_HW_CACHE_RESULT_MISS << 16)}};
+    std::vector<std::pair<int, int>> events = {{PERF_TYPE_HARDWARE, PERF_COUNT_HW_CPU_CYCLES},
+                                               {PERF_TYPE_HARDWARE, PERF_COUNT_HW_INSTRUCTIONS},
+                                               {PERF_TYPE_HARDWARE, PERF_COUNT_HW_CACHE_REFERENCES},
+                                               {PERF_TYPE_HARDWARE, PERF_COUNT_HW_CACHE_MISSES},
+                                               {PERF_TYPE_HARDWARE, PERF_COUNT_HW_BRANCH_INSTRUCTIONS},
+                                               {PERF_TYPE_HARDWARE, PERF_COUNT_HW_BRANCH_MISSES},
+                                               {PERF_TYPE_HARDWARE, PERF_COUNT_HW_BUS_CYCLES},
+                                               {PERF_TYPE_HARDWARE, PERF_COUNT_HW_STALLED_CYCLES_FRONTEND},
+                                               {PERF_TYPE_HARDWARE, PERF_COUNT_HW_STALLED_CYCLES_BACKEND},
+                                               {PERF_TYPE_HARDWARE, PERF_COUNT_HW_REF_CPU_CYCLES}};
 
     perf::Group perfEventGroup(events);
 
