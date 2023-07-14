@@ -1,6 +1,13 @@
 #include <perf.hpp>
 
+#include <cassert>
+#include <cstring>
+#include <iostream>
+
 #include <linux/perf_event.h>
+#include <sys/ioctl.h>
+#include <sys/syscall.h>
+#include <unistd.h>
 
 std::string perf::toString(int type, int config) {
     if (type == PERF_TYPE_HARDWARE) {
@@ -105,4 +112,98 @@ std::string perf::toString(int type, int config) {
     }
 
     return "[unknown]";
+}
+
+perf::Group::Group(const std::vector<std::pair<int, int>>& events) {
+    assert(!events.empty());
+
+    struct perf_event_attr pe;
+    std::memset(&pe, 0, sizeof(struct perf_event_attr));
+    pe.size = sizeof(struct perf_event_attr);
+    pe.type = events[0].first;
+    pe.config = events[0].second;
+    pe.inherit = 1;
+    pe.disabled = 1;
+
+    const auto leader = syscall(SYS_perf_event_open, &pe, 0, -1, -1, 0);
+    if (leader == -1) {
+        std::cerr << "perf_event_open failed for event " << perf::toString(pe.type, pe.config) << std::endl;
+        exit(EXIT_FAILURE);
+    }
+    if (ioctl(leader, PERF_EVENT_IOC_RESET, 0)) {
+        std::cerr << "ioctl(RESET) failed for event " << perf::toString(pe.type, pe.config) << std::endl;
+        exit(EXIT_FAILURE);
+    }
+    descriptors.push_back(leader);
+
+    for (std::size_t i = 1; i < events.size(); ++i) {
+        struct perf_event_attr pe;
+        std::memset(&pe, 0, sizeof(struct perf_event_attr));
+        pe.size = sizeof(struct perf_event_attr);
+        pe.type = events[i].first;
+        pe.config = events[i].second;
+        pe.inherit = 1;
+
+        const auto fd = syscall(SYS_perf_event_open, &pe, 0, -1, leader, 0);
+        if (fd == -1) {
+            std::cerr << "perf_event_open failed for event " << perf::toString(pe.type, pe.config) << std::endl;
+            exit(EXIT_FAILURE);
+        }
+        if (ioctl(fd, PERF_EVENT_IOC_RESET, 0)) {
+            std::cerr << "ioctl(RESET) failed for event " << perf::toString(pe.type, pe.config) << std::endl;
+            exit(EXIT_FAILURE);
+        }
+        descriptors.push_back(fd);
+    }
+}
+
+perf::Group::~Group() {
+    for (const auto fd : descriptors) {
+        close(fd);
+    }
+}
+
+void perf::Group::enable() {
+    if (ioctl(descriptors[0], PERF_EVENT_IOC_ENABLE, 0)) {
+        std::cerr << "ioctl(ENABLE) failed" << std::endl;
+        exit(EXIT_FAILURE);
+    }
+    enabled = true;
+}
+
+void perf::Group::disable() {
+    if (ioctl(descriptors[0], PERF_EVENT_IOC_DISABLE, 0)) {
+        std::cerr << "ioctl(DISABLE) failed" << std::endl;
+        exit(EXIT_FAILURE);
+    }
+    enabled = false;
+}
+
+void perf::Group::reset() {
+    for (const auto fd : descriptors) {
+        if (ioctl(fd, PERF_EVENT_IOC_RESET, 0)) {
+            std::cerr << "ioctl(RESET) failed" << std::endl;
+            exit(EXIT_FAILURE);
+        }
+    }
+}
+
+bool perf::Group::isEnabled() {
+    return enabled;
+}
+
+std::vector<std::uint64_t> perf::Group::read() const {
+    // This restriction is due to `inherit` and `PERF_FORMAT_GROUP` not being compatible.
+    assert(!isEnabled());
+
+    std::vector<std::uint64_t> values(descriptors.size());
+
+    for (std::size_t i = 0; i < descriptors.size(); ++i) {
+        if (::read(descriptors[i], &values[i], sizeof(std::uint64_t)) != sizeof(std::uint64_t)) {
+            std::cerr << "read failed" << std::endl;
+            exit(EXIT_FAILURE);
+        }
+    }
+
+    return values;
 }

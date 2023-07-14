@@ -8,6 +8,7 @@
 #include <mutex>
 #include <ratio>
 #include <thread>
+#include <unordered_map>
 #include <vector>
 
 #include <linux/hw_breakpoint.h>
@@ -20,8 +21,11 @@
 
 #include <glaze/glaze.hpp>
 
+#include <range/v3/all.hpp>
+
 #include <cpu.hpp>
 #include <msr.hpp>
+#include <perf.hpp>
 #include <rapl.hpp>
 
 struct KillableTimer {
@@ -48,7 +52,7 @@ using Clock = std::chrono::high_resolution_clock;
 struct Result {
     Clock::rep runtime;
     rapl::DoubleSample energy;
-    uint64_t cycles;
+    std::unordered_map<std::string, std::uint64_t> perf_counters;
 };
 
 template <>
@@ -84,7 +88,7 @@ template <>
 struct glz::meta<Result> {
     using T = Result;
     [[maybe_unused]] static constexpr auto value
-        = glz::object("runtime", &T::runtime, "energy", &T::energy, "cycles", &T::cycles);
+        = glz::object("runtime", &T::runtime, "energy", &T::energy, "perf_counters", &T::perf_counters);
 };
 
 int main(int argc, char* argv[]) {
@@ -99,20 +103,14 @@ int main(int argc, char* argv[]) {
         command.append(argv[i]);
     }
 
-    struct perf_event_attr pe;
-    memset(&pe, 0, sizeof(struct perf_event_attr));
-    pe.type = PERF_TYPE_HARDWARE;
-    pe.config = PERF_COUNT_HW_REF_CPU_CYCLES;
-    pe.size = sizeof(struct perf_event_attr);
-    pe.inherit = 1;
-    pe.disabled = 1;
+    std::vector<std::pair<int, int>> events
+        = {// {PERF_TYPE_HARDWARE, PERF_COUNT_HW_REF_CPU_CYCLES},
+           {PERF_TYPE_HARDWARE, PERF_COUNT_HW_CPU_CYCLES},
+           {PERF_TYPE_HARDWARE, PERF_COUNT_HW_INSTRUCTIONS},
+           {PERF_TYPE_HW_CACHE,
+            PERF_COUNT_HW_CACHE_LL | (PERF_COUNT_HW_CACHE_OP_READ << 8) | (PERF_COUNT_HW_CACHE_RESULT_ACCESS << 16)}};
 
-    const auto fd = syscall(__NR_perf_event_open, &pe, 0, -1, -1, 0);
-    if (fd == -1) {
-        std::cerr << "perf_event_open failed" << std::endl;
-        return 1;
-    }
-    ioctl(fd, PERF_EVENT_IOC_RESET, 0);
+    perf::Group perfEventGroup(events);
 
     Result result;
     std::vector<rapl::U32Sample> previous;
@@ -146,11 +144,11 @@ int main(int argc, char* argv[]) {
         }
     }
 
-    ioctl(fd, PERF_EVENT_IOC_ENABLE, 0);
+    perfEventGroup.enable();
     const auto start = Clock::now();
     const auto status = std::system(command.c_str());
     const auto end = Clock::now();
-    ioctl(fd, PERF_EVENT_IOC_DISABLE, 0);
+    perfEventGroup.disable();
 
     std::lock_guard<std::mutex> guard(lock);
     for (int package = 0; package < cpu::getNPackages(); ++package) {
@@ -158,10 +156,12 @@ int main(int argc, char* argv[]) {
         result.energy += rapl::scale(sample - previous[package], package);
     }
 
-    if (read(fd, &result.cycles, sizeof(uint64_t)) != sizeof(uint64_t)) {
-        std::cerr << "read failed" << std::endl;
-        return 1;
-    }
+    const auto perf_counters = perfEventGroup.read();
+    result.perf_counters = perf_counters | ranges::views::enumerate | ranges::views::transform([&](const auto& p) {
+                               const auto [type, config] = events[p.first];
+                               return std::make_pair(perf::toString(type, config), p.second);
+                           })
+                           | ranges::to<std::unordered_map<std::string, std::uint64_t>>;
 
     if (status != 0) {
         std::cerr << "child process failed" << std::endl;
