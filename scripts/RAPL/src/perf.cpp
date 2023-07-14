@@ -59,34 +59,46 @@ std::string perf::toString(int type, int config) {
         switch (config & 0xFF) {
         case PERF_COUNT_HW_CACHE_L1D:
             representation = "PERF_COUNT_HW_CACHE_L1D";
+            break;
         case PERF_COUNT_HW_CACHE_L1I:
             representation = "PERF_COUNT_HW_CACHE_L1I";
+            break;
         case PERF_COUNT_HW_CACHE_LL:
             representation = "PERF_COUNT_HW_CACHE_LL";
+            break;
         case PERF_COUNT_HW_CACHE_DTLB:
             representation = "PERF_COUNT_HW_CACHE_DTLB";
+            break;
         case PERF_COUNT_HW_CACHE_ITLB:
             representation = "PERF_COUNT_HW_CACHE_ITLB";
+            break;
         case PERF_COUNT_HW_CACHE_BPU:
             representation = "PERF_COUNT_HW_CACHE_BPU";
+            break;
         case PERF_COUNT_HW_CACHE_NODE:
             representation = "PERF_COUNT_HW_CACHE_NODE";
+            break;
         }
 
         switch ((config >> 8) & 0xFF) {
         case PERF_COUNT_HW_CACHE_OP_READ:
             representation += " | PERF_COUNT_HW_CACHE_OP_READ";
+            break;
         case PERF_COUNT_HW_CACHE_OP_WRITE:
             representation += " | PERF_COUNT_HW_CACHE_OP_WRITE";
+            break;
         case PERF_COUNT_HW_CACHE_OP_PREFETCH:
             representation += " | PERF_COUNT_HW_CACHE_OP_PREFETCH";
+            break;
         }
 
         switch ((config >> 16) & 0xFF) {
         case PERF_COUNT_HW_CACHE_RESULT_ACCESS:
             representation += " | PERF_COUNT_HW_CACHE_RESULT_ACCESS";
+            break;
         case PERF_COUNT_HW_CACHE_RESULT_MISS:
             representation += " | PERF_COUNT_HW_CACHE_RESULT_MISS";
+            break;
         }
 
         return representation;
