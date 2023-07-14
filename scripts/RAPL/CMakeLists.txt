@@ -12,7 +12,7 @@ find_package(Threads REQUIRED)
 FetchContent_Declare(
     glaze
     GIT_REPOSITORY https://github.com/stephenberry/glaze.git
-    GIT_TAG cf3d92042ecd375b0f08db78d16272a87cb168f0 # v1.1.2
+    GIT_TAG c01192b984644ae9f24608ee4a3c25fb3fbfdc2d # v1.3.2
 )
 
 message(STATUS "Downloading and configuring Glaze")
