@@ -81,7 +81,7 @@ def main(args):
                         codes.append(status)
                         progress.advance(task)
                 if all([code != 0 for code in codes]):
-                    print("[{language}] [{benchmark}] All warmup runs failed. Skipping.")
+                    print(f"[{language}] [{benchmark}] All warmup runs failed. Skipping.")
                     continue
 
             if args.n > 0:
