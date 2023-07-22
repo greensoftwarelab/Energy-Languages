@@ -75,13 +75,19 @@ def main(args):
                     for i in range(args.warmup):
                         status = run_benchmark(language, benchmark, args.timeout, "run")
                         if status == -1:
-                            console.print(f"{language}::{benchmark} Warmup #{i} timed out.")
+                            console.print(
+                                f"{language}::{benchmark} Warmup #{i} timed out."
+                            )
                         elif status != 0:
-                            console.print(f"{language}::{benchmark} Warmup #{i} failed.")
+                            console.print(
+                                f"{language}::{benchmark} Warmup #{i} failed."
+                            )
                         codes.append(status)
                         progress.advance(task)
                 if all([code != 0 for code in codes]):
-                    print(f"[{language}] [{benchmark}] All warmup runs failed. Skipping.")
+                    print(
+                        f"[{language}] [{benchmark}] All warmup runs failed. Skipping."
+                    )
                     continue
 
             if args.n > 0:
@@ -100,7 +106,9 @@ def main(args):
                             language, benchmark, args.timeout, "measure", env
                         )
                         if status == -1:
-                            console.print(f"{language}::{benchmark} Run #{i} timed out.")
+                            console.print(
+                                f"{language}::{benchmark} Run #{i} timed out."
+                            )
                         elif status != 0:
                             console.print(f"{language}::{benchmark} Run #{i} failed.")
                         progress.advance(task)

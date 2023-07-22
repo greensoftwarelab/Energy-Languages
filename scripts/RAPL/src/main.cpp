@@ -103,7 +103,7 @@ int main(int argc, char* argv[]) {
         command.append(argv[i]);
     }
 
-    std::vector<std::pair<int, int>> events
+    const std::vector<std::pair<int, int>> events
         = {{PERF_TYPE_HARDWARE, PERF_COUNT_HW_CPU_CYCLES},          {PERF_TYPE_HARDWARE, PERF_COUNT_HW_INSTRUCTIONS},
            {PERF_TYPE_HARDWARE, PERF_COUNT_HW_CACHE_REFERENCES},    {PERF_TYPE_HARDWARE, PERF_COUNT_HW_CACHE_MISSES},
            {PERF_TYPE_HARDWARE, PERF_COUNT_HW_BRANCH_INSTRUCTIONS}, {PERF_TYPE_HARDWARE, PERF_COUNT_HW_BRANCH_MISSES},

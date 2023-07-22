@@ -9,19 +9,9 @@ import matplotlib.pyplot as plt
 
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATA_ROOT = os.path.join(ROOT, "data", "obelix96")
-LANGUAGES = [
-    "C",
-    "C++",
-    "Rust",
-    "Java",
-    "Go",
-    "C#",
-    "JavaScript",
-    "TypeScript",
-    "Python",
-]
-FORMAT = "pdf"
+DATA_ROOT = os.path.join(ROOT, "data", "lapn")
+LANGUAGES = ["C", "C++", "Rust", "Java"]
+FORMAT = "png"
 
 
 if __name__ == "__main__":
@@ -38,9 +28,17 @@ if __name__ == "__main__":
                     line = json.loads(line)
                     data[language][benchmark].append(line)
 
+    benchmarks = sorted(list({b for l in data.values() for b in l.keys()}))
+
+    for language in LANGUAGES:
+        for benchmark in benchmarks:
+            if benchmark not in data[language]:
+                continue
+            rate = statistics.mean([r["perf_counters"]["PERF_COUNT_HW_CACHE_MISSES"] for r in data[language][benchmark]]) / statistics.mean([r["perf_counters"]["PERF_COUNT_HW_CACHE_REFERENCES"] for r in data[language][benchmark]])
+            print(f"{language} {benchmark}: {rate}")
+
     plt.rcParams.update({"text.usetex": True, "font.family": "serif"})
     with plt.style.context("bmh"):
-        benchmarks = sorted(list({b for l in data.values() for b in l.keys()}))
         markers = [".", "v", "^", "<", ">", "s", "*", "x", "D", "2", "+"]
         colors = plt.rcParams["axes.prop_cycle"].by_key()["color"]
 
@@ -58,11 +56,9 @@ if __name__ == "__main__":
         energies = {
             language: {
                 benchmark: statistics.geometric_mean(
-                    # TODO: Hack because of some faulty data. Can remove >= 0 in the future.
                     [
                         r["energy"]["pkg"]
                         for r in data[language][benchmark]
-                        if r["energy"]["pkg"] >= 0
                     ]
                 )
                 for benchmark in benchmarks
@@ -78,7 +74,7 @@ if __name__ == "__main__":
         )
         ax.set_xlabel("Time [ms]")
         ax.set_ylabel("Energy [J]")
-        axins = ax.inset_axes([0.02, 0.48, 0.5, 0.5])
+        # axins = ax.inset_axes([0.02, 0.48, 0.5, 0.5])
         for i, language in enumerate(LANGUAGES):
             for j, benchmark in enumerate(benchmarks):
                 if benchmark not in data[language]:
@@ -90,24 +86,24 @@ if __name__ == "__main__":
                     color=colors[i],
                     marker=markers[j],
                 )
-                axins.plot(
-                    runtimes[language][benchmark],
-                    energies[language][benchmark],
-                    # markersize=4,
-                    color=colors[i],
-                    marker=markers[j],
-                )
+                # axins.plot(
+                #     runtimes[language][benchmark],
+                #     energies[language][benchmark],
+                #     # markersize=4,
+                #     color=colors[i],
+                #     marker=markers[j],
+                # )
 
         ax.set_xlim(0, ax.get_xlim()[1])
         ax.set_ylim(0, ax.get_ylim()[1])
         ax.set_axisbelow(True)
 
-        axins.set_axisbelow(True)
-        axins.set_xlim(0, 9000)
-        axins.set_ylim(0, 800)
-        axins.set_xticklabels([])
-        axins.set_yticklabels([])
-        ax.indicate_inset_zoom(axins)
+        # axins.set_axisbelow(True)
+        # axins.set_xlim(0, 9000)
+        # axins.set_ylim(0, 800)
+        # axins.set_xticklabels([])
+        # axins.set_yticklabels([])
+        # ax.indicate_inset_zoom(axins)
 
         ax.add_artist(
             ax.legend(
