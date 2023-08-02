@@ -130,7 +130,7 @@ perf::Group::Group(const std::vector<std::pair<int, int>>& events) {
         std::cerr << "perf_event_open failed for event " << perf::toString(pe.type, pe.config) << std::endl;
         exit(EXIT_FAILURE);
     }
-    if (ioctl(leader, PERF_EVENT_IOC_RESET, 0)) {
+    if (ioctl(leader, PERF_EVENT_IOC_RESET, PERF_IOC_FLAG_GROUP)) {
         std::cerr << "ioctl(RESET) failed for event " << perf::toString(pe.type, pe.config) << std::endl;
         exit(EXIT_FAILURE);
     }
@@ -149,7 +149,7 @@ perf::Group::Group(const std::vector<std::pair<int, int>>& events) {
             std::cerr << "perf_event_open failed for event " << perf::toString(pe.type, pe.config) << std::endl;
             exit(EXIT_FAILURE);
         }
-        if (ioctl(fd, PERF_EVENT_IOC_RESET, 0)) {
+        if (ioctl(fd, PERF_EVENT_IOC_RESET, PERF_IOC_FLAG_GROUP)) {
             std::cerr << "ioctl(RESET) failed for event " << perf::toString(pe.type, pe.config) << std::endl;
             exit(EXIT_FAILURE);
         }
@@ -164,7 +164,7 @@ perf::Group::~Group() {
 }
 
 void perf::Group::enable() {
-    if (ioctl(descriptors[0], PERF_EVENT_IOC_ENABLE, 0)) {
+    if (ioctl(descriptors[0], PERF_EVENT_IOC_ENABLE, PERF_IOC_FLAG_GROUP)) {
         std::cerr << "ioctl(ENABLE) failed" << std::endl;
         exit(EXIT_FAILURE);
     }
@@ -172,7 +172,7 @@ void perf::Group::enable() {
 }
 
 void perf::Group::disable() {
-    if (ioctl(descriptors[0], PERF_EVENT_IOC_DISABLE, 0)) {
+    if (ioctl(descriptors[0], PERF_EVENT_IOC_DISABLE, PERF_IOC_FLAG_GROUP)) {
         std::cerr << "ioctl(DISABLE) failed" << std::endl;
         exit(EXIT_FAILURE);
     }
@@ -181,7 +181,7 @@ void perf::Group::disable() {
 
 void perf::Group::reset() {
     for (const auto fd : descriptors) {
-        if (ioctl(fd, PERF_EVENT_IOC_RESET, 0)) {
+        if (ioctl(fd, PERF_EVENT_IOC_RESET, PERF_IOC_FLAG_GROUP)) {
             std::cerr << "ioctl(RESET) failed" << std::endl;
             exit(EXIT_FAILURE);
         }
