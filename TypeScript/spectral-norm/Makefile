@@ -17,5 +17,4 @@ measure:
 ifndef JSON
 	$(error JSON is not defined)
 endif
-	sudo modprobe msr
 	sudo ../../scripts/RAPL/build/rapl $(JSON) $(NODE) spectralnorm.js 5500

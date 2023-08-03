@@ -14,5 +14,4 @@ measure:
 ifndef JSON
 	$(error JSON is not defined)
 endif
-	sudo modprobe msr
 	sudo ../../scripts/RAPL/build/rapl $(JSON) $(DOTNET) run -c Release --project build/ --no-build -- 5500
