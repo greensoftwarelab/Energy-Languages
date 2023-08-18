@@ -5,7 +5,7 @@ VOLUME [ "/root/data" ]
 # General.
 RUN apt update
 RUN DEBIAN_FRONTEND=noninteractive apt install -y tzdata
-RUN apt install -y git cmake ninja-build build-essential sudo curl wget pkg-config gpg
+RUN apt install -y git cmake ninja-build build-essential sudo curl wget pkg-config gnupg
 
 COPY docker/keys /root/Energy-Languages/docker/keys
 RUN gpg --import /root/Energy-Languages/docker/keys/*
