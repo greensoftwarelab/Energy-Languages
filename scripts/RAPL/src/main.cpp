@@ -11,21 +11,14 @@
 #include <unordered_map>
 #include <vector>
 
-#include <linux/hw_breakpoint.h>
-#include <linux/perf_event.h>
-#include <sys/ioctl.h>
-#include <sys/syscall.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
 
 #include <glaze/glaze.hpp>
 
-#include <range/v3/all.hpp>
-
 #include <cpu.hpp>
 #include <msr.hpp>
-#include <perf.hpp>
 #include <rapl.hpp>
 
 struct KillableTimer {
@@ -52,7 +45,6 @@ using Clock = std::chrono::high_resolution_clock;
 struct Result {
     Clock::rep runtime;
     rapl::DoubleSample energy;
-    std::unordered_map<std::string, std::uint64_t> perf_counters;
 };
 
 template <>
@@ -87,8 +79,7 @@ struct ScopeExit {
 template <>
 struct glz::meta<Result> {
     using T = Result;
-    [[maybe_unused]] static constexpr auto value
-        = glz::object("runtime", &T::runtime, "energy", &T::energy, "perf_counters", &T::perf_counters);
+    [[maybe_unused]] static constexpr auto value = glz::object("runtime", &T::runtime, "energy", &T::energy);
 };
 
 int main(int argc, char* argv[]) {
@@ -102,14 +93,6 @@ int main(int argc, char* argv[]) {
         command.append(" ");
         command.append(argv[i]);
     }
-
-    const std::vector<std::pair<int, int>> events
-        = {{PERF_TYPE_HARDWARE, PERF_COUNT_HW_CPU_CYCLES},          {PERF_TYPE_HARDWARE, PERF_COUNT_HW_INSTRUCTIONS},
-           {PERF_TYPE_HARDWARE, PERF_COUNT_HW_CACHE_REFERENCES},    {PERF_TYPE_HARDWARE, PERF_COUNT_HW_CACHE_MISSES},
-           {PERF_TYPE_HARDWARE, PERF_COUNT_HW_BRANCH_INSTRUCTIONS}, {PERF_TYPE_HARDWARE, PERF_COUNT_HW_BRANCH_MISSES},
-           {PERF_TYPE_HARDWARE, PERF_COUNT_HW_REF_CPU_CYCLES}};
-
-    perf::Group perfEventGroup(events);
 
     Result result;
     std::vector<rapl::U32Sample> previous;
@@ -143,24 +126,15 @@ int main(int argc, char* argv[]) {
         }
     }
 
-    perfEventGroup.enable();
     const auto start = Clock::now();
     const auto status = std::system(command.c_str());
     const auto end = Clock::now();
-    perfEventGroup.disable();
 
     std::lock_guard<std::mutex> guard(lock);
     for (int package = 0; package < cpu::getNPackages(); ++package) {
         const auto sample = rapl::sample(package);
         result.energy += rapl::scale(sample - previous[package], package);
     }
-
-    const auto perf_counters = perfEventGroup.read();
-    result.perf_counters = perf_counters | ranges::views::enumerate | ranges::views::transform([&](const auto& p) {
-                               const auto [type, config] = events[p.first];
-                               return std::make_pair(perf::toString(type, config), p.second);
-                           })
-                           | ranges::to<std::unordered_map<std::string, std::uint64_t>>;
 
     if (status != 0) {
         std::cerr << "child process failed" << std::endl;

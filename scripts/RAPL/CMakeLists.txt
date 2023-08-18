@@ -15,19 +15,10 @@ FetchContent_Declare(
     GIT_TAG c01192b984644ae9f24608ee4a3c25fb3fbfdc2d # v1.3.2
 )
 
-FetchContent_Declare(
-    range-v3
-    GIT_REPOSITORY https://github.com/ericniebler/range-v3.git
-    GIT_TAG a81477931a8aa2ad025c6bda0609f38e09e4d7ec # 0.12.0
-)
-
 message(STATUS "Downloading and configuring Glaze")
 FetchContent_MakeAvailable(glaze)
 
-message(STATUS "Downloading and configuring range-v3")
-FetchContent_MakeAvailable(range-v3)
-
-add_library(rapl_lib STATIC src/cpu.cpp src/msr.cpp src/perf.cpp src/rapl.cpp)
+add_library(rapl_lib STATIC src/cpu.cpp src/msr.cpp src/rapl.cpp)
 target_compile_options(rapl_lib PRIVATE -Wall -Wextra -Wpedantic -Werror)
 target_include_directories(rapl_lib PUBLIC include)
 target_link_libraries(rapl_lib PRIVATE m)
@@ -50,7 +41,6 @@ add_executable(rapl src/main.cpp)
 target_compile_options(rapl PRIVATE -Wall -Wextra -Wpedantic -Werror)
 target_link_libraries(rapl PRIVATE rapl_lib)
 target_link_libraries(rapl PRIVATE glaze::glaze)
-target_link_libraries(rapl PRIVATE range-v3)
 target_link_libraries(rapl PRIVATE Threads::Threads)
 
 add_executable(idle src/idle.cpp)
