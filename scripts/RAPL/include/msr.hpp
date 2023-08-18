@@ -10,5 +10,5 @@
 
 namespace msr {
 int open(int core);
-uint64_t read(int fd, int which);
+std::uint64_t read(int fd, int which);
 } // namespace msr

@@ -1,0 +1,41 @@
+name: RAPL
+
+on:
+  push:
+    branches: ["master"]
+    paths:
+     - "scripts/RAPL/**"
+     - ".github/workflows/rapl.yml"
+  pull_request:
+    branches: ["master"]
+    paths:
+     - "scripts/RAPL/**"
+     - ".github/workflows/rapl.yml"
+
+env:
+  LLVM_VERSION: 16
+
+jobs:
+  check-rapl:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install LLVM/Clang
+        run: |
+          sudo apt install lsb-release wget software-properties-common gnupg
+          curl -sSf https://apt.llvm.org/llvm.sh | sudo bash -s -- $LLVM_VERSION all
+
+      - name: g++
+        run: |
+          sudo rm -rf $GITHUB_WORKSPACE/scripts/RAPL/build
+          sudo cmake $GITHUB_WORKSPACE/scripts/RAPL -B $GITHUB_WORKSPACE/scripts/RAPL/build -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=g++ -DCMAKE_C_COMPILER=gcc
+          sudo cmake --build $GITHUB_WORKSPACE/scripts/RAPL/build
+
+      - name: clang++, clang-tidy
+        run: |
+          sudo rm -rf $GITHUB_WORKSPACE/scripts/RAPL/build
+          sudo cmake $GITHUB_WORKSPACE/scripts/RAPL -B $GITHUB_WORKSPACE/scripts/RAPL/build -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=clang++-$LLVM_VERSION -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+          sudo cmake --build $GITHUB_WORKSPACE/scripts/RAPL/build
+          clang-tidy-$LLVM_VERSION --quiet --warnings-as-errors="*" -p $GITHUB_WORKSPACE/scripts/RAPL/build $GITHUB_WORKSPACE/scripts/RAPL/src/*.cpp

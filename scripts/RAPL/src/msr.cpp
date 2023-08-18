@@ -28,8 +28,8 @@ int msr::open(int core) {
     return fd;
 }
 
-uint64_t msr::read(int fd, int which) {
-    uint64_t data;
+std::uint64_t msr::read(int fd, int which) {
+    std::uint64_t data;
 
     if (pread(fd, &data, sizeof data, which) != sizeof data) {
         std::cerr << "Error reading MSR" << std::endl;
