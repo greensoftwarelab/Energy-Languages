@@ -40,7 +40,7 @@ int cpu::getNCpus() {
             exit(EXIT_FAILURE);
         }
 
-        int n;
+        int n = 0;
         std::string line;
         while (std::getline(file, line)) {
             if (line.starts_with("processor")) {
