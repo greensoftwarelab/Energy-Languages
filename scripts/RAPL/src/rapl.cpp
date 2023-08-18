@@ -48,7 +48,7 @@ rapl::U32Sample rapl::sample(int package) {
     return sample;
 }
 
-rapl::DoubleSample rapl::scale(rapl::U32Sample sample, int package) {
+rapl::DoubleSample rapl::scale([[maybe_unused]] rapl::U32Sample sample, int package) {
     [[maybe_unused]] const auto unit = getEnergyUnitForPackage(package);
 
     return rapl::DoubleSample{
