@@ -8,8 +8,6 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-#include <cpu.hpp>
-
 int msr::open(int core) {
     const auto filename = "/dev/cpu/" + std::to_string(core) + "/msr";
     const auto fd = ::open(filename.c_str(), O_RDONLY);

@@ -5,7 +5,6 @@
 #include <vector>
 
 #include <cpu.hpp>
-#include <msr.hpp>
 #include <rapl.hpp>
 
 using Clock = std::chrono::high_resolution_clock;

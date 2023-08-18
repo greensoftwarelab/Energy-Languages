@@ -2,8 +2,6 @@
 
 #include <cstdint>
 
-#include <msr.hpp>
-
 namespace rapl {
 struct DoubleSample {
 #ifdef RAPL_MSR_PKG_SUPPORTED
