@@ -13,7 +13,16 @@ try_run(
 )
 
 if(NOT RAPL_MSR_OPEN_COMPILE_RESULT OR RAPL_MSR_OPEN_RUN_RESULT)
-    message(FATAL_ERROR "Could not open /dev/cpu/0/msr. Did you configure with sudo? If so, make sure your CPU supports RAPL.")
+    message(WARNING "Could not open /dev/cpu/0/msr. \
+        Did you configure with sudo? \
+        If so, make sure your CPU supports RAPL. \
+        Configuration will continue and building the project will work, but will crash at runtime.")
+    # Set everything to true to test compilation.
+    set(RAPL_MSR_PKG_SUPPORTED TRUE)
+    set(RAPL_MSR_PP0_SUPPORTED TRUE)
+    set(RAPL_MSR_PP1_SUPPORTED TRUE)
+    set(RAPL_MSR_DRAM_SUPPORTED TRUE)
+    return()
 endif()
 
 try_run(
@@ -24,7 +33,15 @@ try_run(
 )
 
 if(NOT RAPL_MSR_POWER_UNITS_COMPILE_RESULT OR RAPL_MSR_POWER_UNITS_RUN_RESULT)
-    message(FATAL_ERROR "Could not read power units from RAPL.")
+    message(WARNING "Could not read power units from RAPL. \
+        This feature is essential to power measurements. \
+        Configuration will continue and building the project will work, but will crash at runtime.")
+    # Set everything to true to test compilation.
+    set(RAPL_MSR_PKG_SUPPORTED TRUE)
+    set(RAPL_MSR_PP0_SUPPORTED TRUE)
+    set(RAPL_MSR_PP1_SUPPORTED TRUE)
+    set(RAPL_MSR_DRAM_SUPPORTED TRUE)
+    return()
 endif()
 
 try_run(
