@@ -42,6 +42,7 @@ def main(args):
                 d
                 for d in os.listdir(os.path.join(ROOT, language))
                 if os.path.isdir(os.path.join(ROOT, language, d))
+                and os.path.exists(os.path.join(ROOT, language, d, "Makefile"))
             ]
         )
 
