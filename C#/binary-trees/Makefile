@@ -4,7 +4,7 @@ endif
 
 compile:
 	$(DOTNET) new console -o build -n build --force
-	cp binarytrees.csharpcore-4.csharpcore build/Program.cs
+	cp binarytrees.cs build/Program.cs
 	$(DOTNET) build build/ -c Release --no-incremental
 
 run:

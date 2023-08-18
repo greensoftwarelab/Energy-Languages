@@ -4,7 +4,7 @@ endif
 
 compile:
 	$(DOTNET) new console -o build -n build --force
-	cp chameneosredux.csharpcore build/Program.cs
+	cp chameneosredux.cs build/Program.cs
 	$(DOTNET) build build/ -c Release --no-incremental
 
 run:

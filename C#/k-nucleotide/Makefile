@@ -4,7 +4,7 @@ endif
 
 compile:
 	$(DOTNET) new console -o build -n build --force
-	cp knucleotide.csharpcore-6.csharpcore build/Program.cs
+	cp knucleotide.cs build/Program.cs
 	$(DOTNET) build build/ -c Release --no-incremental
 
 run:

@@ -4,7 +4,7 @@ endif
 
 compile:
 	$(DOTNET) new console -o build -n build --force
-	cp regexredux.csharpcore-4.csharpcore build/Program.cs
+	cp regexredux.cs build/Program.cs
 	$(DOTNET) build build/ -c Release --no-incremental
 
 run:

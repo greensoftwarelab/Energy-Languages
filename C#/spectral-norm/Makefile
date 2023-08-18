@@ -4,7 +4,7 @@ endif
 
 compile:
 	$(DOTNET) new console -o build -n build --force
-	cp spectralnorm.csharpcore-3.csharpcore build/Program.cs
+	cp spectralnorm.cs build/Program.cs
 	$(DOTNET) build build/ -c Release --no-incremental
 
 run:
