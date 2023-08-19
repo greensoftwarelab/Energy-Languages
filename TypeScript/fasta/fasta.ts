@@ -7,6 +7,7 @@
  */
 
 type Freq = { s: string; p: number; c: number; sc: number };
+const ENCODING = 'binary';
 
 class Out {
     out_buffer_size: number;
@@ -28,7 +29,7 @@ class Out {
 }
 
 var IM = 139968, IA = 3877, IC = 29573, last = 42;
-var LINE_LEN = 60, NEW_LINE = 10, ENCODING = 'binary';
+var LINE_LEN = 60, NEW_LINE = 10;
 var out = new Out();
 
 function random(): number {
