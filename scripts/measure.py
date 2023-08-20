@@ -25,6 +25,7 @@ def run_benchmark(language, benchmark, timeout, type, env=os.environ):
     try:
         return subprocess.run(
             ["make", type],
+            stdin=subprocess.DEVNULL,
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL,
             cwd=os.path.join(ROOT, language, benchmark),
@@ -53,6 +54,7 @@ def main(args):
                 compilation = subprocess.run(
                     ["make", "compile"],
                     cwd=directory,
+                    stdin=subprocess.DEVNULL,
                     stdout=subprocess.PIPE,
                     stderr=subprocess.STDOUT,
                 )
