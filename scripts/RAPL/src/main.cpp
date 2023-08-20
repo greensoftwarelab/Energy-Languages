@@ -102,8 +102,7 @@ int main(int argc, char* argv[]) {
     KillableTimer timer;
     std::thread subprocess = std::thread([&] {
         for (;;) {
-            using namespace std::chrono_literals;
-            if (!timer.wait(1s)) {
+            if (!timer.wait(std::chrono::seconds(1))) {
                 break;
             }
 
