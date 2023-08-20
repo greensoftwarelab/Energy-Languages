@@ -126,6 +126,7 @@ if __name__ == "__main__":
         help="List of PLs to measure. Names must match directory names",
     )
     parser.add_argument(
+        "--iterations",
         "-n",
         required=True,
         type=int,
