@@ -91,12 +91,12 @@ def main(args):
                     )
                     continue
 
-            if args.n > 0:
+            if args.iterations > 0:
                 with Progress(*progress_columns, console=console) as progress:
                     task = progress.add_task(
-                        f"{language}::{benchmark}::Measure", total=args.n
+                        f"{language}::{benchmark}::Measure", total=args.iterations
                     )
-                    for i in range(args.n):
+                    for i in range(args.iterations):
                         json = os.path.join(
                             os.path.abspath(args.output), language, f"{benchmark}.json"
                         )
@@ -154,7 +154,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    if args.n > 0 and not os.path.exists(RAPL_ROOT):
+    if args.iterations > 0 and not os.path.exists(RAPL_ROOT):
         raise "Could not find the RAPL executable. Make sure you build it first."
 
     main(args)
