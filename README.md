@@ -25,9 +25,9 @@ The following options are available:
  -  `--iterations`: The number of iterations to run for each benchmark.
  -  `--timeout`: The timeout after which to stop execution. Some benchmarks are known to occasionally run indefinitely.
 
-Here is an example running all languages/benchmarks pairs.
+Here is an example running all languages/benchmarks pairs, outputting data in `` `pwd`/data/`hostname -s`/docker-default ``.
 ```bash
-% sudo docker run --privileged -v `pwd`/data/tmp:/root/data energy-languages \
+% sudo docker run -d --privileged -v `pwd`/data/`hostname -s`/docker-default:/root/data energy-languages \
     --languages C C++ Rust Go Java C\# JavaScript TypeScript PHP Python \
 	--warmup 3 \
 	--iterations 21 \
