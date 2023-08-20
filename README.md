@@ -23,7 +23,7 @@ The following options are available:
  -  `--languages`: A whitespace-separated list of languages to benchmarks.
  -  `--warmup`: The number of warmup iterations to run before measuring.
  -  `--iterations`: The number of iterations to run for each benchmark.
- -  `--timeout`: The timeout after which to stop execution. Some benchmarks are known to run occasionally indefinitely.
+ -  `--timeout`: The timeout after which to stop execution. Some benchmarks are known to occasionally run indefinitely.
 
 Here is an example running all languages/benchmarks pairs.
 ```bash
