@@ -89,6 +89,4 @@ RUN python3 -m pip install -r /root/Energy-Languages/requirements.txt
 WORKDIR /root/Energy-Languages
 COPY . .
 RUN ./gen-input.sh
-# TODO Restore.
-# ENTRYPOINT [ "./docker/bench.sh" ]
-ENTRYPOINT [ "bash" ]
+ENTRYPOINT [ "./docker/bench.sh" ]
