@@ -99,6 +99,13 @@ int main(int argc, char* argv[]) {
     std::vector<rapl::U32Sample> previous;
     std::mutex lock;
 
+    {
+        std::lock_guard<std::mutex> guard(lock);
+        for (int package = 0; package < cpu::getNPackages(); ++package) {
+            previous.emplace_back(rapl::sample(package));
+        }
+    }
+
     KillableTimer timer;
     std::thread subprocess = std::thread([&] {
         for (;;) {
@@ -118,13 +125,6 @@ int main(int argc, char* argv[]) {
         timer.kill();
         subprocess.join();
     });
-
-    {
-        std::lock_guard<std::mutex> guard(lock);
-        for (int package = 0; package < cpu::getNPackages(); ++package) {
-            previous.emplace_back(rapl::sample(package));
-        }
-    }
 
     const auto start = Clock::now();
     const auto status = std::system(command.c_str());
