@@ -8,7 +8,7 @@ TODO.
 
 Running the measurement tool requires:
  -  an Intel processor with RAPL support.
- -  Linux (tested on 22.04).
+ -  Linux (tested on Ubuntu 22.04).
 
 ### Docker
 
