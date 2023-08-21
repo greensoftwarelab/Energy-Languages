@@ -24,7 +24,13 @@ RUN ./rust-${RUST_VERSION}-x86_64-unknown-linux-gnu/install.sh
 RUN rm rust-${RUST_VERSION}-x86_64-unknown-linux-gnu.tar.gz rust-${RUST_VERSION}-x86_64-unknown-linux-gnu.tar.gz.asc
 
 # Java.
-RUN apt install -y openjdk-11-jdk libfastutil-java
+ARG JAVA_VERSION=11.0.20+8
+ARG JAVA_CHECKSUM=7a99258af2e3ee9047e90f1c0c1775fd6285085759501295358d934d662e01f9
+RUN apt install -y libfastutil-java
+RUN wget https://github.com/adoptium/temurin11-binaries/releases/download/jdk-${JAVA_VERSION}/OpenJDK11U-jdk_x64_linux_hotspot_$(echo $JAVA_VERSION | sed s/+/_/).tar.gz
+RUN echo "${JAVA_CHECKSUM} OpenJDK11U-jdk_x64_linux_hotspot_$(echo $JAVA_VERSION | sed s/+/_/).tar.gz" | sha256sum --check
+RUN tar -C /usr/local --strip-components=1 -xzf OpenJDK11U-jdk_x64_linux_hotspot_$(echo $JAVA_VERSION | sed s/+/_/).tar.gz
+RUN rm OpenJDK11U-jdk_x64_linux_hotspot_$(echo $JAVA_VERSION | sed s/+/_/).tar.gz
 
 # Go.
 # https://go.dev/dl/
