@@ -45,6 +45,6 @@ int main(int argc, char* argv[]) {
             previous[package] = sample;
         }
 
-        csv << timestamp << "," << total.pkg << "\n";
+        csv << timestamp << "," << total.pkg << std::endl;
     }
 }
