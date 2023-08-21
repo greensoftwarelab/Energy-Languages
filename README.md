@@ -16,7 +16,7 @@ The easiest way to run these benchmarks is using Docker.
 ```bash
 % sudo modprobe msr # Enable msr kernel module.
 % sudo docker build -f docker/main.Dockerfile -t energy-languages .
-% sudo docker run --privileged -v [OUTPUT DIRECTORY]:/root/data energy-languages [OPTIONS]
+% sudo docker run --privileged -v [OUTPUT_DIRECTORY]:/root/data energy-languages [OPTIONS]
 ```
 
 The following options are available:
