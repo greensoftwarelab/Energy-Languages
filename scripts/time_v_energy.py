@@ -1,23 +1,18 @@
+import argparse
 import collections
 import json
+import math
 import os
 import statistics
 
-import matplotlib
 import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
 
 
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATA_ROOT = os.path.join(ROOT, "data", "lapn")
-LANGUAGES = ["C", "C++", "Rust", "Java"]
-FORMAT = "png"
-
-
-if __name__ == "__main__":
+def main(args):
     data = collections.defaultdict(lambda: collections.defaultdict(list))
-    for language in LANGUAGES:
-        LANGUAGES_ROOT = os.path.join(DATA_ROOT, language)
+    for language in args.languages:
+        LANGUAGES_ROOT = os.path.join(args.data_root, language)
         assert os.path.isdir(LANGUAGES_ROOT)
         for benchmark in os.listdir(LANGUAGES_ROOT):
             path = os.path.join(LANGUAGES_ROOT, benchmark)
@@ -30,13 +25,6 @@ if __name__ == "__main__":
 
     benchmarks = sorted(list({b for l in data.values() for b in l.keys()}))
 
-    for language in LANGUAGES:
-        for benchmark in benchmarks:
-            if benchmark not in data[language]:
-                continue
-            rate = statistics.mean([r["perf_counters"]["PERF_COUNT_HW_CACHE_MISSES"] for r in data[language][benchmark]]) / statistics.mean([r["perf_counters"]["PERF_COUNT_HW_CACHE_REFERENCES"] for r in data[language][benchmark]])
-            print(f"{language} {benchmark}: {rate}")
-
     plt.rcParams.update({"text.usetex": True, "font.family": "serif"})
     with plt.style.context("bmh"):
         markers = [".", "v", "^", "<", ">", "s", "*", "x", "D", "2", "+"]
@@ -44,27 +32,25 @@ if __name__ == "__main__":
 
         runtimes = {
             language: {
-                benchmark: statistics.geometric_mean(
+                benchmark: 0.001
+                * statistics.geometric_mean(
                     [r["runtime"] for r in data[language][benchmark]]
                 )
                 for benchmark in benchmarks
                 if benchmark in data[language]
             }
-            for language in LANGUAGES
+            for language in args.languages
         }
 
         energies = {
             language: {
                 benchmark: statistics.geometric_mean(
-                    [
-                        r["energy"]["pkg"]
-                        for r in data[language][benchmark]
-                    ]
+                    [r["energy"]["pkg"] for r in data[language][benchmark]]
                 )
                 for benchmark in benchmarks
                 if benchmark in data[language]
             }
-            for language in LANGUAGES
+            for language in args.languages
         }
 
         fig, ax = plt.subplots()
@@ -72,61 +58,101 @@ if __name__ == "__main__":
         ax.set_title(
             f"Energy consumed as a function of runtime for all (language, benchmark) pairs"
         )
-        ax.set_xlabel("Time [ms]")
+        ax.set_xlabel("Time [s]")
         ax.set_ylabel("Energy [J]")
-        # axins = ax.inset_axes([0.02, 0.48, 0.5, 0.5])
-        for i, language in enumerate(LANGUAGES):
+        if args.axin_xmax:
+            axins = ax.inset_axes([0.02, 0.48, 0.5, 0.5])
+
+        max_x = 0
+        axin_max_x = 0
+        axin_max_y = 0
+        for i, language in enumerate(args.languages):
             for j, benchmark in enumerate(benchmarks):
                 if benchmark not in data[language]:
                     continue
-                ax.plot(
-                    runtimes[language][benchmark],
-                    energies[language][benchmark],
-                    # markersize=4,
-                    color=colors[i],
-                    marker=markers[j],
-                )
-                # axins.plot(
-                #     runtimes[language][benchmark],
-                #     energies[language][benchmark],
-                #     # markersize=4,
-                #     color=colors[i],
-                #     marker=markers[j],
-                # )
+                if runtimes[language][benchmark] <= args.xmax:
+                    max_x = max(max_x, runtimes[language][benchmark])
+                    ax.plot(
+                        runtimes[language][benchmark],
+                        energies[language][benchmark],
+                        markersize=4,
+                        color=colors[i],
+                        marker=markers[j],
+                    )
+                if args.axin_xmax and runtimes[language][benchmark] <= args.axin_xmax:
+                    axin_max_x = max(axin_max_x, runtimes[language][benchmark])
+                    axin_max_y = max(axin_max_y, energies[language][benchmark])
+                    axins.plot(
+                        runtimes[language][benchmark],
+                        energies[language][benchmark],
+                        markersize=4,
+                        color=colors[i],
+                        marker=markers[j],
+                    )
 
-        ax.set_xlim(0, ax.get_xlim()[1])
+        ax.set_xlim(0, min(1.1 * max_x, ax.get_xlim()[1]))
         ax.set_ylim(0, ax.get_ylim()[1])
         ax.set_axisbelow(True)
 
-        # axins.set_axisbelow(True)
-        # axins.set_xlim(0, 9000)
-        # axins.set_ylim(0, 800)
-        # axins.set_xticklabels([])
-        # axins.set_yticklabels([])
-        # ax.indicate_inset_zoom(axins)
+        if args.axin_xmax:
+            axins.set_xlim(0, min(1.1 * axin_max_x, axins.get_xlim()[1]))
+            axins.set_ylim(0, axins.get_ylim()[1])
+            axins.set_axisbelow(True)
+            axins.set_xticklabels([])
+            axins.set_yticklabels([])
+            ax.indicate_inset_zoom(axins)
 
-        ax.add_artist(
-            ax.legend(
-                handles=[
-                    mpatches.Patch(color=colors[i], label=language.replace("#", "\\#"))
-                    for i, language in enumerate(LANGUAGES)
-                ],
+        languages_legend_handles = [
+            mpatches.Patch(color=colors[i], label=language.replace("#", "\\#"))
+            for i, language in enumerate(args.languages)
+        ]
+
+        whitespace_handle = mpatches.Patch(color="none", label="")
+
+        benchmark_legend_handles = [
+            ax.scatter(
+                [],
+                [],
+                color=plt.rcParams["axes.edgecolor"],
+                marker=markers[i],
+                label=benchmark,
             )
-        )
-        ax.add_artist(
-            ax.legend(
-                handles=[
-                    ax.scatter(
-                        [],
-                        [],
-                        color=plt.rcParams["axes.edgecolor"],
-                        marker=markers[i],
-                        label=benchmark,
-                    )
-                    for i, benchmark in enumerate(benchmarks)
-                ],
-            )
+            for i, benchmark in enumerate(benchmarks)
+        ]
+
+        ax.legend(
+            handles=languages_legend_handles
+            + [whitespace_handle]
+            + benchmark_legend_handles,
+            prop={"size": 9},
         )
 
         fig.tight_layout()
-        plt.savefig(f"time_v_energy.{FORMAT}", format=FORMAT)
+        plt.savefig(f"time_v_energy.{args.format}", format=args.format)
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--data-root", type=str, required=True)
+    parser.add_argument(
+        "--languages",
+        type=str,
+        nargs="+",
+        default=[
+            "C",
+            "C++",
+            "Rust",
+            "Go",
+            "Java",
+            "C#",
+            "JavaScript",
+            "TypeScript",
+            "PHP",
+            "Python",
+        ],
+    )
+    parser.add_argument("--format", type=str, default="png")
+    parser.add_argument("--xmax", type=int, default=math.inf)
+    # Indicating this enables the inset axis.
+    parser.add_argument("--axin-xmax", type=int, default=None)
+    main(parser.parse_args())
