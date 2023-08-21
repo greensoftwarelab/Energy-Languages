@@ -4,6 +4,7 @@ import json
 import os
 import statistics
 
+import matplotlib.pyplot as plt
 from rich.console import Console
 from rich.table import Table
 
@@ -65,6 +66,49 @@ def main(args):
     console = Console()
     console.print(table)
 
+    plt.rcParams.update({"text.usetex": True, "font.family": "serif"})
+    with plt.style.context("bmh"):
+        energy_over_time_ratio = {
+            language: {
+                benchmark: statistics.geometric_mean(
+                    [
+                        r["energy"]["pkg"] / (1e-3 * r["runtime"])
+                        for r in data[language][benchmark]
+                    ]
+                )
+                for benchmark in benchmarks
+                if benchmark in data[language]
+            }
+            for language in args.languages
+        }
+
+        fig, ax = plt.subplots()
+        fig.set_size_inches(10, 7)
+        ax.set_title(
+            f"Energy/time ratio as a function of CPU usage for all (language, benchmark) pairs"
+        )
+        ax.set_xlabel("CPU Usage")
+        ax.set_ylabel("Energy over Time [J/s]")
+
+        for language in args.languages:
+            x = []
+            y = []
+            for benchmark in benchmarks:
+                if benchmark in energy_over_time_ratio[language]:
+                    x.append(cpu_usages[language][benchmark])
+                    y.append(energy_over_time_ratio[language][benchmark])
+            ax.scatter(
+                x,
+                y,
+                marker=".",
+                s=50,
+                label=language.replace("#", "\\#"),
+            )
+
+        ax.legend()
+        fig.tight_layout()
+        plt.savefig(f"cpu_usage.{args.format}", format=args.format)
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -86,4 +130,5 @@ if __name__ == "__main__":
             "Python",
         ],
     )
+    parser.add_argument("--format", type=str, default="png")
     main(parser.parse_args())
