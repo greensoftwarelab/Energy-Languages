@@ -29,7 +29,7 @@ Here is an example running all languages/benchmarks pairs, outputting data in ``
 ```bash
 % sudo docker run -d --privileged -v `pwd`/data/`hostname -s`/docker-default:/root/data energy-languages \
     --languages C C++ Rust Go Java C\# JavaScript TypeScript PHP Python \
-	--warmup 3 \
-	--iterations 21 \
-	--timeout 600
+    --warmup 3 \
+    --iterations 21 \
+    --timeout 600
 ```
