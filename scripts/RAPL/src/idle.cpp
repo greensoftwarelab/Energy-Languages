@@ -13,7 +13,7 @@ using Clock = std::chrono::high_resolution_clock;
 #error "This tool requires MSR PKG domain support"
 #endif
 
-#define N 3600 // ~ 1 hour
+#define N 600 // ~ 10 minutes
 
 int main(int argc, char* argv[]) {
     if (argc < 2) {
