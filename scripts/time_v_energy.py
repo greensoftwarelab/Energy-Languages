@@ -55,9 +55,10 @@ def main(args):
 
         fig, ax = plt.subplots()
         fig.set_size_inches(10, 7)
-        ax.set_title(
-            f"Energy consumed as a function of runtime for all (language, benchmark) pairs"
-        )
+        if not args.no_title:
+            ax.set_title(
+                f"Energy consumed as a function of runtime for all (language, benchmark) pairs"
+            )
         ax.set_xlabel("Time [s]")
         ax.set_ylabel("Energy [J]")
         if args.axin_xmax:
@@ -155,4 +156,5 @@ if __name__ == "__main__":
     parser.add_argument("--xmax", type=int, default=math.inf)
     # Indicating this enables the inset axis.
     parser.add_argument("--axin-xmax", type=int, default=None)
+    parser.add_argument("--no-title", action="store_true")
     main(parser.parse_args())

@@ -85,11 +85,12 @@ def main(args):
 
         fig, ax = plt.subplots()
         fig.set_size_inches(10, 7)
-        ax.set_title(
-            f"Energy/time ratio as a function of CPU usage for all (language, benchmark) pairs"
-        )
-        ax.set_xlabel("CPU Usage")
-        ax.set_ylabel("Energy over Time [J/s]")
+        if not args.no_title:
+            ax.set_title(
+                f"Power consumption as a function of CPU usage for all (language, benchmark) pairs"
+            )
+        ax.set_xlabel("CPU usage")
+        ax.set_ylabel("Average power consumption [W]")
 
         all_xs = []
         all_ys = []
@@ -141,4 +142,5 @@ if __name__ == "__main__":
         ],
     )
     parser.add_argument("--format", type=str, default="png")
+    parser.add_argument("--no-title", action="store_true")
     main(parser.parse_args())
