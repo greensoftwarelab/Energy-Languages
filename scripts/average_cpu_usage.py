@@ -7,6 +7,7 @@ import statistics
 import matplotlib.pyplot as plt
 from rich.console import Console
 from rich.table import Table
+import scipy
 
 
 def main(args):
@@ -90,6 +91,8 @@ def main(args):
         ax.set_xlabel("CPU Usage")
         ax.set_ylabel("Energy over Time [J/s]")
 
+        all_xs = []
+        all_ys = []
         for language in args.languages:
             x = []
             y = []
@@ -97,6 +100,8 @@ def main(args):
                 if benchmark in energy_over_time_ratio[language]:
                     x.append(cpu_usages[language][benchmark])
                     y.append(energy_over_time_ratio[language][benchmark])
+            all_xs.extend(x)
+            all_ys.extend(y)
             ax.scatter(
                 x,
                 y,
@@ -104,6 +109,11 @@ def main(args):
                 s=50,
                 label=language.replace("#", "\\#"),
             )
+
+        regression = scipy.stats.linregress(all_xs, all_ys)
+        print("Regression slope :", regression.slope)
+        print("Regression ravlue:", regression.rvalue)
+        print("Regression stderr:", regression.stderr)
 
         ax.legend()
         fig.tight_layout()
