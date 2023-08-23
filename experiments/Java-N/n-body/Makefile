@@ -10,14 +10,14 @@ compile:
 ifndef NNNNN
 	$(error NNNNN is not defined)
 endif
-	sed s/NNNNN/$(NNNNN)/ mandelbrot.java.in > mandelbrot.java
-	$(JAVAC) -d . mandelbrot.java
+	sed s/NNNNN/$(NNNNN)/ nbody.java.in > nbody.java
+	$(JAVAC) -d . nbody.java
 
 run:
-	$(JAVA) mandelbrot 16000
+	$(JAVA) nbody 50000000
 
 measure:
 ifndef JSON
 	$(error JSON is not defined)
 endif
-	sudo ../../scripts/RAPL/build/rapl $(JSON) $(JAVA) mandelbrot 16000
+	sudo ../../../scripts/RAPL/build/rapl $(JSON) $(JAVA) nbody 50000000
