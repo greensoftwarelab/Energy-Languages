@@ -17,7 +17,7 @@ progress_columns = [
 ]
 
 
-def run_benchmark(language, benchmark, timeout, type, env=os.environ):
+def run_benchmark(language, benchmark, timeout, type, env=os.environ, verbose=False):
     # Todd Mytkowicz, Amer Diwan, Matthias Hauswirth, and Peter F. Sweeney. 2009.
     # Producing wrong data without doing anything obviously wrong!
     # SIGPLAN Not. 44, 3 (March 2009), 265–276. https://doi.org/10.1145/1508284.1508275
@@ -27,7 +27,7 @@ def run_benchmark(language, benchmark, timeout, type, env=os.environ):
             ["make", type],
             stdin=subprocess.DEVNULL,
             stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
+            stderr=(None if verbose else subprocess.DEVNULL),
             cwd=os.path.join(ROOT, language, benchmark),
             timeout=timeout,
             env=env,
@@ -55,7 +55,7 @@ def main(args):
                     ["make", "compile"],
                     cwd=directory,
                     stdin=subprocess.DEVNULL,
-                    stdout=subprocess.PIPE,
+                    stdout=(None if args.verbose else subprocess.DEVNULL),
                     stderr=subprocess.STDOUT,
                 )
                 if compilation.returncode != 0:
@@ -76,7 +76,7 @@ def main(args):
                         f"{language}::{benchmark}::Warmup", total=args.warmup
                     )
                     for i in range(args.warmup):
-                        status = run_benchmark(language, benchmark, args.timeout, "run")
+                        status = run_benchmark(language, benchmark, args.timeout, "run", args.verbose)
                         if status == -1:
                             console.print(
                                 f"{language}::{benchmark} Warmup #{i} timed out."
@@ -106,7 +106,7 @@ def main(args):
                         env = {**os.environ, "JSON": json}
 
                         status = run_benchmark(
-                            language, benchmark, args.timeout, "measure", env
+                            language, benchmark, args.timeout, "measure", env, args.verbose
                         )
                         if status == -1:
                             console.print(
@@ -153,6 +153,7 @@ if __name__ == "__main__":
         default=0,
         help="Number of warmup runs for each benchmark",
     )
+    parser.add_argument("--verbose", "-v", action="store_true")
 
     args = parser.parse_args()
 

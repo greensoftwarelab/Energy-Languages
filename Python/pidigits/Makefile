@@ -12,4 +12,4 @@ measure:
 ifndef JSON
 	$(error JSON is not defined)
 endif
-	sudo ../../scripts/RAPL/build/rapl $(JSON) $(PYTHON) -OO pidigits.py 10000
+	sudo ../../scripts/RAPL/build/rapl "$(JSON)" $(PYTHON) -OO pidigits.py 10000

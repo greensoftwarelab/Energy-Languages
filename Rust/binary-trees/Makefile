@@ -10,4 +10,4 @@ measure:
 ifndef JSON
 	$(error JSON is not defined)
 endif
-	sudo ../../scripts/RAPL/build/rapl $(JSON) ./target/release/binary-trees 21
+	sudo ../../scripts/RAPL/build/rapl "$(JSON)" ./target/release/binary-trees 21

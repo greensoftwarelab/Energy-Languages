@@ -10,4 +10,4 @@ measure:
 ifndef JSON
 	$(error JSON is not defined)
 endif
-	sudo ../../scripts/RAPL/build/rapl $(JSON) ./target/release/fannkuch-redux 12
+	sudo ../../scripts/RAPL/build/rapl "$(JSON)" ./target/release/fannkuch-redux 12

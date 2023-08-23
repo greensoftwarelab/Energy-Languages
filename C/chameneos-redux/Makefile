@@ -10,4 +10,4 @@ measure:
 ifndef JSON
 	$(error JSON is not defined)
 endif
-	sudo ../../scripts/RAPL/build/rapl $(JSON) ./chameneosredux_run 6000000
+	sudo ../../scripts/RAPL/build/rapl "$(JSON)" ./chameneosredux_run 6000000

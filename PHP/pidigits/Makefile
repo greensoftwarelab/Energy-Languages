@@ -11,4 +11,4 @@ measure:
 ifndef JSON
 	$(error JSON is not defined)
 endif
-	sudo ../../scripts/RAPL/build/rapl $(JSON) php -c . pidigits.php 10000
+	sudo ../../scripts/RAPL/build/rapl "$(JSON)" php -c . pidigits.php 10000

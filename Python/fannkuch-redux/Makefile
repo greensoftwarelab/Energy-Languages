@@ -12,4 +12,4 @@ measure:
 ifndef JSON
 	$(error JSON is not defined)
 endif
-	sudo ../../scripts/RAPL/build/rapl $(JSON) $(PYTHON) -OO fannkuchredux.py 12
+	sudo ../../scripts/RAPL/build/rapl "$(JSON)" $(PYTHON) -OO fannkuchredux.py 12

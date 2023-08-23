@@ -11,5 +11,5 @@ measure:
 ifndef JSON
 	$(error JSON is not defined)
 endif
-	sudo ../../scripts/RAPL/build/rapl $(JSON) php fannkuchredux.php 12
+	sudo ../../scripts/RAPL/build/rapl "$(JSON)" php fannkuchredux.php 12
 
