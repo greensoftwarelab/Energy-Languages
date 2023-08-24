@@ -76,7 +76,13 @@ def main(args):
                         f"{language}::{benchmark}::Warmup", total=args.warmup
                     )
                     for i in range(args.warmup):
-                        status = run_benchmark(language, benchmark, args.timeout, "run", args.verbose)
+                        status = run_benchmark(
+                            language,
+                            benchmark,
+                            args.timeout,
+                            "run",
+                            verbose=args.verbose,
+                        )
                         if status == -1:
                             console.print(
                                 f"{language}::{benchmark} Warmup #{i} timed out."
@@ -106,7 +112,12 @@ def main(args):
                         env = {**os.environ, "JSON": json}
 
                         status = run_benchmark(
-                            language, benchmark, args.timeout, "measure", env, args.verbose
+                            language,
+                            benchmark,
+                            args.timeout,
+                            "measure",
+                            env,
+                            args.verbose,
                         )
                         if status == -1:
                             console.print(
