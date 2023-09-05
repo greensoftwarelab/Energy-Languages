@@ -8,5 +8,5 @@ do
         --languages experiments/Java-N \
         --warmup 1 \
         --iterations 7
-    mv `pwd`/data/`hostname -s`/docker-default/data/experiments/Java-N `pwd`/data/`hostname -s`/docker-default/data/experiments/Java-$i
+    mv `pwd`/data/`hostname -s`/docker-default/experiments/Java-N `pwd`/data/`hostname -s`/docker-default/experiments/Java-$i
 done
