@@ -13,7 +13,10 @@ def main(args):
     data = collections.defaultdict(lambda: collections.defaultdict(list))
     for language in args.languages:
         LANGUAGES_ROOT = os.path.join(args.data_root, language)
-        assert os.path.isdir(LANGUAGES_ROOT)
+        if not os.path.isdir(LANGUAGES_ROOT):
+            args.languages.remove(language)
+            print(f"Warning: {LANGUAGES_ROOT} does not exist, skipping")
+            continue
         for benchmark in os.listdir(LANGUAGES_ROOT):
             path = os.path.join(LANGUAGES_ROOT, benchmark)
             assert os.path.isfile(path) and path.endswith(".json")

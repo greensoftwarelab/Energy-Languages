@@ -31,7 +31,9 @@ def table(title, args, data, means):
             elif language == args.baseline:
                 entries.append(f"{means[language][benchmark]:.2f}")
             else:
-                normalized = means[language][benchmark] / means[args.baseline][benchmark]
+                normalized = (
+                    means[language][benchmark] / means[args.baseline][benchmark]
+                )
                 entries.append(f"{normalized:.2f}")
         table.add_row(*(benchmark, *entries))
 
@@ -72,8 +74,6 @@ def main(args):
                     line = json.loads(line)
                     data[language][benchmark].append(line)
 
-    
-
     Console().print(
         table(
             "Runtime",
@@ -110,6 +110,7 @@ def main(args):
         )
     )
 
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--data-root", type=str, required=True)
@@ -130,9 +131,5 @@ if __name__ == "__main__":
             "Python",
         ],
     )
-    parser.add_argument(
-        "--baseline",
-        type=str,
-        default="C"
-    )
+    parser.add_argument("--baseline", type=str, default="C")
     main(parser.parse_args())
