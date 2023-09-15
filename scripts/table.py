@@ -45,9 +45,15 @@ def table(title, args, data, means):
     per_language_baseline = statistics.geometric_mean(
         [m for m in means[args.baseline].values()]
     )
+
     per_language_normalized_means = {
-        language: statistics.geometric_mean([m for m in means[language].values()])
-        / per_language_baseline
+        language: statistics.geometric_mean(
+            [
+                means[language][b] / means[args.baseline][b]
+                for b in benchmarks
+                if b in means[language] and b in means[args.baseline]
+            ]
+        )
         for language in args.languages
     }
 
@@ -99,9 +105,7 @@ def main(args):
             {
                 language: {
                     benchmark: statistics.geometric_mean(
-                        # TODO: Remove >= 0.
-                        # This is due to old data points with a bug in the RAPL measurement tool.
-                        [e["energy"]["pkg"] for e in subdata if e["energy"]["pkg"] >= 0]
+                        [e["energy"]["pkg"] for e in subdata]
                     )
                     for benchmark, subdata in data[language].items()
                 }
