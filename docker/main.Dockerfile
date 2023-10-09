@@ -90,6 +90,7 @@ RUN rm -rf Python-${PYTHON_VERSION}.tar.xz Python-${PYTHON_VERSION}.tar.xz.asc P
 
 # Python scripts dependencies.
 COPY requirements.txt /root/Energy-Languages/
+RUN python3 -m pip install --upgrade pip
 RUN python3 -m pip install -r /root/Energy-Languages/requirements.txt
 
 # PyPy

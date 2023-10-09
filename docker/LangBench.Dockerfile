@@ -7,8 +7,8 @@ RUN apt update
 RUN DEBIAN_FRONTEND=noninteractive apt install -y tzdata
 RUN apt install -y git cmake ninja-build build-essential sudo curl wget pkg-config gnupg
 
-COPY docker/keys /root/LangeBench/docker/keys
-RUN gpg --import /root/LangeBench/docker/keys/*
+COPY docker/keys /root/LangBench/docker/keys
+RUN gpg --import /root/LangBench/docker/keys/*
 
 # Java.
 ARG JAVA_VERSION=11.0.20+8
@@ -48,19 +48,12 @@ RUN cd Python-${PYTHON_VERSION} && ./configure --enable-optimizations --with-lto
 RUN rm -rf Python-${PYTHON_VERSION}.tar.xz Python-${PYTHON_VERSION}.tar.xz.asc Python-${PYTHON_VERSION}
 
 # Python scripts dependencies.
-COPY requirements.txt /root/LangeBench/
-RUN python3 -m pip install -r /root/LangeBench/requirements.txt
+COPY requirements.txt /root/LangBench/
+RUN python3 -m pip install --upgrade pip
+RUN apt install -y libgmp-dev libmpc-dev
+RUN python3 -m pip install -r /root/LangBench/requirements.txt
 
-# PyPy
-ARG PYPY_VERSION=7.3.12
-ARG PYPY_PYTHON_VERSION=3.10
-ARG PYPY_CHECKSUM=6c577993160b6f5ee8cab73cd1a807affcefafe2f7441c87bd926c10505e8731
-RUN wget --quiet https://downloads.python.org/pypy/pypy${PYPY_PYTHON_VERSION}-v${PYPY_VERSION}-linux64.tar.bz2
-RUN echo "${PYPY_CHECKSUM} pypy${PYPY_PYTHON_VERSION}-v${PYPY_VERSION}-linux64.tar.bz2" | sha256sum --check
-RUN tar -C /usr/local --strip-components=1 -xjf pypy${PYPY_PYTHON_VERSION}-v${PYPY_VERSION}-linux64.tar.bz2
-RUN rm pypy${PYPY_PYTHON_VERSION}-v${PYPY_VERSION}-linux64.tar.bz2
-
-WORKDIR /root/LangeBench
+WORKDIR /root/LangBench
 COPY . .
-RUN ./gen-input.sh
+RUN python3 ./data/file-server/generate.py
 ENTRYPOINT [ "./docker/bench.sh" ]
