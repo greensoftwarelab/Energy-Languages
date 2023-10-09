@@ -56,4 +56,5 @@ RUN python3 -m pip install -r /root/LangBench/requirements.txt
 WORKDIR /root/LangBench
 COPY . .
 RUN python3 ./data/file-server/generate.py
+RUN make -C ./data/file-server/client/
 ENTRYPOINT [ "./docker/bench.sh" ]
