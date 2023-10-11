@@ -6,6 +6,7 @@ VOLUME [ "/root/data" ]
 RUN apt update
 RUN DEBIAN_FRONTEND=noninteractive apt install -y tzdata
 RUN apt install -y git cmake ninja-build build-essential sudo curl wget pkg-config gnupg
+RUN apt install -y redis
 
 COPY docker/keys /root/LangBench/docker/keys
 RUN gpg --import /root/LangBench/docker/keys/*
