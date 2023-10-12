@@ -47,7 +47,8 @@ def main(args):
 
         energies = {
             language: {
-                benchmark: statistics.geometric_mean(
+                benchmark: 0.001
+                * statistics.geometric_mean(
                     [r["energy"]["pkg"] for r in data[language][benchmark]]
                 )
                 for benchmark in benchmarks
@@ -63,7 +64,7 @@ def main(args):
                 f"Energy consumed as a function of runtime for all (language, benchmark) pairs"
             )
         ax.set_xlabel("Time [s]")
-        ax.set_ylabel("Energy [J]")
+        ax.set_ylabel("Energy [kJ]")
         if args.axin_xmax:
             axins = ax.inset_axes([0.02, 0.48, 0.5, 0.5])
 
